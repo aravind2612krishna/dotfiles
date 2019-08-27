@@ -2,7 +2,10 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc-snippets'
 
 " For Tagbar related features - not essential
-Plug 'liuchengxu/vista.vim'
+let g:vista_executive_for = {
+  \ 'cpp': 'coc',
+  \ 'php': 'coc',
+  \ }
 
 " For highlighting references
 Plug 'neoclide/coc-highlight'

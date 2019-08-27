@@ -4,51 +4,21 @@ if exists('g:fvim_loaded')
     Plug 'scrooloose/nerdtree'
 endif
 
-let s:use_lightline = v:true
-let s:use_airline = v:false
-let s:use_eleline = v:false
+let g:use_lightline = v:true
+let g:use_airline = v:false
+let g:use_eleline = v:false
 
-if s:use_lightline
+" For Tagbar related features - not essential
+Plug 'liuchengxu/vista.vim'
+let g:vista_sidebar_width=96
+if g:use_lightline
     Plug 'itchyny/lightline.vim'
-    let g:lightline = {
-                \ 'component_function': {
-                \   'filetype': 'MyFiletype',
-                \   'fileformat': 'MyFileformat',
-                \   'cocstatus': 'CocStatus',
-                \   'currentfunction': 'CocCurrentFunction'
-                \ },
-                \ 'colorscheme': 'default'
-                \ }
-
-    function! MyFiletype()
-        if has('fvim_loaded')
-            return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-        else
-            return winwidth(0) > 70 ? (&filetype) : ''
-        endif
-    endfunction
-    function! MyFileformat()
-        if has('fvim_loaded')
-            return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-        else
-            return winwidth(0) > 70 ? (&fileformat) : ''
-        endif
-    endfunction
-    function! CocStatus()
-        if exists('g:coc_status') && get(g:, 'coc_enabled', 0) | return g:coc_status.' ' | endif
-        return ''
-    endfunction
-    function! CocCurrentFunction()
-        " return get(b:, 'coc_current_function', '')
-        return ''
-    endfunction
-
-elseif s:use_eleline
+elseif g:use_eleline
 
     Plug 'liuchengxu/eleline.vim'
     let g:eleline_slim = 1
 
-elseif s:use_airline
+elseif g:use_airline
 
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'

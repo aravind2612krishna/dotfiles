@@ -46,3 +46,42 @@ if exists('g:fvim_loaded')
     " FVimFontAntialias v:true
     " FVimFontSubpixel v:true
 endif
+
+if g:use_lightline
+    let g:lightline = {
+                \ 'component_function': {
+                \   'filetype': 'MyFiletype',
+                \   'fileformat': 'MyFileformat',
+                \   'cocstatus': 'CocStatus',
+                \   'method': 'NearestMethodOrFunction'
+                \ },
+                \ 'colorscheme': 'default'
+                \ }
+
+    function! NearestMethodOrFunction() abort
+        return get(b:, 'vista_nearest_method_or_function', '')
+    endfunction   
+
+    function! MyFiletype()
+        if has('fvim_loaded')
+            return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+        else
+            return winwidth(0) > 70 ? (&filetype) : ''
+        endif
+    endfunction
+    function! MyFileformat()
+        if has('fvim_loaded')
+            return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+        else
+            return winwidth(0) > 70 ? (&fileformat) : ''
+        endif
+    endfunction
+    function! CocStatus()
+        if exists('g:coc_status') && get(g:, 'coc_enabled', 0) | return g:coc_status.' ' | endif
+        return ''
+    endfunction
+    function! CocCurrentFunction()
+        " return get(b:, 'coc_current_function', '')
+        return ''
+    endfunction
+endif

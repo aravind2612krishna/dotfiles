@@ -19,13 +19,12 @@ endif
 
 " in-file searching
 Plug 'skywind3000/asyncrun.vim'
+let g:asyncrun_open = 8
 
 if executable('rg')
     map <leader>r :AsyncRun rg -in <C-R><C-W> <C-R>=expand("%:.:h") <CR>
-    copen topleft
 else
     if executable('grep')
         map <leader>r :AsyncRun grep -Rn <C-R><C-W> <C-R>=expand("%:p:h") . "/*" <CR>
-        copen topleft
     endif
 endif
