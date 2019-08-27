@@ -1,4 +1,4 @@
-call plug#begin(curscrpath . '/../.vim/plugged')
+call plug#begin(g:norm_home_dir . '/.vim/plugged')
 " explorer
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 execute 'source '. curscrpath . '/looks.vim'
@@ -19,6 +19,7 @@ Plug 'tpope/vim-commentary'
 Plug 'jceb/vim-orgmode'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'will133/vim-dirdiff'
+Plug 'tomasiser/vim-code-dark'
 " Plug 'majutsushi/tagbar'
 " Plug 'junegunn/goyo.vim'
 call plug#end()
