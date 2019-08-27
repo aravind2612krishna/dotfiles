@@ -41,6 +41,7 @@ function! Input()
     let @t = text
 endfunction
 " }}}
+
 " {{{ 12. macros
 " DEBUG_MIDMESH
 let @d = 'DO#if DEBUG_MIDMESHo#endifP'
@@ -78,6 +79,7 @@ endfunction
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR> 
 " }}}
+
 " Search in function C++ {{{
 " Search within a scope (a {...} program block).
 " Version 2010-02-28 from http://vim.wikia.com/wiki/VimTip1530
@@ -124,10 +126,6 @@ vnoremap <Leader>/ <Esc>/<C-R>=<SID>ScopeSearch('[[', 2)<CR><CR>
 nnoremap <C-s> :exe 'mks! ~\' . $P4CLIENT . '.vim'<CR>
 
 autocmd FileType cpp setlocal foldmarker=#if,#endif
-" if !empty($P4CLIENT)
-"     autocmd GuiEnter * set title
-"     autocmd GuiEnter * let &titlestring=$P4CLIENT
-" endif
 
 augroup PreviewAutocmds
   autocmd!
@@ -137,9 +135,6 @@ augroup END
 if has('win32')
     set directory=D:\vimfiles\swaps
     set backupdir=D:\vimfiles\backups
-else
-    " set directory=D:\vimfiles\swaps
-    " set backupdir=D:\vimfiles\backups
 endif
 
 " open the current Vim file in Visual Studio.
