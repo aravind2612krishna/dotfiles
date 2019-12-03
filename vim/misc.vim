@@ -44,7 +44,8 @@ endfunction
 
 " {{{ 12. macros
 " DEBUG_MIDMESH
-let @d = 'DO#if DEBUG_MIDMESHo#endifP'
+" let @d = 'DO#if DEBUG_MIDMESHo#endifP'
+let @d = 'C#if DEBUG_MIDMESHo#endifP'
 " Inserts a part variable 
 let @p = '[[ohwDGFIPart *pPart = p_pMidMesher->GetPart();'
 " Go to one of the places where current function is called
@@ -140,3 +141,12 @@ endif
 " open the current Vim file in Visual Studio.
 cabbrev vsedit :!start devenv /edit "%"
 
+" Copy selection as html
+function! CopyFormatted(line1, line2)
+    execute a:line1 . "," . a:line2 . "TOhtml"
+    %yank *
+    !start /min powershell -noprofile "gcb | scb -as"
+    bwipeout!
+endfunction
+
+command! -range=% HtmlClip silent call CopyFormatted(<line1>,<line2>)

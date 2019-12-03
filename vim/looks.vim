@@ -4,8 +4,8 @@ if exists('g:fvim_loaded')
     Plug 'scrooloose/nerdtree'
 endif
 
-let g:use_lightline = v:true
-let g:use_airline = v:false
+let g:use_lightline = v:false
+let g:use_airline = v:true
 let g:use_eleline = v:false
 
 " For Tagbar related features - not essential
@@ -13,10 +13,27 @@ Plug 'liuchengxu/vista.vim'
 let g:vista_sidebar_width=96
 if g:use_lightline
     Plug 'itchyny/lightline.vim'
+    let g:lightline = {
+                \ 'active': {
+                \   'left': [ [ 'mode', 'paste' ],
+                \             [ 'readonly', 'filename', 'modified', 'method' ] ],
+                \ 'right': [ [ 'lineinfo' ],
+                \            [ 'percent' ],
+                \            [ 'cocstatus', 'fileformat', 'fileencoding', 'filetype' ] ]
+                \ },
+                \ 'component_function': {
+                \   'filetype': 'MyFiletype',
+                \   'fileformat': 'MyFileformat',
+                \   'cocstatus': 'coc#status',
+                \   'method': 'NearestMethodOrFunction'
+                \ },
+                \ 'colorscheme': 'onedark'
+                \ }
+
 elseif g:use_eleline
 
     Plug 'liuchengxu/eleline.vim'
-    let g:eleline_slim = 1
+    let g:eleline_slim = 0
 
 elseif g:use_airline
 
@@ -48,6 +65,14 @@ elseif g:use_airline
     let g:airline_right_sep = ''
     let g:airline_right_alt_sep = ''
 
+    let g:airline_symbols = {}
+    let g:airline_symbols.linenr = '●'
+
+    let g:airline_section_y = ''
+    " let g:airline_section_z = airline#section#create(['linenr', ':%3v'])
+    " let g:airline_section_z = (line number, column number)
+    " let g:airline_section_z       (percentage, line number, column number)
+
     " let g:airline_left_sep = ''
     " let g:airline_left_alt_sep = ''
     " let g:airline_right_sep = ''
@@ -63,31 +88,49 @@ elseif g:use_airline
     " let g:airline_right_sep = ''
     " let g:airline_right_alt_sep = ''
 
-    " let g:airline_symbols.branch = ''
-    " let g:airline_symbols.readonly = ''
-    " let g:airline_symbols.linenr = ''
-    " let g:airline_section_b=""
-    " let g:airline_section_y=""
-    
-    " let g:airline_section_error=""
-    " let g:airline_section_warning=""
-    
 
     "}}}
 
 endif "}}}
 
+function! NearestMethodOrFunction() abort
+    return get(b:, 'vista_nearest_method_or_function', '')
+endfunction   
+
+function! MyFiletype() abort
+    if exists('g:fvim_loaded')
+        return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+    else
+        return winwidth(0) > 70 ? (&filetype) : ''
+    endif
+endfunction
+
+function! MyFileformat() abort
+    if exists('g:fvim_loaded')
+        return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+    else
+        return winwidth(0) > 70 ? (&fileformat) : ''
+    endif
+endfunction
+
+function! CocStatus() abort
+    if exists('g:coc_status') && get(g:, 'coc_enabled', 0) | return g:coc_status.' ' | endif
+    return ''
+endfunction
+
+function! CocCurrentFunction() abort
+    " return get(b:, 'coc_current_function', '')
+    return ''
+endfunction
+
 " indent guides
 Plug 'Yggdroot/indentLine'
-
-" colorschemes
-Plug 'flazz/vim-colorschemes'
 
 " fullscreen
 if has('nvim')
     " Plug 'lambdalisue/vim-fullscreen'
 else
-    " Plug 'kkoenig/wimproved.vim'
+    Plug 'kkoenig/wimproved.vim'
 endif
 
 "{{{ list chars
@@ -111,8 +154,8 @@ endif
 
 " Font {{{
 if !has('nvim')
-    set guifont=Iosevka:h11:cANSI:qDRAFT
-    " set guifont=Consolas:h10:cANSI:qDRAFT
+    " set guifont=Iosevka:h11:cANSI:qDRAFT
+    set guifont=Consolas:h10:cANSI:qDRAFT
     " set guifont=Powerline_Consolas:h11:cANSI:qDRAFT
     " set guifont=Fantasque_Sans_Mono:h08:cANSI:qDRAFT
     " set guifont=Hack:h10:cANSI

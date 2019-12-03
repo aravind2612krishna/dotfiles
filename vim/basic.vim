@@ -20,7 +20,8 @@ set hlsearch                   " search highlight
 set incsearch                  " search as you type
 set lazyredraw                 " redraw performance
 set foldcolumn=1               " fold level column
-set background=dark            " Dark background
+set background=dark            " Dark/light background
+set termguicolors
 " }}}
 
 " encoding related

@@ -1,5 +1,7 @@
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-snippets'
+" Plug 'm-pilia/vim-ccls'
 
 " For Tagbar related features - not essential
 let g:vista_executive_for = {
@@ -8,15 +10,15 @@ let g:vista_executive_for = {
   \ }
 
 " For highlighting references
-Plug 'neoclide/coc-highlight'
-highlight! link CocHighlightText PmenuSel
+" Plug 'neoclide/coc-highlight'
+" highlight! link CocHighlightText PmenuSel
 " highlight! link CocHighlightText CocListBlackWhite
 " highlight! link CocHighlightText LightlineMiddle_terminal
-set updatetime=500
+" set updatetime=500
 
 " For semantic coloring {{{
-Plug 'jackguo380/vim-lsp-cxx-highlight', {'for' : 'cpp'}
-if !has('nvim')
+if v:true " !has('nvim')
+    Plug 'jackguo380/vim-lsp-cxx-highlight', {'for' : 'cpp'}
     let g:lsp_cxx_hl_use_text_props = 1 " Without this scrolling slow
 endif
 " }}}
@@ -53,10 +55,10 @@ function! s:show_documentation()
 endfunction
 
 " Show signature help while editing
-autocmd! CursorHoldI * silent! call CocAction('showSignatureHelp')
+" autocmd! CursorHoldI * silent! call CocAction('showSignatureHelp')
 
 " Highlight symbol under cursor on CursorHold
-autocmd! CursorHold * silent call CocActionAsync('highlight')
+" autocmd! CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
@@ -80,3 +82,7 @@ let g:rooter_patterns = ['compile_commands.json', '.git']
 
 " resume coclist
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
+
+nn <silent><buffer> <leader>u :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<CR>
+
+nnoremap <M-n> :CocCommand document.jumpToNextSymbol<CR>
