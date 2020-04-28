@@ -20,7 +20,7 @@ set hlsearch                   " search highlight
 set incsearch                  " search as you type
 set lazyredraw                 " redraw performance
 set foldcolumn=1               " fold level column
-set background=dark            " Dark/light background
+" set background=dark            " Dark/light background
 set termguicolors
 " }}}
 
@@ -31,6 +31,8 @@ set ai                         " Auto indent
 set si                         " Smart indent
 set nowrap                     " Wrap lines
 set fdo-=search                " Open folds for search
+set noshowmode
+set showcmd
 
 " Gui related options 
 set guioptions+=c  "use console dialogs
@@ -80,8 +82,8 @@ set foldmethod=marker          " Foldmethod
 " textwidth
 set tw=0
 set fo+=t
-set nowrap linebreak nolist
-set colorcolumn=108
+set linebreak nolist
+set colorcolumn=100
 
 " syntax
 syntax on
@@ -107,14 +109,14 @@ endif
 " set nowritebackup
 
 " clipboard
-" set clipboard=unnamedplus
+set clipboard=unnamedplus
 
 " completion messages disabling
 set shortmess+=c
 
 " histogram based diff
-if has('nvim-0.3.2') || has("patch-8.1.0360")
-    set diffopt=filler,internal,algorithm:histogram,indent-heuristic
+if has('nvim')
+    set diffopt=filler,internal,algorithm:patience,indent-heuristic
 endif
 
 " open files relative to current path {{{
@@ -124,3 +126,16 @@ map <leader>s :split <C-R>=expand("%:p:h") . "/" <CR>
 map <leader>c :cd <C-R>=expand("%:p:h") . "/" <CR>
 map <leader>w :w <C-R>=expand("%:p:h") . "/" <CR>
 " }}}
+
+" Help Neovim check if file has changed on disc
+" https://github.com/neovim/neovim/issues/2127
+augroup checktime
+    autocmd!
+    if !has("gui_running")
+        "silent! necessary otherwise throws errors when using command
+        "line window.
+        autocmd BufEnter,FocusGained,BufEnter,FocusLost,WinLeave * checktime
+    endif
+augroup END
+
+set updatetime=500

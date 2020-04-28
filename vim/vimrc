@@ -1,5 +1,7 @@
 let g:norm_home_dir = substitute(expand('~'), '\', '/', 'g')
 let curscrpath = expand('<sfile>:p:h')
+let g:python3_host_prog = "C:/Python38/python.exe"
+let g:python_host_prog = "C:/Python27/python.exe"
 execute 'source '. curscrpath . '/basic.vim'
 execute 'source '. curscrpath . '/plugins.vim'
 execute 'source '. curscrpath . '/misc.vim'

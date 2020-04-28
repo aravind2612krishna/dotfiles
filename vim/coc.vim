@@ -1,7 +1,12 @@
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-snippets'
-" Plug 'm-pilia/vim-ccls'
+Plug 'honza/vim-snippets'
+Plug 'neoclide/coc-python'
+" Plug 'clangd/coc-clangd'
+
+Plug 'm-pilia/vim-ccls'
+let g:ccls_levels = 1
 
 " For Tagbar related features - not essential
 let g:vista_executive_for = {
@@ -15,13 +20,8 @@ let g:vista_executive_for = {
 " highlight! link CocHighlightText CocListBlackWhite
 " highlight! link CocHighlightText LightlineMiddle_terminal
 " set updatetime=500
-
-" For semantic coloring {{{
-if v:true " !has('nvim')
-    Plug 'jackguo380/vim-lsp-cxx-highlight', {'for' : 'cpp'}
-    let g:lsp_cxx_hl_use_text_props = 1 " Without this scrolling slow
-endif
-" }}}
+" Highlight symbol under cursor on CursorHold
+" autocmd! CursorHold * silent call CocActionAsync('highlight')
 
 " if hidden not set, TextEdit might fail.
 set hidden
@@ -57,9 +57,6 @@ endfunction
 " Show signature help while editing
 " autocmd! CursorHoldI * silent! call CocAction('showSignatureHelp')
 
-" Highlight symbol under cursor on CursorHold
-" autocmd! CursorHold * silent call CocActionAsync('highlight')
-
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
@@ -86,3 +83,36 @@ nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 nn <silent><buffer> <leader>u :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<CR>
 
 nnoremap <M-n> :CocCommand document.jumpToNextSymbol<CR>
+
+" bases
+nn <silent> xb :call CocLocations('ccls','$ccls/inheritance')<cr>
+" bases of up to 3 levels
+nn <silent> xB :call CocLocations('ccls','$ccls/inheritance',{'levels':3})<cr>
+" derived
+nn <silent> xd :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true})<cr>
+" derived of up to 3 levels
+nn <silent> xD :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true,'levels':3})<cr>
+
+" caller
+nn <silent> xc :call CocLocations('ccls','$ccls/call')<cr>
+" callee
+nn <silent> xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<cr>
+
+" $ccls/member
+" member variables / variables in a namespace
+nn <silent> xm :call CocLocations('ccls','$ccls/member')<cr>
+" member functions / functions in a namespace
+nn <silent> xf :call CocLocations('ccls','$ccls/member',{'kind':3})<cr>
+" nested classes / types in a namespace
+nn <silent> xs :call CocLocations('ccls','$ccls/member',{'kind':2})<cr>
+
+nmap <silent> xt <Plug>(coc-type-definition)<cr>
+nn <silent> xv :call CocLocations('ccls','$ccls/vars')<cr>
+nn <silent> xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<cr>
+
+nn <silent> gj :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
+nn <silent> gh :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
+nn <silent> gl :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
+nn <silent> gk :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
+
+nn xx x

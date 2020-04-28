@@ -3,53 +3,57 @@ call plug#begin(g:norm_home_dir . '/.vim/plugged')
 " explorer
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 execute 'source '. curscrpath . '/looks.vim'
-execute 'source '. curscrpath . '/vcs.vim'
+" Plug 'akiyosi/gonvim-fuzzy'
 execute 'source '. curscrpath . '/file_search.vim'
 if has('nvim')
-    " Plug 'neovim/nvim-lsp'
-    execute 'source '. curscrpath . '/coc.vim'
-    " execute 'source '. curscrpath . '/vimlsp.vim'
-    " execute 'source '. curscrpath . '/lsc.vim'
-else
+    " execute 'source '. curscrpath . '/vcs.vim'
+    " execute 'source '. curscrpath . '/nvim_lsp_plug.vim'
+    " execute 'source '. curscrpath . '/coc.vim'
     " execute 'source '. curscrpath . '/vimlsp.vim'
     execute 'source '. curscrpath . '/lsc.vim'
+    " execute 'source '. curscrpath . '/lcn.vim'
+    " execute 'source '. curscrpath . '/lamp.vim'
+else
+    execute 'source '. curscrpath . '/vimlsp.vim'
+    " execute 'source '. curscrpath . '/lsc.vim'
     " execute 'source '. curscrpath . '/termdebug.vim'
+    Plug 'vim/killersheep'
+    Plug 'puremourning/vimspector'
+    Plug 'honza/vim-snippets'
+    let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 endif
+" Plug 'python/black', {'for': 'python', 'tag': '*' }
 Plug 'python/black', {'for': 'python'}
 " misc
+Plug 'wellle/context.vim', {'for': 'cpp'}
 " Plug 'Vimjas/vim-python-pep8-indent', {'for': 'python'}
-Plug 'maxbrunsfeld/vim-yankstack'
+" Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'tpope/vim-commentary'
 Plug 'jceb/vim-orgmode'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'will133/vim-dirdiff'
+Plug 'yssl/QFEnter'
+Plug 'vimwiki/vimwiki'
 
-" Colorschemes
-Plug 'tomasiser/vim-code-dark'
-Plug 'iCyMind/NeoSolarized'
-Plug 'haishanh/night-owl.vim'
-" Plug 'ayu-theme/ayu-vim' " or other package manager
-" Plug 'JBakamovic/yaflandia'
-" Plug 'majutsushi/tagbar'
-" Plug 'junegunn/goyo.vim'
-Plug 'rakr/vim-one'
+" tcl
+" Plug 'JessicaKMcIntosh/Nagelfar-Vim'
+" autocmd FileType tcl compiler nagelfar
+" Plug 'dense-analysis/ale', {'for': 'tcl'}
+
 call plug#end()
 
 " colorscheme ayu
-" let ayucolor="light"  " for light version of theme
+let ayucolor="light"  " for light version of theme
 " let ayucolor="mirage" " for mirage version of theme
 " let ayucolor="dark"   " for dark version of theme
-" colorscheme onedark
-" colorscheme NeoSolarized
-" colorscheme solarized8_light_flat
-" colorscheme PaperColor
-" colorscheme yaflandia
-colorscheme codedark
-" colorscheme one
-" colorscheme night-owl
-" colorscheme one
-" let g:airline_theme='one'
+" colorscheme codedark
+" colorscheme gruvbox
 " let g:one_allow_italics = 1
+" AirlineTheme transparent
+" set background=light
+" colorscheme solarized8_high
+" colorscheme gruvbox
+colorscheme space-vim-dark
 
 let g:black_linelength=79
 
@@ -57,10 +61,10 @@ function! SetLcnSettings()
     call deoplete#custom#source('_',  'max_menu_width', 0)
     call deoplete#custom#source('_',  'max_abbr_width', 0)
     call deoplete#custom#source('_',  'max_kind_width', 0)
-    sign define LanguageClientError text= texthl=SignError
-    sign define LanguageClientWarning text= texthl=SignWarning
-    sign define LanguageClientInformation text= texthl=SignInformation
-    sign define LanguageClientHint text= texthl=SignHint
+    " sign define LanguageClientError text= texthl=SignError
+    " sign define LanguageClientWarning text= texthl=SignWarning
+    " sign define LanguageClientInformation text= texthl=SignInformation
+    " sign define LanguageClientHint text= texthl=SignHint
 endfunction
 
 if exists('g:fvim_loaded')
@@ -72,31 +76,10 @@ if exists('g:fvim_loaded')
     " Cursor tweaks
     " FVimCursorSmoothMove v:true
     FVimCursorSmoothBlink v:true
-    :set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+    set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
                 \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
                 \,sm:block-blinkwait175-blinkoff150-blinkon175
 
-
-    " Font tweaks
-    FVimFontAntialias v:true
-    FVimFontAutohint v:true
-    FVimFontSubpixel v:true
-    FVimFontLcdRender v:true
-    FVimFontHintLevel 'full'
-    " FVimFontLineHeight '+1.0' " can be 'default', '14.0', '-1.0' etc.
-
-    " Try to snap the fonts to the pixels, reduces blur
-    " in some situations (e.g. 100% DPI).
-    FVimFontAutoSnap v:true
-
-    " FVimBackgroundComposition 'none'   " 'none', 'blur' or 'acrylic'
-
-    " " Font weight tuning, possible valuaes are 100..900
-    " FVimFontNormalWeight 400
-    " FVimFontBoldWeight 700
-
-    " Font debugging -- draw bounds around each glyph
-    " FVimFontDrawBounds v:true
 
     " UI options (all default to v:false)
     " FVimUIMultiGrid v:false     " per-window grid system -- work in progress
@@ -111,4 +94,14 @@ endif
 
 if has('nvim')
     " execute 'source '. curscrpath . '/nvim_lsp.vim'
+endif
+let g:context_enabled = 0
+let g:context_add_mappings = 0
+let g:context_add_autocmds = 1
+
+silent let g:echodoc#enable_at_startup = 1
+
+if !empty($P4CLIENT)
+    set title
+    let &titlestring="nvim-" . $P4CLIENT
 endif

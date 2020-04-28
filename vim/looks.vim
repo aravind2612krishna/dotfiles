@@ -1,16 +1,19 @@
 " Status lines {{{
-if exists('g:fvim_loaded') 
+" if exists('g:fvim_loaded') 
+if v:true
     Plug 'ryanoasis/vim-devicons'
     Plug 'scrooloose/nerdtree'
 endif
 
-let g:use_lightline = v:false
-let g:use_airline = v:true
+let g:use_lightline = v:true
+let g:use_airline = v:false
 let g:use_eleline = v:false
 
 " For Tagbar related features - not essential
+" Disabling due to startuptime problems
 Plug 'liuchengxu/vista.vim'
 let g:vista_sidebar_width=96
+
 if g:use_lightline
     Plug 'itchyny/lightline.vim'
     let g:lightline = {
@@ -19,7 +22,7 @@ if g:use_lightline
                 \             [ 'readonly', 'filename', 'modified', 'method' ] ],
                 \ 'right': [ [ 'lineinfo' ],
                 \            [ 'percent' ],
-                \            [ 'cocstatus', 'fileformat', 'fileencoding', 'filetype' ] ]
+                \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
                 \ },
                 \ 'component_function': {
                 \   'filetype': 'MyFiletype',
@@ -27,9 +30,16 @@ if g:use_lightline
                 \   'cocstatus': 'coc#status',
                 \   'method': 'NearestMethodOrFunction'
                 \ },
-                \ 'colorscheme': 'onedark'
+                \ 'colorscheme': 'darcula'
                 \ }
 
+    command! LightlineReload call LightlineReload()
+
+    function! LightlineReload()
+        call lightline#init()
+        call lightline#colorscheme()
+        call lightline#update()
+    endfunction
 elseif g:use_eleline
 
     Plug 'liuchengxu/eleline.vim'
@@ -38,11 +48,13 @@ elseif g:use_eleline
 elseif g:use_airline
 
     Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
+    " Plug 'vim-airline/vim-airline-themes'
+    Plug 'khatiba/vim-airline-themes'
     Plug 'enricobacis/vim-airline-clock'
     "{{{ air-line
     let g:airline_powerline_fonts = 1
-    if exists('g:fvim_loaded') 
+    " if exists('g:fvim_loaded') 
+    if has('neovim')
         " adding to vim-airline's tabline
          let g:webdevicons_enable_airline_tabline = 1
          " adding to vim-airline's statusline
@@ -64,6 +76,16 @@ elseif g:use_airline
     let g:airline_left_alt_sep = ''
     let g:airline_right_sep = ''
     let g:airline_right_alt_sep = ''
+
+    " let g:airline_left_sep = ''
+    " let g:airline_left_alt_sep = ''
+    " let g:airline_right_sep = ''
+    " let g:airline_right_alt_sep = ''
+
+    " let g:airline_left_sep = ''
+    " let g:airline_left_alt_sep = ''
+    " let g:airline_right_sep = ''
+    " let g:airline_right_alt_sep = ''
 
     let g:airline_symbols = {}
     let g:airline_symbols.linenr = '●'
@@ -98,7 +120,8 @@ function! NearestMethodOrFunction() abort
 endfunction   
 
 function! MyFiletype() abort
-    if exists('g:fvim_loaded')
+    " if exists('g:fvim_loaded')
+    if has('neovim')
         return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
     else
         return winwidth(0) > 70 ? (&filetype) : ''
@@ -106,7 +129,8 @@ function! MyFiletype() abort
 endfunction
 
 function! MyFileformat() abort
-    if exists('g:fvim_loaded')
+    " if exists('g:fvim_loaded')
+    if has('neovim')
         return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
     else
         return winwidth(0) > 70 ? (&fileformat) : ''
@@ -124,7 +148,11 @@ function! CocCurrentFunction() abort
 endfunction
 
 " indent guides
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
+Plug 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+let g:indent_guides_enable_on_vim_startup = 1
 
 " fullscreen
 if has('nvim')
@@ -134,7 +162,7 @@ else
 endif
 
 "{{{ list chars
-if has('nvim')
+if v:true  " has('nvim')
     set listchars=tab:▸\ ,extends:▸,precedes:◂,nbsp:●,eol:→
 else
     set listchars=tab:►\ ,extends:╍,precedes:◤,nbsp:●,eol:◣
@@ -154,13 +182,34 @@ endif
 
 " Font {{{
 if !has('nvim')
-    " set guifont=Iosevka:h11:cANSI:qDRAFT
-    set guifont=Consolas:h10:cANSI:qDRAFT
+    set guifont=Iosevka:h11:cANSI:qDRAFT
+    " set guifont=Consolas:h10:cANSI:qDRAFT
     " set guifont=Powerline_Consolas:h11:cANSI:qDRAFT
     " set guifont=Fantasque_Sans_Mono:h08:cANSI:qDRAFT
     " set guifont=Hack:h10:cANSI
     " set guifont=Luculent:h9:cANSI
     " set guifont=Iosevka:h09:cANSI:qDRAFT
+else
+    " set guifont=Consolas\ NF:h13:cANSI:qDRAFT
+    " set guifont=Iosevka\ Light:h13
+    set guifont=Iosevka:h14
+    " set guifont=Cascadia\ Mono\ PL:h12
+    " set guifont=Cascadia\ Code:h12
 endif
 
 " }}}
+
+" Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'bfrg/vim-cpp-modern'
+" Plug 'octol/vim-cpp-enhanced-highlight'
+
+ " Colorschemes
+ Plug 'tomasiser/vim-code-dark'
+ Plug 'rafi/awesome-vim-colorschemes'
+ " Plug 'majutsushi/tagbar'
+ " Plug 'junegunn/goyo.vim'
+
+" Plug 'camspiers/lens.vim'
+" Plug 'camspiers/animate.vim'
+
+set relativenumber

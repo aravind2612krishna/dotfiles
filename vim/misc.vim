@@ -21,14 +21,21 @@ function! MyCompile()
     let makedir=NonIntrusiveGetMakeDir()
     let &makeprg = 'make -j4 -k -s -C' . makedir
     echom &makeprg
-    setlocal errorformat=\ %#%f(%l)\ :\ %#%t%[A-z]%#\ %[A-Z\ ]%#%n:\ %m
+    set errorformat=\ %#%f(%l)\ :\ %#%t%[A-z]%#\ %[A-Z\ ]%#%n:\ %m
     AsyncRun -program=make
     :normal p
 endfunction
 
 nmap <F7> :call MyCompile()<CR>
-nmap <C-n> :cn<CR>
-nmap <C-p> :cp<CR>
+" Loc list
+nmap <M-n> :lnext<CR>
+nmap <M-p> :lprev<CR>
+nmap <M-q> :lclose<CR>
+nnoremap <M-e> :topleft lopen<CR>
+
+" QuickFix List
+nmap <C-n> :cnext<CR>
+nmap <C-p> :cprev<CR>
 nmap <C-q> :cclose<CR>
 nnoremap <C-e> :topleft copen<CR>
 "}}}
@@ -139,14 +146,31 @@ if has('win32')
 endif
 
 " open the current Vim file in Visual Studio.
-cabbrev vsedit :!start devenv /edit "%"
+cabbrev vsedit :!start /min devenv /edit "%"
 
 " Copy selection as html
 function! CopyFormatted(line1, line2)
+    " let g:html_prevent_copy="n"
     execute a:line1 . "," . a:line2 . "TOhtml"
+    execute "g:<body"
+    execute "normal! oFile : "
+    execute "normal! \"#p"
+    execute "normal! a<br>"
+    " execute "sav $(TEMP)/temp.html"
     %yank *
     !start /min powershell -noprofile "gcb | scb -as"
     bwipeout!
 endfunction
 
 command! -range=% HtmlClip silent call CopyFormatted(<line1>,<line2>)
+
+function! ProfileStart()
+    exec('profile start profile.log')
+    exec('profile func *')
+    exec('profile file *')
+endfunction
+
+function! ProfileEnd()
+    exec('profile pause')
+    exec('qall')
+endfunction
