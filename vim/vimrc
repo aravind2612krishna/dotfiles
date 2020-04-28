@@ -5,4 +5,4 @@ endif
 let curscrpath = expand('<sfile>:p:h')
 runtime basic.vim
 runtime plugins.vim
-runtime hyperworks.vim
+runtime misc.vim
