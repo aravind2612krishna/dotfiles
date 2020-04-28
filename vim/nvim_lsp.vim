@@ -2,29 +2,13 @@ if v:false " executable('clangd')
     lua require'nvim_lsp'.clangd.setup{ cmd = {"clangd", "--background-index", "-j=6", "--clang-tidy", "-clang-tidy-checks=-*,clang-analyzer*,bugprone*,performance*", "-pch-storage=memory", "--completion-style=detailed", "--completion-parse=auto", "--function-arg-placeholders"}, on_attach=require'completion'.on_attach }
 
 elseif executable('ccls')
-    let s:ccls_cache_dir = substitute(expand('~'), '\', '/', 'g') . '/ccls-cache'
+    let s:ccls_cache_dir = g:storage_home . '/ccls-cache'
+    if v:false " has('win32)
+        s:ccls_cache_dir = substitute(s:ccls_cache_dir, '/', '\\\\')
+    endif
     let s:findjson = {... -> fnamemodify(findfile('compile_commands.json', expand('%:p') . ';'), ':p:h')}
 
-    " ccls_settings = {
-    "     ccls.cache.directory = "~/ccls-cache",
-    "     ccls.completion.enableSnippetInsertion = true,
-    "     ccls.index.threads = 4
-    " };
-    
-    " " lua nvim_lsp.ccls.setup({settings = {"ccls.cache.directory" = "~/ccls-cache", "ccls.completion.placeholder" = true, "ccls.index.threads" = 4, "ccls.completion.detailedLabel" = false}});
-    " let ccls_settings = {
-    "             \     "init_options": {
-    "             \       "cache": {"directory": s:ccls_cache_dir},
-    "             \       "completion": {"detailedLabel": v:false},
-    "             \       "index": {"threads": 4}
-    "             \   }}
-    " call nvim_lsp#setup("ccls", ccls_settings)
-
-    lua require'nvim_lsp'.ccls.setup{ init_options = { cache = { directory="C:\\Users\\aravk\\ccls-cache" }, completion = { placeholder = true, detailedLabel = false, caseSensitivity = 0, duplicateOptional = true }, index = { threads = 6 } }, on_attach=require'completion'.on_attach  }
-
-    " lua require'nvim_lsp'.ccls.setup{settings = { ccls.cache.directory = "C:\\Users\\aravk\\ccls-cache", ccls.completion.caseSensitivity = 0, ccls.completion.detailedLabel = false, ccls.completion.duplicateOptional = true, ccls.completion.enableSnippetInsertion = true, ccls.index.threads = 6 } }
-    
-    " lua require'nvim_lsp'.ccls.setup{ settings = { ccls.cache.directory = "C:\\Users\\aravk\\ccls-cache" } }
+    lua require'nvim_lsp'.ccls.setup{ init_options = { cache = { directory=s:ccls_cache_dir}, completion = { placeholder = true, detailedLabel = false, caseSensitivity = 0, duplicateOptional = true }, index = { threads = 6 } }, on_attach=require'completion'.on_attach  }
 
     autocmd Filetype cpp setl omnifunc=v:lua.vim.lsp.omnifunc
 

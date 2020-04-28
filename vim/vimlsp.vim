@@ -74,6 +74,7 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 "" }}}
 
 " {{{ lsp ccls
+let s:ccls_cache_dir = expand(g:storage_home . '/ccls-cache')
 if executable('ccls')
     " let g:lsp_text_edit_enabled = 0
     " let g:lsp_insert_text_enabled = 0
@@ -83,7 +84,7 @@ if executable('ccls')
                 \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
                 \ 'initialization_options': {
                 \   "index": { "threads": 8 },
-                \   "cache": {"directory": "C:/Users/aravk/ccls-cache"},
+                \   "cache": {"directory":ccls_cache_dir},
                 \   'highlight': { 'lsRanges' : v:true },
                 \ },
                 \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],

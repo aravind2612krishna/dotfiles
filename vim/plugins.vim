@@ -1,22 +1,21 @@
 let g:plug_log_on = 1
-call plug#begin(g:norm_home_dir . '/.vim/plugged')
+call plug#begin(g:storage_home . '/.vim/plugged')
 " explorer
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-execute 'source '. curscrpath . '/looks.vim'
-" Plug 'akiyosi/gonvim-fuzzy'
-execute 'source '. curscrpath . '/file_search.vim'
+runtime looks.vim
+runtime file_search.vim
 if has('nvim')
-    " execute 'source '. curscrpath . '/vcs.vim'
-    " execute 'source '. curscrpath . '/nvim_lsp_plug.vim'
-    " execute 'source '. curscrpath . '/coc.vim'
-    " execute 'source '. curscrpath . '/vimlsp.vim'
-    execute 'source '. curscrpath . '/lsc.vim'
-    " execute 'source '. curscrpath . '/lcn.vim'
-    " execute 'source '. curscrpath . '/lamp.vim'
+    " runtime vcs.vim
+    " runtime nvim_lsp_plug.vim
+    " runtime coc.vim
+    " runtime vimlsp.vim
+    runtime lsc.vim
+    " runtime lcn.vim
+    " runtime lamp.vim
 else
-    execute 'source '. curscrpath . '/vimlsp.vim'
-    " execute 'source '. curscrpath . '/lsc.vim'
-    " execute 'source '. curscrpath . '/termdebug.vim'
+    runtime vimlsp.vim
+    " runtime lsc.vim
+    " runtime termdebug.vim
     Plug 'vim/killersheep'
     Plug 'puremourning/vimspector'
     Plug 'honza/vim-snippets'
@@ -93,7 +92,7 @@ if exists('g:fvim_loaded')
 endif
 
 if has('nvim')
-    " execute 'source '. curscrpath . '/nvim_lsp.vim'
+    " runtime nvim_lsp.vim
 endif
 let g:context_enabled = 0
 let g:context_add_mappings = 0

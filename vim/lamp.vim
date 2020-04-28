@@ -27,7 +27,7 @@ function! s:on_initialized()
     call lamp#builtin#pyls()
 
     " ccls setting
-    let s:ccls_cache_dir = substitute(expand('~'), '\', '/', 'g') . '/ccls-cache'
+    let s:ccls_cache_dir = g:storage_home . '/ccls-cache'
     call lamp#register('ccls', {
                 \   'command': ['ccls', '--log-file=ccls.log'],
                 \   'filetypes': ['c', 'cpp'],

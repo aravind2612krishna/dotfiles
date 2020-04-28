@@ -2,7 +2,7 @@
 " LeaderF/FZF {{{
 
 " FZF {{{
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '.\install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
 " }}}
@@ -69,7 +69,7 @@ endfunction
 let useLeaderF = v:false
 let useClap = v:false
 
-if has('nvim')
+if has('nvim') && has('win32')
     let useLeaderF = v:true
     let useClap = v:false
 endif

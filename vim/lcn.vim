@@ -6,7 +6,7 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
 Plug 'm-pilia/vim-ccls'
-let g:ccls_log_file = expand('~/my_log_file.txt')
+let g:ccls_log_file = expand('~/ccls_log.txt')
 
 " Snippets
 Plug 'SirVer/ultisnips'
@@ -76,8 +76,10 @@ if executable('ccls')
                 \ 'cuda': ['ccls', '--log-file=ccls.log'],
                 \ 'objc': ['ccls', '--log-file=ccls.log'],
                 \ }
-    let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
-    let g:LanguageClient_settingsPath = "C:/Users/aravk/AppData/Local/nvim/ccls_setings.json"
+    if has('win32')
+        let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+        let g:LanguageClient_settingsPath = "C:/Users/aravk/AppData/Local/nvim/ccls_setings.json"
+    endif
 endif
 " }}}
 

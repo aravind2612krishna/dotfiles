@@ -41,7 +41,7 @@ set complete=.,w
 autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
 let g:lsc_auto_map = v:true
 let g:lsc_reference_highlights = v:true
-let s:ccls_cache_dir = substitute(expand('~'), '\', '/', 'g') . '/ccls-cache'
+let s:ccls_cache_dir = g:storage_home . '/ccls-cache'
 let g:lsc_server_commands = {
             \ 'cpp': {
             \    'command': 'ccls',
