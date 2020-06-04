@@ -1,6 +1,6 @@
 " Status lines {{{
-" if exists('g:fvim_loaded') 
-if v:true
+if exists('g:fvim_loaded') 
+" if v:true
     Plug 'ryanoasis/vim-devicons'
     Plug 'scrooloose/nerdtree'
 endif
@@ -27,10 +27,9 @@ if g:use_lightline
                 \ 'component_function': {
                 \   'filetype': 'MyFiletype',
                 \   'fileformat': 'MyFileformat',
-                \   'cocstatus': 'coc#status',
                 \   'method': 'NearestMethodOrFunction'
                 \ },
-                \ 'colorscheme': 'darcula'
+                \ 'colorscheme': 'selenized_black'
                 \ }
 
     command! LightlineReload call LightlineReload()
@@ -48,8 +47,8 @@ elseif g:use_eleline
 elseif g:use_airline
 
     Plug 'vim-airline/vim-airline'
-    " Plug 'vim-airline/vim-airline-themes'
-    Plug 'khatiba/vim-airline-themes'
+    Plug 'vim-airline/vim-airline-themes'
+    " Plug 'khatiba/vim-airline-themes'
     Plug 'enricobacis/vim-airline-clock'
     "{{{ air-line
     let g:airline_powerline_fonts = 1
@@ -120,8 +119,8 @@ function! NearestMethodOrFunction() abort
 endfunction   
 
 function! MyFiletype() abort
-    " if exists('g:fvim_loaded')
-    if has('neovim')
+    if exists('g:fvim_loaded')
+    " if has('neovim')
         return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
     else
         return winwidth(0) > 70 ? (&filetype) : ''
@@ -129,8 +128,8 @@ function! MyFiletype() abort
 endfunction
 
 function! MyFileformat() abort
-    " if exists('g:fvim_loaded')
-    if has('neovim')
+    if exists('g:fvim_loaded')
+    " if has('neovim')
         return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
     else
         return winwidth(0) > 70 ? (&fileformat) : ''
@@ -194,7 +193,7 @@ else
     " set guifont=Iosevka\ Light:h13
     set guifont=Iosevka:h14
     " set guifont=Cascadia\ Mono\ PL:h12
-    " set guifont=Cascadia\ Code:h12
+    " set guifont=Cascadia\ Code:h14
 endif
 
 " }}}

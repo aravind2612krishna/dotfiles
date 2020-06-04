@@ -5,6 +5,10 @@ if executable('pyls')
     Plug 'ryanolsonx/vim-lsp-python'
     " Plug 'vim-vdebug/vdebug'
 endif
+let g:vista_executive_for = {
+  \ 'cpp': 'vim_lsp',
+  \ 'python': 'vim_lsp',
+  \ }
 
 " snippets {{{ disabling due to performance
 " Plug 'Shougo/neosnippet.vim'
@@ -59,19 +63,19 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 
 " }}}
 
-""{{{ vim-vsnip
+"{{{ vim-vsnip
 
-" Plug 'hrsh7th/vim-vsnip'
-" Plug 'hrsh7th/vim-vsnip-integ'
-" imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-" imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-" smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-" imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-" smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-" imap <expr> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-" smap <expr> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+ Plug 'hrsh7th/vim-vsnip'
+ Plug 'hrsh7th/vim-vsnip-integ'
+ imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+ imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+ smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+ imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+ smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+ imap <expr> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+ smap <expr> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
-"" }}}
+" }}}
 
 " {{{ lsp ccls
 let s:ccls_cache_dir = expand(g:storage_home . '/ccls-cache')
@@ -84,7 +88,7 @@ if executable('ccls')
                 \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
                 \ 'initialization_options': {
                 \   "index": { "threads": 8 },
-                \   "cache": {"directory":ccls_cache_dir},
+                \   "cache": {"directory": s:ccls_cache_dir},
                 \   'highlight': { 'lsRanges' : v:true },
                 \ },
                 \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
@@ -138,6 +142,12 @@ nnoremap <leader>lr :LspRename<CR>
 
 " highlight lspReference ctermfg=red guifg=red ctermbg=green guibg=green
 highlight! link lspReference PMenuSel
+
+hi! link LspInformationVirtual LineNr
+hi! link LspWarningVirtual Folded
+hi! link LspErrorVirtual ErrorMsg
+hi! link LspErrorHighlight SpellBad
+
 " if exists('g:fvim_loaded')
 if has('neovim')
     let g:lsp_signs_error = {'text': ''}

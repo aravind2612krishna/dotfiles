@@ -18,10 +18,12 @@ set ignorecase                 " Ignore case when reading
 set smartcase                  " if even one char in searchstr is uppercase it will not ignore case
 set hlsearch                   " search highlight
 set incsearch                  " search as you type
+set wrapscan                   " search [don't] wrap
 set lazyredraw                 " redraw performance
 set foldcolumn=1               " fold level column
 " set background=dark            " Dark/light background
 set termguicolors
+set virtualedit=block,onemore  " Allows you to move your cursor off the end of lines while in visual block mode, and allows your cursor to go one space off the end of the line when in normal mode.
 " }}}
 
 " encoding related
@@ -99,7 +101,7 @@ set number
 
 " behaviour of makesession command
 " set sessionoptions=buffers,curdir,folds,resize,winpos,winsize
-set sessionoptions=buffers,curdir
+set sessionoptions=buffers,curdir,tabpages
 
 if exists('g:fvim_loaded') 
     nnoremap <BS> h

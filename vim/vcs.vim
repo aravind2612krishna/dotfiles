@@ -1,6 +1,7 @@
 " Plug 'nfvs/vim-perforce'
 
 Plug 'mhinz/vim-signify'
+let g:signify_disable_by_default=1
 " Plug 'ngemily/vim-vp4'
 
 " let g:perforce_debug=1

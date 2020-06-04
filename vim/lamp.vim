@@ -33,9 +33,7 @@ function! s:on_initialized()
                 \   'filetypes': ['c', 'cpp'],
                 \   'root_uri': { -> lamp#findup('compile_commands.json') },
                 \   'initialization_options': { -> {'index': {'threads': 4},
-                \                                      'highlight': { 'lsRanges' : v:true },
                 \                                      'cache': {'directory': s:ccls_cache_dir}
-                \                                     
                 \   } }
                 \ })
 endfunction

@@ -1,8 +1,11 @@
 " lsc
-Plug 'natebosch/vim-lsc'
+Plug 'natebosch/vim-lsc', { 'for' : ['cpp', 'python'] }
+let g:vista_executive_for = {
+  \ 'cpp': 'vim_lsc',
+  \ 'python': 'vim_lsc',
+  \ }
 
 " Formatting
-
 " {{{ vim-clang-format
 " Plug 'rhysd/vim-clang-format'
 " Plug 'Kypert/vim-clang-format', { 'branch' : 'fix/issues/98' }
@@ -28,29 +31,33 @@ xnoremap ,gq :Autoformat<CR>
 set completeopt-=preview
 set complete=.,w
 
-" Plug 'hrsh7th/vim-vsnip'
-" Plug 'hrsh7th/vim-vsnip-integ'
-" imap <expr> <silent> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-" imap <expr> <silent> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-" smap <expr> <silent> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-" imap <expr> <silent> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-" smap <expr> <silent> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-" imap <expr> <silent> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-" smap <expr> <silent> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+let g:lsc_enable_snippet_support = v:true
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+imap <expr> <silent> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand)'         : '<C-l>'
+imap <expr> <silent> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+smap <expr> <silent> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+imap <expr> <silent> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <silent> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <silent> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <silent> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
 autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
 let g:lsc_auto_map = v:true
 let g:lsc_reference_highlights = v:true
 let s:ccls_cache_dir = g:storage_home . '/ccls-cache'
+            " \                                                     'filterAndSort': v:false,
+            " \                                                     'detailedLabel': v:true}
 let g:lsc_server_commands = {
             \ 'cpp': {
-            \    'command': 'ccls',
+            \    'command': 'ccls --log-file=ccls.log',
             \    'suppress_stderr': v:true,
             \    'message_hooks': {
             \        'initialize': {
             \            'initializationOptions': {'index': {'threads': 4},
             \                                      'highlight': { 'lsRanges' : v:true },
-            \                                      'cache': {'directory': s:ccls_cache_dir}
+            \                                      'cache': {'directory': s:ccls_cache_dir},
+            \                                      'completion': {'duplicateOptional': v:true}
             \                                     },
             \            'rootUri': {m, p -> lsc#uri#documentUri(fnamemodify(findfile('compile_commands.json', expand('%:p') . ';'), ':p:h'))}
             \        },
@@ -90,7 +97,7 @@ let g:lsc_auto_map = {
             \ 'defaults': v:true,
             \ 'NextReference': ']r', 
             \ 'PreviousReference': '[r',
-            \ 'Completion': 'omnifunc'
+            \ 'Completion': 'completefunc'
             \ }
 " let g:lsc_enable_autocomplete = v:false
 Plug 'Shougo/echodoc.vim'

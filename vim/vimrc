@@ -4,5 +4,7 @@ if !exists('g:storage_home')
 endif
 let curscrpath = expand('<sfile>:p:h')
 runtime basic.vim
-runtime plugins.vim
-runtime hyperworks.vim
+if !exists('g:vscode')
+    runtime plugins.vim
+endif
+runtime misc.vim

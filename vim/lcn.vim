@@ -7,6 +7,10 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
 Plug 'm-pilia/vim-ccls'
 let g:ccls_log_file = expand('~/ccls_log.txt')
+let g:vista_executive_for = {
+  \ 'cpp': 'lcn',
+  \ 'python': 'lcn',
+  \ }
 
 " Snippets
 Plug 'SirVer/ultisnips'

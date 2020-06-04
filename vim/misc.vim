@@ -63,7 +63,7 @@ let @s = '"zdiwafor (size_t iterName = 0; iterName < z.size(); ++iterName){}
 let @i = '"zdiwafor (auto iterName = z.begin(); iterName != z.end(); ++iterName){}kkf=b:call Input()*Nciwtn.n.jo= *t;^iauto '
 " camelCase to underscores
 " let @c = 'viwomt"tywviw:s:\%V\(\u\):_\1:g`tguiw'
-let @c = ':sp:set autoread:e command.tclG?readfile$F.yT/:q:set noautoreadO// case : p'
+let @c = ':sp:set autoread:e command1.tclG?readfile$F.yT/:q:set noautoreadO// case : p'
 let @e = ':!p4 edit %'
 " }}}
 
@@ -133,7 +133,32 @@ vnoremap <Leader>/ <Esc>/<C-R>=<SID>ScopeSearch('[[', 2)<CR><CR>
 " session
 nnoremap <C-s> :exe 'mks! ~\' . $P4CLIENT . '.vim'<CR>
 
+" Foldtext
 autocmd FileType cpp setlocal foldmarker=#if,#endif
+set fillchars+=fold:\ 
+" set fillchars+=fold:-
+set foldmethod=marker
+function! NeatFold()
+    " set the max number of nested fold levels + 1
+    let fnum = 3
+    " set the max number of digits in the number folded lines
+    let nnum = 5
+
+    let char = matchstr(&fillchars, 'fold:\zs.')
+    let lnum = v:foldend - v:foldstart + 1
+    let plus = repeat('❱', fnum - v:foldlevel)
+    let minus = repeat('❰', fnum - v:foldlevel)
+    let dash = repeat(char, v:foldlevel)
+    let spac = repeat(' ', nnum - len(lnum))
+
+    " let txta = v:foldstart . ' ⇋ ' . v:foldend
+    let txta = trim(getline(v:foldstart), &commentstring.&foldmarker)
+    let txtb = '' . spac . lnum . ' '
+    let fill = repeat(char, winwidth(0) - fnum - len(txta . txtb) - &foldcolumn - (&number ? &numberwidth : 0))
+
+    return plus . dash . txta . fill . txtb
+endfunction
+set foldtext=NeatFold()
 
 augroup PreviewAutocmds
   autocmd!
@@ -174,3 +199,4 @@ function! ProfileEnd()
     exec('profile pause')
     exec('qall')
 endfunction
+

@@ -1,8 +1,8 @@
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-snippets'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-snippets'
 Plug 'honza/vim-snippets'
-Plug 'neoclide/coc-python'
+" Plug 'neoclide/coc-python'
 " Plug 'clangd/coc-clangd'
 
 Plug 'm-pilia/vim-ccls'
@@ -11,17 +11,17 @@ let g:ccls_levels = 1
 " For Tagbar related features - not essential
 let g:vista_executive_for = {
   \ 'cpp': 'coc',
-  \ 'php': 'coc',
+  \ 'python': 'coc',
   \ }
 
 " For highlighting references
-" Plug 'neoclide/coc-highlight'
-" highlight! link CocHighlightText PmenuSel
+Plug 'neoclide/coc-highlight'
+highlight! link CocHighlightText PmenuSel
 " highlight! link CocHighlightText CocListBlackWhite
 " highlight! link CocHighlightText LightlineMiddle_terminal
 " set updatetime=500
 " Highlight symbol under cursor on CursorHold
-" autocmd! CursorHold * silent call CocActionAsync('highlight')
+autocmd! CursorHold * silent call CocActionAsync('highlight')
 
 " if hidden not set, TextEdit might fail.
 set hidden
@@ -100,15 +100,15 @@ nn <silent> xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<cr>
 
 " $ccls/member
 " member variables / variables in a namespace
-nn <silent> xm :call CocLocations('ccls','$ccls/member')<cr>
+nn <silent> gxm :call CocLocations('ccls','$ccls/member')<cr>
 " member functions / functions in a namespace
-nn <silent> xf :call CocLocations('ccls','$ccls/member',{'kind':3})<cr>
+nn <silent> gxf :call CocLocations('ccls','$ccls/member',{'kind':3})<cr>
 " nested classes / types in a namespace
-nn <silent> xs :call CocLocations('ccls','$ccls/member',{'kind':2})<cr>
+nn <silent> gxs :call CocLocations('ccls','$ccls/member',{'kind':2})<cr>
 
-nmap <silent> xt <Plug>(coc-type-definition)<cr>
-nn <silent> xv :call CocLocations('ccls','$ccls/vars')<cr>
-nn <silent> xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<cr>
+nmap <silent> gxt <Plug>(coc-type-definition)<cr>
+nn <silent> gxv :call CocLocations('ccls','$ccls/vars')<cr>
+nn <silent> gxV :call CocLocations('ccls','$ccls/vars',{'kind':1})<cr>
 
 nn <silent> gj :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
 nn <silent> gh :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
