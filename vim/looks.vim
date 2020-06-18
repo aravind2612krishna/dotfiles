@@ -48,7 +48,6 @@ elseif g:use_airline
 
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-    " Plug 'khatiba/vim-airline-themes'
     Plug 'enricobacis/vim-airline-clock'
     "{{{ air-line
     let g:airline_powerline_fonts = 1
