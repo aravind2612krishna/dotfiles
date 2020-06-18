@@ -181,7 +181,8 @@ endif
 
 " Font {{{
 if !has('nvim')
-    set guifont=Iosevka:h11:cANSI:qDRAFT
+    " set guifont=Hasplex_Nerd:h11:cANSI:qDRAFT
+    set guifont=Iosevka:h14:cANSI:qDRAFT
     " set guifont=Consolas:h10:cANSI:qDRAFT
     " set guifont=Powerline_Consolas:h11:cANSI:qDRAFT
     " set guifont=Fantasque_Sans_Mono:h08:cANSI:qDRAFT
@@ -191,7 +192,8 @@ if !has('nvim')
 else
     " set guifont=Consolas\ NF:h13:cANSI:qDRAFT
     " set guifont=Iosevka\ Light:h13
-    set guifont=Iosevka:h14
+    set guifont=Iosevka:h16
+    " set guifont=Hasplex:h14
     " set guifont=Cascadia\ Mono\ PL:h12
     " set guifont=Cascadia\ Code:h14
 endif

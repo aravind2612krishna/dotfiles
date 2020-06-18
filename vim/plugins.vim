@@ -5,25 +5,27 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 runtime looks.vim
 runtime file_search.vim
 runtime vcs.vim
+
 if has('nvim')
     " runtime nvim_lsp_plug.vim
     " runtime coc.vim
-    runtime vimlsp.vim
-    " runtime lsc.vim
+    " runtime vimlsp.vim
+    runtime lsc.vim
     " runtime lcn.vim
     " runtime lamp.vim
 else
-    " runtime vimlsp.vim
-    runtime lsc.vim
+    runtime vimlsp.vim
+    " runtime lsc.vim
     " runtime termdebug.vim
     Plug 'vim/killersheep'
     Plug 'puremourning/vimspector'
     Plug 'honza/vim-snippets'
     let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 endif
+
 Plug 'psf/black', { 'branch': 'stable','for': 'python' }
 " misc
-Plug 'wellle/context.vim', {'for': 'cpp'}
+" Plug 'wellle/context.vim', {'for': 'cpp'}
 " Plug 'Vimjas/vim-python-pep8-indent', {'for': 'python'}
 " Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'tpope/vim-commentary'
@@ -103,15 +105,19 @@ if s:IsPlugged('context.vim')
     let g:context_enabled = 0
     let g:context_add_mappings = 0
     let g:context_add_autocmds = 1
-    " let g:context_border_char = ' '
-    let g:context_border_char = '┈'
+    let g:context_border_char = ' '
+    " let g:context_border_char = '┈'
     let g:context_highlight_normal = 'Directory'
     let g:context_highlight_border = 'ErrorMsg'
-    " augroup context_plugin
-    "     autocmd!
-    "     " this one is which you're most likely to use?
-    "     autocmd CursorHold *.cxx,*.cpp,*.h ContextPeek
-    " augroup end
+    let g:context_max_height = 5
+    let g:context_max_per_indent = 1
+    let g:context_nvim_no_redraw = 0
+    " let g:context_presenter = "preview"
+    augroup context_plugin
+        autocmd!
+        " this one is which you're most likely to use?
+        autocmd CursorHold *.cxx,*.cpp,*.h ContextPeek
+    augroup end
 endif
 
 silent let g:echodoc#enable_at_startup = 1

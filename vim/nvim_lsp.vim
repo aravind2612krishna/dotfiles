@@ -4,8 +4,17 @@ let g:vista_executive_for = {
   \ 'cpp': 'nvim_lsp',
   \ 'python': 'nvim_lsp',
   \ }
-if v:false " executable('clangd')
-    lua require'nvim_lsp'.clangd.setup{ cmd = {"clangd", "--background-index", "-j=6", "--clang-tidy", "-clang-tidy-checks=-*,clang-analyzer*,bugprone*,performance*", "-pch-storage=memory", "--completion-style=detailed", "--completion-parse=auto", "--function-arg-placeholders"}, on_attach=require'completion'.on_attach }
+if executable('clangd')
+    " lua require'nvim_lsp'.clangd.setup{ cmd = {"clangd", "--background-index", "-j=6", "--clang-tidy", "-clang-tidy-checks=-*,clang-analyzer*,bugprone*,performance*", "-pch-storage=memory", "--completion-style=detailed", "--completion-parse=auto", "--function-arg-placeholders"}, on_attach=require'completion'.on_attach }
+lua << EOF
+    local nvim_lsp = require('nvim_lsp')
+
+    nvim_lsp.ccls.setup{
+        cmd = {"clangd", "--background-index", "-j=6", "--clang-tidy", "-clang-tidy-checks=-*,clang-analyzer*,bugprone*,performance*", "-pch-storage=memory", "--completion-style=detailed", "--completion-parse=auto", "--function-arg-placeholders"},
+        on_attach = require'OnAttach'.on_attach,
+    }
+
+EOF
 
 elseif executable('ccls')
     let s:ccls_cache_dir = g:storage_home . '/ccls-cache'
@@ -43,11 +52,11 @@ lua require'nvim_lsp'.pyls.setup{ on_attach = require'OnAttach'.on_attach }
 lua vim.lsp.set_log_level("debug")
 
 " Use completion-nvim in every buffer
-autocmd BufEnter * lua require'completion'.on_attach()
+" autocmd BufEnter * lua require'completion'.on_attach()
 
-" UltiSnips {{{
-let g:completion_enable_snippet = 'vim-vsnip'
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-" }}}
+" " UltiSnips {{{
+" let g:completion_enable_snippet = 'UltiSnips'
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" " }}}
