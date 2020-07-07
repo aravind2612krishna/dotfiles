@@ -135,8 +135,11 @@ nnoremap <C-s> :exe 'mks! ~\' . $P4CLIENT . '.vim'<CR>
 
 " Foldtext
 autocmd FileType cpp setlocal foldmarker=#if,#endif
-set fillchars+=fold:\ 
-" set fillchars+=fold:-
+highlight! link Folded FoldColumn
+set fillchars+=fold:┈
+" set fillchars+=fold:╍
+" set fillchars+=fold:─
+" set fillchars+=fold:\ 
 set foldmethod=marker
 function! NeatFold()
     " set the max number of nested fold levels + 1
@@ -152,7 +155,7 @@ function! NeatFold()
     let spac = repeat(' ', nnum - len(lnum))
 
     " let txta = v:foldstart . ' ⇋ ' . v:foldend
-    let txta = trim(getline(v:foldstart), &commentstring.&foldmarker)
+    let txta = '' . trim(getline(v:foldstart), &commentstring.&foldmarker) . ''
     let txtb = '' . spac . lnum . ' '
     let fill = repeat(char, winwidth(0) - fnum - len(txta . txtb) - &foldcolumn - (&number ? &numberwidth : 0))
 

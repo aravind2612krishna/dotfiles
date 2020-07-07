@@ -1,40 +1,37 @@
 " file finding
 " LeaderF/FZF {{{
 
-" FZF {{{
 " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
-" }}}
+" Border style (rounded / sharp / horizontal)
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Todo', 'border': 'sharp' } }
 
-let useLeaderF = v:false
-let useClap = v:false
+" Plug 'Yggdroot/LeaderF'
+" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+" Plug 'wincent/command-t'
+" Plug 'ctrlpvim/ctrlp.vim'
 
-if has('nvim') && has('win32')
-    let useLeaderF = v:false
-    let useClap = v:true
-endif
+nnoremap <leader>m :FZFMru<CR>
+nnoremap <leader>f :FZF<CR>
+nnoremap <leader>b :Buffers<CR>
 
-if useLeaderF
+if has_key(g:plugs, "LeaderF")
     Plug 'Yggdroot/LeaderF'
     let g:Lf_WindowPosition = 'popup'
     nnoremap <leader>m :LeaderfMru<CR>
     nnoremap <leader>f :LeaderfFile<CR>
     nnoremap <leader>b :LeaderfBuffer<CR>
-elseif useClap
+endif
+
+if has_key(g:plugs, "vim-clap")
     Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
     nnoremap <leader>m :Clap history<CR>
     nnoremap <leader>f :Clap files<CR>
     nnoremap <leader>b :Clap buffers<CR>
-else
-    nnoremap <leader>m :FZFMru<CR>
-    nnoremap <leader>f :FZF<CR>
-    nnoremap <leader>b :Buffers<CR>
-    " general
-    " let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
-    " let $FZF_DEFAULT_OPTS="--reverse " " top to bottom
 endif
+
 " }}}
 
 " in-file searching

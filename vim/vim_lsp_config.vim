@@ -1,45 +1,3 @@
-" lsp
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-if executable('pyls')
-    Plug 'ryanolsonx/vim-lsp-python'
-    " Plug 'vim-vdebug/vdebug'
-endif
-let g:vista_executive_for = {
-  \ 'cpp': 'vim_lsp',
-  \ 'python': 'vim_lsp',
-  \ }
-
-" snippets {{{ disabling due to performance
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'thomasfaingnaert/vim-lsp-snippets'
-" Plug 'thomasfaingnaert/vim-lsp-neosnippet'
-" imap <expr> <Tab> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-" smap <expr> <Tab> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-" }}}
-
-" " {{{ deoplete
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'Shougo/echodoc.vim'
-" set cmdheight=2
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#enable_smart_case = 1
-" let g:echodoc#enable_at_startup = 1
-" let g:echodoc#highlight_arguments="Visual"
-" Plug 'lighttiger2505/deoplete-vim-lsp'
-" " }}}
-
-" {{{ asyncomplete.vim
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" Plug 'prabirshrestha/asyncomplete-file.vim'
-" au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-"     \ 'name': 'file',
-"     \ 'whitelist': ['*'],
-"     \ 'priority': 10,
-"     \ 'completor': function('asyncomplete#sources#file#completor')
-"     \ }))
-Plug 'prabirshrestha/asyncomplete-buffer.vim'
 au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
     \ 'name': 'buffer',
     \ 'whitelist': ['*'],
@@ -49,33 +7,6 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
     \    'max_buffer_size': 5000000,
     \  },
     \ }))
-
-" }}}
-
-" " ultisnips {{{
-" Plug 'SirVer/ultisnips'
-" Plug 'thomasfaingnaert/vim-lsp-snippets'
-" Plug 'thomasfaingnaert/vim-lsp-ultisnips'
-
-" let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger="<tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-" }}}
-
-"{{{ vim-vsnip
-
- Plug 'hrsh7th/vim-vsnip'
- Plug 'hrsh7th/vim-vsnip-integ'
- imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand)'         : '<C-j>'
- imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
- smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
- imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
- smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
- imap <expr> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
- smap <expr> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-
-" }}}
 
 " {{{ lsp ccls
 let s:ccls_cache_dir = expand(g:storage_home . '/ccls-cache')

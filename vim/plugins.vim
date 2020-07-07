@@ -25,7 +25,7 @@ endif
 
 Plug 'psf/black', { 'branch': 'stable','for': 'python' }
 " misc
-" Plug 'wellle/context.vim', {'for': 'cpp'}
+Plug 'wellle/context.vim', {'for': 'cpp'}
 " Plug 'Vimjas/vim-python-pep8-indent', {'for': 'python'}
 " Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'tpope/vim-commentary'
@@ -49,17 +49,23 @@ function! s:IsPlugged(plugin) abort
     return has_key(g:plugs, a:plugin)
 endfunction
 
+set background=dark
+
 " colorscheme ayu
-let ayucolor="light"  " for light version of theme
+" let ayucolor="light"  " for light version of theme
 " let ayucolor="mirage" " for mirage version of theme
 " let ayucolor="dark"   " for dark version of theme
+
 colorscheme codedark
+
 " colorscheme gruvbox
-" let g:one_allow_italics = 1
-" AirlineTheme transparent
-" set background=light
-" colorscheme solarized8_high
-" colorscheme gruvbox
+
+" colorscheme solarized8_flat
+" colorscheme flattened_light
+
+" let g:monochrome_italic_comments = 1
+" colorscheme monochrome
+
 " colorscheme space-vim-dark
 
 let g:black_linelength=79
@@ -112,12 +118,13 @@ if s:IsPlugged('context.vim')
     let g:context_max_height = 5
     let g:context_max_per_indent = 1
     let g:context_nvim_no_redraw = 0
+    nnoremap <C-G> <cmd>ContextPeek<CR>
     " let g:context_presenter = "preview"
-    augroup context_plugin
-        autocmd!
-        " this one is which you're most likely to use?
-        autocmd CursorHold *.cxx,*.cpp,*.h ContextPeek
-    augroup end
+    " augroup context_plugin
+    "     autocmd!
+    "     " this one is which you're most likely to use?
+    "     autocmd CursorHold *.cxx,*.cpp,*.h ContextPeek
+    " augroup end
 endif
 
 silent let g:echodoc#enable_at_startup = 1

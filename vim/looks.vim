@@ -4,6 +4,7 @@ if exists('g:fvim_loaded')
     Plug 'ryanoasis/vim-devicons'
     Plug 'scrooloose/nerdtree'
 endif
+Plug 'DanilaMihailov/beacon.nvim'
 
 let g:use_lightline = v:true
 let g:use_airline = v:false
@@ -31,6 +32,9 @@ if g:use_lightline
                 \ },
                 \ 'colorscheme': 'selenized_black'
                 \ }
+                " \ 'colorscheme': 'selenized_black'
+                " \ 'colorscheme': 'solarized'
+                " \ 'colorscheme': 'gruvbox'
 
     command! LightlineReload call LightlineReload()
 
@@ -70,10 +74,10 @@ elseif g:use_airline
     " let g:airline_right_sep = '|'
     " let g:airline_right_alt_sep = '|'
 
-    let g:airline_left_sep = ''
-    let g:airline_left_alt_sep = ''
-    let g:airline_right_sep = ''
-    let g:airline_right_alt_sep = ''
+    " let g:airline_left_sep = ''
+    " let g:airline_left_alt_sep = ''
+    " let g:airline_right_sep = ''
+    " let g:airline_right_alt_sep = ''
 
     " let g:airline_left_sep = ''
     " let g:airline_left_alt_sep = ''
@@ -161,7 +165,7 @@ endif
 
 "{{{ list chars
 if v:true  " has('nvim')
-    set listchars=tab:▸\ ,extends:▸,precedes:◂,nbsp:●,eol:→
+    set listchars=tab:▸\ ,extends:▸,precedes:◂,nbsp:●,eol:↦
 else
     set listchars=tab:►\ ,extends:╍,precedes:◤,nbsp:●,eol:◣
 endif
@@ -190,8 +194,9 @@ if !has('nvim')
     " set guifont=Iosevka:h09:cANSI:qDRAFT
 else
     " set guifont=Consolas\ NF:h13:cANSI:qDRAFT
-    " set guifont=Iosevka\ Light:h13
-    set guifont=Iosevka:h16
+    set guifont=Iosevka:h17
+    " set guifont=Iosevka\ Slab:h18
+    " set guifont=Iosevka\ SS08:h18
     " set guifont=Hasplex:h14
     " set guifont=Cascadia\ Mono\ PL:h12
     " set guifont=Cascadia\ Code:h14
@@ -200,7 +205,7 @@ endif
 " }}}
 
 " Plug 'jackguo380/vim-lsp-cxx-highlight'
-Plug 'bfrg/vim-cpp-modern'
+" Plug 'bfrg/vim-cpp-modern'
 " Plug 'octol/vim-cpp-enhanced-highlight'
 
  " Colorschemes

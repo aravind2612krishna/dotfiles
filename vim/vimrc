@@ -5,7 +5,8 @@ endif
 let curscrpath = expand('<sfile>:p:h')
 runtime basic.vim
 if !exists('g:vscode')
-    runtime plugins.vim
+    runtime plug_config.vim
+    " runtime plugins.vim
     " runtime packager.vim
 endif
 runtime misc.vim

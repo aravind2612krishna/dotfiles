@@ -4,7 +4,7 @@ let g:mapleader = ','          " Leader key
 set nocompatible
 set hidden                     " Abandoned buffer hide
 set noshowmode                 " Status related
-set history=500                " depth of command history
+set noshowcmd
 set noautoread                 " when file is changed outside vim, auto read?
 set laststatus=2
 filetype plugin on
@@ -33,8 +33,6 @@ set ai                         " Auto indent
 set si                         " Smart indent
 set nowrap                     " Wrap lines
 set fdo-=search                " Open folds for search
-set noshowmode
-set showcmd
 
 " Gui related options 
 set guioptions+=c  "use console dialogs
@@ -91,16 +89,13 @@ set colorcolumn=100
 syntax on
 
 " vim autocomplete setting
-" set complete-=i " ignore headers
-set complete-=t " ignore tags
-" set complete-=b " ignore other loaded buffers
-" set complete-=u " ignore other unloaded buffers
+set complete=.,w
 
 " Numbering related
 set number
+set norelativenumber
 
 " behaviour of makesession command
-" set sessionoptions=buffers,curdir,folds,resize,winpos,winsize
 set sessionoptions=buffers,curdir,tabpages
 
 if exists('g:fvim_loaded') 
