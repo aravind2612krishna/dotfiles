@@ -203,3 +203,13 @@ function! ProfileEnd()
     exec('qall')
 endfunction
 
+function! NeovideToggleFullScreen()
+    if exists('g:neovide')
+        if exists('g:neovide_fullscreen') && g:neovide_fullscreen
+            let g:neovide_fullscreen = v:false
+        else
+            let g:neovide_fullscreen = v:true
+        endif
+    endif
+endfunction
+nnoremap <M-Enter> <cmd>call NeovideToggleFullScreen()<CR>

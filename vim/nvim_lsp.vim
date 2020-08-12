@@ -19,7 +19,7 @@ if has_key(g:plugs, 'completion-nvim')
 endif
 
 " c++
-if v:false " executable('clangd')
+if executable('clangd')
     lua require'lsp_setup'.setup_clangd()
 elseif executable('ccls')
     lua require'lsp_setup'.setup_ccls()

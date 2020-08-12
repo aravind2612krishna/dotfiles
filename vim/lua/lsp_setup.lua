@@ -1,6 +1,8 @@
 local nvim_lsp = require('nvim_lsp')
 local path = require('path')
 local api = vim.api
+local lsp_status = require('lsp-status')
+lsp_status.register_progress()
 
 local M = {}
 
@@ -12,6 +14,7 @@ function M.setup_clangd()
             "-pch-storage=memory", "--completion-style=detailed",
             "--completion-parse=auto", "--function-arg-placeholders"
         },
+        init_options = { clangdFileStatus = true },
         on_attach = require'OnAttach'.on_attach,
     }
 end

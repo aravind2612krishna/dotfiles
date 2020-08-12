@@ -12,15 +12,18 @@ let g:lsc_auto_map = v:true
 let g:lsc_reference_highlights = v:true
 let s:ccls_cache_dir = g:storage_home . '/ccls-cache'
 
+" snippets
+let g:lsc_enable_snippet_support = v:true
+
 if has_key(g:plugs, 'vim-autoformat')
     xnoremap ,gq :Autoformat<CR>
 endif
 
 " \                                                     'filterAndSort': v:false,
 " \                                                     'detailedLabel': v:true}
-let g:lsc_server_commands = {
+let s:ccls_lsc_server_commands = {
             \ 'cpp': {
-            \    'command': 'ccls --log-file=ccls.log',
+            \    'command': 'ccls -v=1 --log-file=ccls.log',
             \    'suppress_stderr': v:true,
             \    'message_hooks': {
             \        'initialize': {
@@ -49,6 +52,20 @@ let g:lsc_server_commands = {
             \ 'python' : 'pyls',
             \}
 
+let s:clangd_lsc_server_commands = {
+            \ 'cpp': {
+            \    'command': 'clangd --clang-tidy --completion-style=detailed -clang-tidy-checks=-*,clang-analyzer*,bugprone*',
+            \    'suppress_stderr': v:true,
+            \  },
+            \ 'c': {
+            \    'command': 'clangd --clang-tidy --completion-style=detailed -clang-tidy-checks=-*,clang-analyzer*,bugprone*',
+            \    'suppress_stderr': v:true,
+            \ },
+            \ 'python' : 'pyls',
+            \}
+
+let g:lsc_server_commands = s:ccls_lsc_server_commands
+
 let g:lsc_auto_map = {
             \ 'defaults': v:true,
             \ 'NextReference': ']r', 
@@ -56,7 +73,7 @@ let g:lsc_auto_map = {
             \ 'Completion': 'completefunc'
             \ }
 
-let g:lsc_trace_level = 'off'
+let g:lsc_trace_level = 'error'
 highlight link lscCurrentParameter Todo
 highlight link lscReference PmenuSel
 highlight link lscDiagnosticError SpellBad

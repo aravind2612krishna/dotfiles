@@ -8,5 +8,6 @@ if !exists('g:vscode')
     runtime plug_config.vim
     " runtime plugins.vim
     " runtime packager.vim
+    " runtime packager_config.vim
 endif
 runtime misc.vim

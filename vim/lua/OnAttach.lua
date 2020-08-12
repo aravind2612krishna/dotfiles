@@ -7,6 +7,9 @@ M.on_attach = function(_, bufnr)
     if vim.g['plugs']['diagnostic-nvim'] then
         require'diagnostic'.on_attach()
     end
+    -- if vim.g['plugs']['lsp-status.nvim'] then
+    --     require'diagnostic'.on_attach()
+    -- end
 
     -- Mappings.
     local opts = { noremap=true, silent=true }

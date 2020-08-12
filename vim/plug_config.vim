@@ -1,16 +1,22 @@
 let g:plug_log_on = 1
-call plug#begin(g:storage_home . '/.vim/plugged')
+call plug#begin(g:storage_home . '/.vim/plugged/pack/packager/opt')
+
+" Check if a plugin is plugged in plug section or not
+function! s:IsPlugged(plugin) abort
+    return has_key(g:plugs, a:plugin)
+endfunction
+
 
 " LSP
 if has('nvim')
 
     " Plug 'neovim/nvim-lsp' " {{{ nvim_lsp
     " Plug 'nvim-lua/diagnostic-nvim'
+    " Plug 'nvim-lua/lsp-status.nvim'
     " Plug 'nvim-lua/completion-nvim' " }}}
 
     Plug 'natebosch/vim-lsc', { 'for' : ['cpp', 'python'] } " {{{ lsc
-    Plug 'Chiel92/vim-autoformat'
-    Plug 'kkoenig/wimproved.vim' " }}}
+    Plug 'Chiel92/vim-autoformat' " }}}
 
     " Plug 'neoclide/coc.nvim', {'branch': 'release'} " {{{ coc
     " " Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
@@ -31,6 +37,9 @@ if has('nvim')
     " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     " Plug 'Shougo/echodoc.vim' " }}}
 
+    " Plug 'nvim-treesitter/nvim-treesitter' " Tree sitter
+    " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
+
 else
 
     Plug 'natebosch/vim-lsc', { 'for' : ['cpp', 'python'] } " {{{ lsc
@@ -40,10 +49,13 @@ else
 endif
 
 if has('nvim')
-    Plug 'hrsh7th/vim-vsnip'
-    Plug 'hrsh7th/vim-vsnip-integ'
+    if !s:IsPlugged('coc.nvim')
+        Plug 'hrsh7th/vim-vsnip'
+        Plug 'hrsh7th/vim-vsnip-integ'
+    endif
 else
     Plug 'puremourning/vimspector'
+    Plug 'kkoenig/wimproved.vim' 
 endif
 
 Plug 'liuchengxu/vista.vim', { 'for' : ['cpp', 'python'] }
@@ -51,13 +63,18 @@ Plug 'liuchengxu/vista.vim', { 'for' : ['cpp', 'python'] }
 " Misc
 Plug 'tpope/vim-commentary'
 Plug 'jceb/vim-orgmode'
+Plug 'vimwiki/vimwiki'
 Plug 'wellle/context.vim', {'for': 'cpp'}
 Plug 'psf/black', { 'branch': 'stable','for': 'python' }
 Plug 'skywind3000/asyncrun.vim'
 
 " Looks
-if has('nvim')
-    Plug 'DanilaMihailov/beacon.nvim'
+if exists('g:neovide')
+    let g:neovide_cursor_vfx_mode = "wireframe"
+else
+    if has('nvim')
+        Plug 'DanilaMihailov/beacon.nvim'
+    endif
 endif
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ryanoasis/vim-devicons'
@@ -69,16 +86,14 @@ Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
+" Plug 'kassio/neoterm'
 
 " VCS
 Plug 'mhinz/vim-signify', { 'for' : ['cpp', 'python'] }
 
 call plug#end()
 
-" Check if a plugin is plugged in plug section or not
-function! s:IsPlugged(plugin) abort
-    return has_key(g:plugs, a:plugin)
-endfunction
+" runtime statusline_mak.vim
 
 " {{{ nvim_lsp
 if s:IsPlugged('nvim-lsp')
@@ -94,7 +109,7 @@ endif
 
 " {{{ coc
 if s:IsPlugged('coc')
-    runtime coc_config.vim
+    runtime coc-config.vim
 endif
 " }}}
 
@@ -109,6 +124,10 @@ if s:IsPlugged('LanguageClient-neovim')
     runtime lcn_config.vim
 endif
 " }}}
+
+if s:IsPlugged('nvim-treesitter')
+    " lua require'treesitter_config'.config_treesitter()
+endif
 
 " {{{ snippets
 if s:IsPlugged('vim-vsnip')
@@ -159,7 +178,7 @@ if s:IsPlugged('context.vim')
     " let g:context_max_height = 5
     let g:context_max_per_indent = 1
     let g:context_nvim_no_redraw = 0
-    nnoremap <C-G> <cmd>ContextPeek<CR>
+    nnoremap <C-[> <cmd>ContextPeek<CR>
     " let g:context_presenter = "preview"
     " augroup context_plugin
     "     autocmd!
@@ -169,13 +188,78 @@ if s:IsPlugged('context.vim')
 endif
 " }}}
 
-" {{{ FZF
-if s:IsPlugged('fzf.vim')
-    " Border style (rounded / sharp / horizontal)
-    let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Todo', 'border': 'sharp' } }
+" {{{ FZF/FileSearch
+if s:IsPlugged('ctrlp.vim')
+    let g:ctrlp_map = '<leader>f'
+    let g:ctrlp_working_path_mode = '0'
+    set wildignore+=.clangd\\*,*.o,*.lib,*.dll,*.exe
+    let g:ctrlp_user_command = 'fd --type f --color=never "" %s'
+    let g:ctrlp_use_caching = 1
+
+    if s:IsPlugged('fruzzy')
+        " optional - but recommended - see below
+        let g:fruzzy#usenative = 1
+        " tell CtrlP to use this matcher
+        let g:ctrlp_match_func = {'match': 'fruzzy#ctrlp#matcher'}
+        let g:ctrlp_match_current_file = 1 " to include current file in matches
+    endif
+
+elseif s:IsPlugged('vim-clap')
+    nnoremap <leader>m :Clap history<CR>
+    nnoremap <leader>f :Clap files<CR>
+    nnoremap <leader>b :Clap buffers<CR>
+elseif s:IsPlugged('LeaderF')
+    let g:Lf_WindowPosition = 'popup'
+    nnoremap <leader>m :LeaderfMru<CR>
+    nnoremap <leader>f :LeaderfFile<CR>
+    nnoremap <leader>b :LeaderfBuffer<CR>
+elseif s:IsPlugged('vim-ctrlspace')
+    if has('win32')
+        let s:vimfiles = g:storage_home . '/.vim/plugged/pack/packager/opt/vim-ctrlspace'
+        let s:os   = 'windows'
+    else
+        let s:vimfiles = '~/.vim'
+        if has('mac') || has('gui_macvim')
+            let s:os = 'darwin'
+        else
+            " elseif has('gui_gtk2') || has('gui_gtk3')
+            let s:os = 'linux'
+        endif
+    endif
+
+    let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+    let g:CtrlSpaceFileEngine = s:vimfiles . '/bin/file_engine_' . s:os . '_amd64.exe'
+    let g:CtrlSpaceSearchTiming = 500
+
+    if executable("fd")
+        let g:CtrlSpaceGlobCommand = 'fd --type file'
+    endif
+elseif s:IsPlugged('fzf.vim')
     nnoremap <leader>m :FZFMru<CR>
     nnoremap <leader>f :FZF<CR>
     nnoremap <leader>b :Buffers<CR>
+endif
+
+if s:IsPlugged('fzf.vim')
+    " Border style (rounded / sharp / horizontal)
+    " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Todo', 'border': 'sharp' } }
+
+    " An action can be a reference to a function that processes selected lines
+    function! s:build_quickfix_list(lines)
+        call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+        copen
+        cc
+    endfunction
+
+    let g:fzf_action = {
+                \ 'ctrl-q': function('s:build_quickfix_list'),
+                \ 'ctrl-t': 'tab split',
+                \ 'ctrl-x': 'split',
+                \ 'ctrl-v': 'vsplit' }
+
+    " Default fzf layout
+    " - down / up / left / right
+    " let g:fzf_layout = { 'down': '40%' }
 endif
 " }}}
 
@@ -217,7 +301,9 @@ endif
 set listchars=tab:▸\ ,extends:▸,precedes:◂,nbsp:●,eol:↦
 set list
 set fillchars+=vert:│
-colorscheme codedark
+if s:IsPlugged('vim-code-dark')
+    colorscheme codedark
+endif
 if !has('nvim')
     set guifont=Iosevka:h14:cANSI:qDRAFT
 else
