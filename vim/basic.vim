@@ -56,6 +56,9 @@ autocmd! FileType c setlocal commentstring=//%s
 
 " remap jj to escape
 inoremap jj <Esc>
+if has('nvim')
+    tnoremap jj 
+endif
 
 " Pane switching
 map <C-j> <C-W>j
@@ -64,10 +67,10 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Tab navigation
-map <leader>l :tabnext<cr>
-map <leader>k :tabprevious<cr>
-map <S-H> :bprev<cr>
-map <S-L> :bnext<cr>
+map <S-H> :tabprev<cr>
+map <S-L> :tabnext<cr>
+" map <S-H> :bprev<cr>
+" map <S-L> :bnext<cr>
 
 " Return to last edit position when opening files
 au BufReadPost * if line(" '\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif

@@ -27,19 +27,13 @@ function M.config_treesitter()
             highlight_current_scope = {
                 enable = true
             },
-            smart_rename = {
-                enable = false -- handled by lsp
-                -- keymaps = {
-                --   smart_rename = "grr"          -- mapping to rename reference under cursor
-                -- }
-            },
             navigation = {
-                enable = false -- Handled by lsp
-                -- keymaps = {
-                --   goto_definition = "gnd",      -- mapping to go to definition of symbol under cursor
-                --   list_definitions = "gnD"      -- mapping to list all definitions in current file
-                -- }
-            }
+                enable = true,
+                keymaps = {
+                    goto_next_usage = "<leader-j>",
+                    goto_previous_usage = "<leader-k>",
+                },
+            },
         },
         textobjects = { -- syntax-aware textobjects
             enable = true,

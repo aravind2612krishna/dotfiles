@@ -24,14 +24,15 @@ function M.setup_ccls()
     nvim_lsp.ccls.setup{
         cmd = {"ccls", "--log-file=ccls.log"},
         init_options = {
-            cache = { directory="C:\\Users\\aravk\\ccls-cache" },
+            cache = { directory="/home/aravind/ccls-cache" },
             completion = {
                 placeholder = true,
                 detailedLabel = false,
                 caseSensitivity = 0,
                 duplicateOptional = true 
             },
-            index = { threads = 6 } 
+            index = { threads = 6 },
+            highlight = { lsRanges = true }
         },
         on_attach = require'OnAttach'.on_attach,
     }

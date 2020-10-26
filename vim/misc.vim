@@ -53,8 +53,8 @@ endfunction
 " DEBUG_MIDMESH
 " let @d = 'DO#if DEBUG_MIDMESHo#endifP'
 let @d = 'C#if DEBUG_MIDMESHo#endifP'
-" Inserts a part variable 
-let @p = '[[ohwDGFIPart *pPart = p_pMidMesher->GetPart();'
+" Inserts a # comment box
+let @x = 'I// A //yyPVr/jpVr/'
 " Go to one of the places where current function is called
 let @k = '[[?(b*``' 
 " size_t loop
@@ -177,20 +177,22 @@ endif
 cabbrev vsedit :!start /min devenv /edit "%"
 
 " Copy selection as html
-function! CopyFormatted(line1, line2)
-    " let g:html_prevent_copy="n"
+" let g:html_dynamic_folds=1
+" let g:html_prevent_copy = "n"
+function! Fmtcp(line1, line2)
+    let oldclipopt = &clipboard
+    set clipboard=
     execute a:line1 . "," . a:line2 . "TOhtml"
     execute "g:<body"
-    execute "normal! oFile : "
-    execute "normal! \"#p"
-    execute "normal! a<br>"
-    " execute "sav $(TEMP)/temp.html"
-    %yank *
-    !start /min powershell -noprofile "gcb | scb -as"
+    execute "normal oFile : "
+    execute "normal \"#p"
+    execute "normal a<br>"
+    execute "silent %write !xclip -i -t 'text/html' -selection clipboard"
     bwipeout!
+    let &clipboard=oldclipopt
 endfunction
 
-command! -range=% HtmlClip silent call CopyFormatted(<line1>,<line2>)
+command! -range=% HtmlClip silent call Fmtcp(<line1>,<line2>)
 
 function! ProfileStart()
     exec('profile start profile.log')

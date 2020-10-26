@@ -3,6 +3,12 @@ M.on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     if vim.g['plugs']['completion-nvim'] then
         require'completion'.on_attach()
+        completion_chain_complete_list = {
+            { complete_items = { 'lsp' } },
+            { complete_items = { 'buffers' } },
+            { mode = { '<c-p>' } },
+            { mode = { '<c-n>' } }
+        }
     end
     if vim.g['plugs']['diagnostic-nvim'] then
         require'diagnostic'.on_attach()

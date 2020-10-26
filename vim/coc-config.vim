@@ -149,15 +149,15 @@ let g:rooter_patterns = ['compile_commands.json', '.git']
 
 nnoremap <M-n> :CocCommand document.jumpToNextSymbol<CR>
 
-nnoremap <silent><nowait> <space>d  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <leader>gd  :<C-u>CocList diagnostics<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> gs  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+nnoremap <silent><nowait> <leader>gj  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+nnoremap <silent><nowait> <leader>gk  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent><nowait> <leader>gp  :<C-u>CocListResume<CR>
 
 " bases
 nn <silent> <leader>xb :call CocLocations('ccls','$ccls/inheritance')<cr>
@@ -177,5 +177,3 @@ nn <silent> gj :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
 nn <silent> gh :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
 nn <silent> gl :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
 nn <silent> gk :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
-
-nn <Space><Space> <Space>

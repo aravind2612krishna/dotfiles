@@ -13,16 +13,18 @@ if has('nvim')
     " Plug 'neovim/nvim-lsp' " {{{ nvim_lsp
     " Plug 'nvim-lua/diagnostic-nvim'
     " Plug 'nvim-lua/lsp-status.nvim'
-    " Plug 'nvim-lua/completion-nvim' " }}}
+    " Plug 'nvim-lua/completion-nvim'
+    " Plug 'steelsojka/completion-buffers' " }}}
 
-    Plug 'natebosch/vim-lsc', { 'for' : ['cpp', 'python'] } " {{{ lsc
-    Plug 'Chiel92/vim-autoformat' " }}}
+    " Plug 'natebosch/vim-lsc', { 'for' : ['cpp', 'python'] } " {{{ lsc
+    " Plug 'Chiel92/vim-autoformat' " }}}
 
-    " Plug 'neoclide/coc.nvim', {'branch': 'release'} " {{{ coc
-    " " Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-    " Plug 'honza/vim-snippets'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'} " {{{ coc
+    " Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+    Plug 'honza/vim-snippets'
     " Plug 'neoclide/coc-highlight'
-    " Plug 'm-pilia/vim-ccls' " }}}
+    Plug 'clangd/coc-clangd'
+    Plug 'm-pilia/vim-ccls' " }}}
 
     " Plug 'prabirshrestha/vim-lsp' " {{{ vim-lsp
     " Plug 'prabirshrestha/asyncomplete.vim'
@@ -37,8 +39,14 @@ if has('nvim')
     " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     " Plug 'Shougo/echodoc.vim' " }}}
 
-    " Plug 'nvim-treesitter/nvim-treesitter' " Tree sitter
+    Plug 'nvim-treesitter/nvim-treesitter' " Tree sitter
+    Plug 'romgrk/nvim-treesitter-context'
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    Plug 'nvim-treesitter/nvim-treesitter-refactor'
     " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
+
+    Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
+    Plug 'JessicaKMcIntosh/Nagelfar-Vim', { 'for' : ['tcl'] }
 
 else
 
@@ -67,6 +75,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'wellle/context.vim', {'for': 'cpp'}
 Plug 'psf/black', { 'branch': 'stable','for': 'python' }
 Plug 'skywind3000/asyncrun.vim'
+Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 
 " Looks
 if exists('g:neovide')
@@ -76,20 +85,23 @@ else
         Plug 'DanilaMihailov/beacon.nvim'
     endif
 endif
-Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Yggdroot/indentLine'
 Plug 'ryanoasis/vim-devicons'
 Plug 'octol/vim-cpp-enhanced-highlight'
+" Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'tomasiser/vim-code-dark'
 Plug 'itchyny/lightline.vim'
+" Plug 'kkoomen/vim-doge', {'for': 'cpp', 'do': { -> doge#install() } }
 
 " File search, fzf
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
 " Plug 'kassio/neoterm'
 
 " VCS
-Plug 'mhinz/vim-signify', { 'for' : ['cpp', 'python'] }
+Plug 'mhinz/vim-signify', { 'for' : ['cpp', 'python', 'tcl'] }
 
 call plug#end()
 
@@ -108,7 +120,7 @@ endif
 " }}}
 
 " {{{ coc
-if s:IsPlugged('coc')
+if s:IsPlugged('coc.nvim')
     runtime coc-config.vim
 endif
 " }}}
@@ -126,7 +138,15 @@ endif
 " }}}
 
 if s:IsPlugged('nvim-treesitter')
-    " lua require'treesitter_config'.config_treesitter()
+    lua require'treesitter_config'.config_treesitter()
+    set foldmethod=expr
+    set foldexpr=nvim_treesitter#foldexpr()
+endif
+
+if s:IsPlugged('Nagelfar-Vim')
+    let g:nagelfar_tclsh='/home/aravind/repos/HmMshgFbNxtThpty_AK_1204/tcl/tcl8.5.9/linux64/bin/tclsh8.5'
+    let g:nagelfar_file='~/Downloads/nagelfar131/nagelfar.tcl'
+    let g:nagelfar_disable_mappings=1
 endif
 
 " {{{ snippets
@@ -331,3 +351,4 @@ endif
 let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 
 " }}}
+" 
