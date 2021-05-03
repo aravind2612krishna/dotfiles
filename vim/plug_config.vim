@@ -1,5 +1,6 @@
 let g:plug_log_on = 1
-call plug#begin(g:storage_home . '/.vim/plugged/pack/packager/opt')
+let g:plug_opt_path = g:storage_home . '/.vim/plugged/pack/packager/opt'
+call plug#begin(g:plug_opt_path)
 
 " Check if a plugin is plugged in plug section or not
 function! s:IsPlugged(plugin) abort
@@ -11,20 +12,28 @@ endfunction
 if has('nvim')
 
     " Plug 'neovim/nvim-lsp' " {{{ nvim_lsp
-    " Plug 'nvim-lua/diagnostic-nvim'
-    " Plug 'nvim-lua/lsp-status.nvim'
-    " Plug 'nvim-lua/completion-nvim'
-    " Plug 'steelsojka/completion-buffers' " }}}
+    " Plug 'neovim/nvim-lspconfig'
+    " Plug 'hrsh7th/nvim-compe'
+    " " Plug 'ojroques/nvim-lspfuzzy'
+    " " Plug 'glepnir/lspsaga.nvim'
+    " Plug 'kyazdani42/nvim-web-devicons'
+    " Plug 'simrat39/symbols-outline.nvim'
+    " Plug 'folke/lsp-trouble.nvim'
+    " Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
+    " " Plug 'ray-x/navigator.lua'
+
+    " " Plug 'nvim-lua/diagnostic-nvim'
+    " " Plug 'nvim-lua/lsp-status.nvim'
+    " " Plug 'nvim-lua/completion-nvim'
+    " " Plug 'steelsojka/completion-buffers' " }}}
 
     " Plug 'natebosch/vim-lsc', { 'for' : ['cpp', 'python'] } " {{{ lsc
     " Plug 'Chiel92/vim-autoformat' " }}}
 
     Plug 'neoclide/coc.nvim', {'branch': 'release'} " {{{ coc
-    " Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
     Plug 'honza/vim-snippets'
-    " Plug 'neoclide/coc-highlight'
+    Plug 'neoclide/coc-snippets'
     Plug 'clangd/coc-clangd'
-    Plug 'm-pilia/vim-ccls' " }}}
 
     " Plug 'prabirshrestha/vim-lsp' " {{{ vim-lsp
     " Plug 'prabirshrestha/asyncomplete.vim'
@@ -39,14 +48,27 @@ if has('nvim')
     " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     " Plug 'Shougo/echodoc.vim' " }}}
 
+    " Treesitter colorscheme
+    " Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
+    " Plug 'tjdevries/colorbuddy.vim'
+    " Plug 'Th3Whit3Wolf/onebuddy'
+    " Plug 'Th3Whit3Wolf/spacebuddy'
+    Plug 'norcalli/nvim-colorizer.lua'
+
     Plug 'nvim-treesitter/nvim-treesitter' " Tree sitter
     Plug 'romgrk/nvim-treesitter-context'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'nvim-treesitter/nvim-treesitter-refactor'
+
+    " Plug 'nvim-treesitter/playground'
     " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 
-    Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
+    " Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
     Plug 'JessicaKMcIntosh/Nagelfar-Vim', { 'for' : ['tcl'] }
+
+    packadd termdebug
+
+    " Plug 'puremourning/vimspector'
 
 else
 
@@ -72,17 +94,19 @@ Plug 'liuchengxu/vista.vim', { 'for' : ['cpp', 'python'] }
 Plug 'tpope/vim-commentary'
 Plug 'jceb/vim-orgmode'
 Plug 'vimwiki/vimwiki'
-Plug 'wellle/context.vim', {'for': 'cpp'}
+Plug 'wellle/context.vim'
 Plug 'psf/black', { 'branch': 'stable','for': 'python' }
 Plug 'skywind3000/asyncrun.vim'
-Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
+" Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 
 " Looks
 if exists('g:neovide')
     let g:neovide_cursor_vfx_mode = "wireframe"
 else
     if has('nvim')
-        Plug 'DanilaMihailov/beacon.nvim'
+        " Plug 'DanilaMihailov/beacon.nvim'
+        " Plug 'TaDaa/vimade'
+        " Plug 'dstein64/nvim-scrollview'
     endif
 endif
 " Plug 'nathanaelkane/vim-indent-guides'
@@ -90,8 +114,29 @@ Plug 'Yggdroot/indentLine'
 Plug 'ryanoasis/vim-devicons'
 Plug 'octol/vim-cpp-enhanced-highlight'
 " Plug 'jackguo380/vim-lsp-cxx-highlight'
+
 Plug 'tomasiser/vim-code-dark'
-Plug 'itchyny/lightline.vim'
+" Plug 'wadackel/vim-dogrun'
+" Plug 'rakr/vim-one'
+" Plug 'altercation/vim-colors-solarized'
+Plug 'flazz/vim-colorschemes'
+
+" Plug 'beauwilliams/statusline.lua'
+
+" Plug 'datwaft/bubbly.nvim'
+
+if v:true " !exists('g:goneovim')
+    " Plug 'vim-airline/vim-airline'
+    " Plug 'vim-airline/vim-airline-themes'
+endif
+
+" Plug 'itchyny/lightline.vim'
+" Plug 'josa42/vim-lightline-coc'
+
+Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+
+" Plug 'adelarsq/neoline.vim'
+
 " Plug 'kkoomen/vim-doge', {'for': 'cpp', 'do': { -> doge#install() } }
 
 " File search, fzf
@@ -101,7 +146,8 @@ Plug 'pbogut/fzf-mru.vim'
 " Plug 'kassio/neoterm'
 
 " VCS
-Plug 'mhinz/vim-signify', { 'for' : ['cpp', 'python', 'tcl'] }
+" Plug 'mhinz/vim-signify', { 'for' : ['cpp', 'python', 'tcl'] }
+Plug 'mhinz/vim-signify'
 
 call plug#end()
 
@@ -111,6 +157,7 @@ call plug#end()
 if s:IsPlugged('nvim-lsp')
     runtime nvim_lsp.vim
 endif
+
 " }}}
 
 " {{{ vim_lsc
@@ -137,20 +184,36 @@ if s:IsPlugged('LanguageClient-neovim')
 endif
 " }}}
 
-if s:IsPlugged('nvim-treesitter')
+if s:IsPlugged('nvim-treesitter') "{{{
     lua require'treesitter_config'.config_treesitter()
-    set foldmethod=expr
-    set foldexpr=nvim_treesitter#foldexpr()
-endif
+endif "}}}
 
-if s:IsPlugged('Nagelfar-Vim')
+if s:IsPlugged('Nagelfar-Vim') " {{{
     let g:nagelfar_tclsh='/home/aravind/repos/HmMshgFbNxtThpty_AK_1204/tcl/tcl8.5.9/linux64/bin/tclsh8.5'
     let g:nagelfar_file='~/Downloads/nagelfar131/nagelfar.tcl'
     let g:nagelfar_disable_mappings=1
-endif
+endif " }}}
+
+if s:IsPlugged('nvim-gdb') " {{{
+    let g:nvimgdb_config_override = {
+                \ 'key_frameup': '<PageUp>',
+                \ 'key_framedown': '<PageDown>',
+                \ }
+
+    function! GdbJumpBack()
+        let l:gdb_cmd = "tbreak " . line(".")
+        echo GdbCustomCommand(l:gdb_cmd)
+        let l:gdb_cmd = "jump " . line(".")
+        echo GdbCustomCommand(l:gdb_cmd)
+    endfunction
+    " cabbrev GdbJumpBack :call GdbJumpBack()
+    nnoremap <S-F10> :call GdbJumpBack()<CR>
+    nnoremap <M-C-P> :call GdbCustomCommand("pattach hw")<CR>
+
+endif " }}}
 
 " {{{ snippets
-if s:IsPlugged('vim-vsnip')
+if v:false " s:IsPlugged('vim-vsnip')
     imap <expr> <silent> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand)'         : '<C-l>'
     imap <expr> <silent> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
     smap <expr> <silent> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
@@ -191,14 +254,16 @@ if s:IsPlugged('context.vim')
     let g:context_enabled = 0
     let g:context_add_mappings = 0
     let g:context_add_autocmds = 1
-    let g:context_border_char = ' '
-    " let g:context_border_char = '┈'
+    " let g:context_border_char = ' '
+    let g:context_border_char = '┈'
+    let g:context_border_char = '━'
     let g:context_highlight_normal = 'Directory'
     let g:context_highlight_border = 'ErrorMsg'
     " let g:context_max_height = 5
-    let g:context_max_per_indent = 1
-    let g:context_nvim_no_redraw = 0
+    let g:context_max_per_indent = 3
+    let g:context_nvim_no_redraw = 1
     nnoremap <C-[> <cmd>ContextPeek<CR>
+    let g:context_highlight_normal = 'Directory'
     " let g:context_presenter = "preview"
     " augroup context_plugin
     "     autocmd!
@@ -255,9 +320,10 @@ elseif s:IsPlugged('vim-ctrlspace')
         let g:CtrlSpaceGlobCommand = 'fd --type file'
     endif
 elseif s:IsPlugged('fzf.vim')
-    nnoremap <leader>m :FZFMru<CR>
-    nnoremap <leader>f :FZF<CR>
+    nnoremap <leader>m <cmd>FZFMru<CR>
+    nnoremap <leader>f <cmd>FZF<CR>
     nnoremap <leader>b :Buffers<CR>
+    " nnoremap <leader>b <cmd>Uivonim buffers<CR>
 endif
 
 if s:IsPlugged('fzf.vim')
@@ -301,40 +367,143 @@ if s:IsPlugged('vim-indent-guides')
     let g:indent_guides_guide_size=1
     let g:indent_guides_enable_on_vim_startup = 1
 endif
+if s:IsPlugged('bubbly.nvim')
+    lua require'bubbly'.config_bubbly()
+endif
+if s:IsPlugged('galaxyline.nvim')
+    lua require'evilline'
+    " lua require'spaceline'
+endif
+if s:IsPlugged('vim-airline')
+    let g:airline_detect_whitespace=0
+    let g:airline#extensions#whitespace#enabled = 0
+    let g:airline#extensions#wordcount#enabled = 0
+
+    let g:airline_left_sep = ''
+    let g:airline_left_alt_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_right_alt_sep = ''
+
+    let g:airline_section_c='%t'
+
+endif
+
+function! MyFiletype() abort
+    " if exists('g:fvim_loaded')
+    if has('neovim')
+        return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+    else
+        return winwidth(0) > 70 ? (&filetype) : ''
+    endif
+endfunction
+
+function! MyFileformat() abort
+    " if exists('g:fvim_loaded')
+    if has('neovim')
+        return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+    else
+        return winwidth(0) > 70 ? (&fileformat) : ''
+    endif
+endfunction
+
 if s:IsPlugged('lightline.vim')
-    let g:lightline = {
-                \ 'active': {
+
+    function! MyFiletype() abort
+        " if exists('g:fvim_loaded')
+        if has('neovim')
+            return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+        else
+            return winwidth(0) > 70 ? (&filetype) : ''
+        endif
+    endfunction
+
+    function! MyFileformat() abort
+        " if exists('g:fvim_loaded')
+        if has('neovim')
+            return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+        else
+            return winwidth(0) > 70 ? (&fileformat) : ''
+        endif
+    endfunction
+
+    let g:lightline = {}
+    let g:lightline.active = {
                 \   'left': [ [ 'mode', 'paste' ],
-                \             [ 'readonly', 'filename', 'modified', 'method' ] ],
+                \             [ 'readonly', 'filename', 'modified',
+                \               'linter_warnings', 'linter_errors', 'linter_ok',
+                \               'status', 'vcs'] ],
                 \ 'right': [ [ 'lineinfo' ],
                 \            [ 'percent' ],
                 \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
-                \ },
-                \ 'component_function': {
+                \ }
+    let g:lightline.component_expand = {
+                \   'linter_warnings': 'lightline#coc#warnings',
+                \   'linter_errors': 'lightline#coc#errors',
+                \   'linter_ok': 'lightline#coc#ok',
+                \   'status': 'lightline#coc#status',
+                \ }
+    " Set color to the components:
+    let g:lightline.component_type = {
+                \   'linter_warnings': 'warning',
+                \   'linter_errors': 'error',
+                \   'linter_ok': 'left',
+                \ }
+    let g:lightline.component_function = {
                 \   'filetype': 'MyFiletype',
                 \   'fileformat': 'MyFileformat',
-                \   'method': 'NearestMethodOrFunction'
-                \ },
-                \ 'colorscheme': 'selenized_black'
+                \   'vcs': 'LightlineSignify'
                 \ }
+    let g:lightline.colorscheme = 'selenized_black'
+    call lightline#coc#register()
 endif
-set listchars=tab:▸\ ,extends:▸,precedes:◂,nbsp:●,eol:↦
+
+if exists('g:fvim_loaded')
+    set listchars=tab:┄\ ,extends:┄,precedes:┄,nbsp:┄,eol:┘
+else
+    set listchars=tab:▸\ ,extends:▸,precedes:◂,nbsp:●,eol:↦
+endif
 set list
 set fillchars+=vert:│
-if s:IsPlugged('vim-code-dark')
+if s:IsPlugged('spacebuddy')
+    lua require('colorbuddy').colorscheme('spacebuddy')
+elseif s:IsPlugged('nvcode-color-schemes.vim')
+    colorscheme nvcode
+elseif s:IsPlugged('vim-code-dark')
     colorscheme codedark
+elseif s:IsPlugged('vim-colorschemes')
+    " set background=light
+    colorscheme flattened_dark
+elseif s:IsPlugged('vim-dogrun')
+    colorscheme dogrun
+elseif s:IsPlugged('vim-one')
+    colorscheme one
 endif
+
 if !has('nvim')
     set guifont=Iosevka:h14:cANSI:qDRAFT
 else
-    set guifont=Iosevka:h17
+    set guifont=Victor\ Mono:h12
+    " set guifont=Input\ Mono:h12
+    " set guifont=VictorMono\ Nerd\ Font\ Mono:h12
+    " set guifont=Iosevka:h17
     " set guifont=Iosevka\ Slab:h18
     " set guifont=Iosevka\ SS08:h18
 endif
 
 " }}}
 
+if s:IsPlugged('vim-signify')
+    highlight! link SignifySignChange Comment
+    highlight! link SignifySignDelete ErrorMsg
+    highlight! link SignifySignAdd Type
+endif
+
+if s:IsPlugged('lsp-trouble.nvim')
+    nnoremap <leader>xx <cmd>LspTroubleToggle<cr>
+endif
+
 " {{{ misc
+
 if !empty($P4CLIENT)
     set title
     let &titlestring="vim-" . $P4CLIENT
@@ -349,6 +518,7 @@ if has('nvim')
 endif
 
 let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+highlight Comment cterm=italic gui=italic
 
 " }}}
 " 

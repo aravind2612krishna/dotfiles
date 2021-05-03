@@ -122,8 +122,8 @@ function! NearestMethodOrFunction() abort
 endfunction   
 
 function! MyFiletype() abort
-    if exists('g:fvim_loaded')
-    " if has('neovim')
+    " if exists('g:fvim_loaded')
+    if has('neovim')
         return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
     else
         return winwidth(0) > 70 ? (&filetype) : ''
@@ -131,8 +131,8 @@ function! MyFiletype() abort
 endfunction
 
 function! MyFileformat() abort
-    if exists('g:fvim_loaded')
-    " if has('neovim')
+    " if exists('g:fvim_loaded')
+    if has('neovim')
         return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
     else
         return winwidth(0) > 70 ? (&fileformat) : ''
@@ -147,6 +147,27 @@ endfunction
 function! CocCurrentFunction() abort
     " return get(b:, 'coc_current_function', '')
     return ''
+endfunction
+
+function! LightlineSignify()
+    let [added, modified, removed] = sy#repo#get_stats()
+    let l:sy = ''
+    for [flag, flagcount] in [
+                \   [exists("g:signify_sign_add")?g:signify_sign_add:'+', added],
+                \   [exists("g:signify_sign_delete")?g:signify_sign_delete:'-', removed],
+                \   [exists("g:signify_sign_change")?g:signify_sign_change:'!', modified]
+                \ ]
+        if flagcount> 0
+            let l:sy .= printf('%s%d', flag, flagcount)
+        endif
+    endfor
+    if !empty(l:sy)
+        let l:sy = printf('[%s]', l:sy)
+        let l:sy_vcs = get(b:sy, 'updated_by', '???')
+        return printf('%s%s', l:sy_vcs, l:sy)
+    else
+        return ''
+    endif
 endfunction
 
 " indent guides
@@ -164,14 +185,15 @@ else
 endif
 
 "{{{ list chars
-if v:true  " has('nvim')
-    set listchars=tab:▸\ ,extends:▸,precedes:◂,nbsp:●,eol:↦
+if exists('g:fvim_loaded')
+    FVimUIPopupMenu v:false
+    set listchars=tab:┄,extends:┄,precedes:┄,nbsp:┄,eol:┘
 else
     set listchars=tab:►\ ,extends:╍,precedes:◤,nbsp:●,eol:◣
 endif
 " set listchars=tab:‣\ ,extends:┈,precedes:┈,nbsp:●,eol:→
 " set listchars=tab:▶\ ,extends:┈,precedes:┈,nbsp:●,eol:↩
-set list
+" set list
 "}}}
 
 " Vertical split chars {{{
@@ -194,7 +216,8 @@ if !has('nvim')
     " set guifont=Iosevka:h09:cANSI:qDRAFT
 else
     " set guifont=Consolas\ NF:h13:cANSI:qDRAFT
-    set guifont=Iosevka:h17
+    set guifont=Victor\ Mono:h12
+    " set guifont=Iosevka:h17
     " set guifont=Iosevka\ Slab:h18
     " set guifont=Iosevka\ SS08:h18
     " set guifont=Hasplex:h14

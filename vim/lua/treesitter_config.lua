@@ -18,26 +18,26 @@ function M.config_treesitter()
                 node_incremental = "gnn",       -- increment to the upper named parent
                 scope_incremental = "gns",      -- increment to the upper scope (as defined in locals.scm)
                 node_decremental = "gnp",       -- decrement to the previous node
-            }
+            },
         },
         refactor = {
             highlight_definitions = {
-                enable = true
+                enable = false
             },
             highlight_current_scope = {
-                enable = true
+                enable = false
             },
             navigation = {
                 enable = true,
                 keymaps = {
-                    goto_next_usage = "<leader-j>",
-                    goto_previous_usage = "<leader-k>",
+                    goto_next_usage = "<c-a-j>",
+                    goto_previous_usage = "<c-a-k>",
                 },
             },
         },
         textobjects = { -- syntax-aware textobjects
+        select = {
             enable = true,
-            disable = {},
             keymaps = {
                 -- ["iL"] = { -- you can define your own textobjects directly here
                 --   python = "(function_definition) @function",
@@ -50,20 +50,35 @@ function M.config_treesitter()
                 ["if"] = "@function.inner",
                 ["aC"] = "@class.outer",
                 ["iC"] = "@class.inner",
-                ["ac"] = "@conditional.outer",
-                ["ic"] = "@conditional.inner",
-                ["ae"] = "@block.outer",
-                ["ie"] = "@block.inner",
-                ["al"] = "@loop.outer",
-                ["il"] = "@loop.inner",
-                ["is"] = "@statement.inner",
-                ["as"] = "@statement.outer",
-                ["ad"] = "@comment.outer",
-                ["am"] = "@call.outer",
-                ["im"] = "@call.inner"
-            }
+                -- ["ac"] = "@conditional.outer",
+                -- ["ic"] = "@conditional.inner",
+                -- ["ae"] = "@block.outer",
+                -- ["ie"] = "@block.inner",
+                -- ["al"] = "@loop.outer",
+                -- ["il"] = "@loop.inner",
+                -- ["is"] = "@statement.inner",
+                -- ["as"] = "@statement.outer",
+                -- ["ad"] = "@comment.outer",
+                -- ["am"] = "@call.outer",
+                -- ["im"] = "@call.inner"
+            },
+        }, 
+        move = {
+            enable = true,
+            goto_next_start = {
+                ["]m"] = "@function.outer",
+            },
+            goto_next_end = {
+                ["]M"] = "@function.outer",
+            },
+            goto_previous_start = {
+                ["[m"] = "@function.outer",
+            },
+            goto_previous_end = {
+                ["[M"] = "@function.outer",
+            },
         },
-        ensure_installed = "cpp" -- one of "all", "language", or a list of languages
+        },
     }
 end
 

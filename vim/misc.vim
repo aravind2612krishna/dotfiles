@@ -27,17 +27,6 @@ function! MyCompile()
 endfunction
 
 nmap <F7> :call MyCompile()<CR>
-" Loc list
-nmap <M-n> :lnext<CR>
-nmap <M-p> :lprev<CR>
-nmap <M-q> :lclose<CR>
-nnoremap <M-e> :topleft lopen<CR>
-
-" QuickFix List
-nmap <C-n> :cnext<CR>
-nmap <C-p> :cprev<CR>
-nmap <C-q> :cclose<CR>
-nnoremap <C-e> :topleft copen<CR>
 "}}}
 
 " Input macros {{{
@@ -52,17 +41,12 @@ endfunction
 " {{{ 12. macros
 " DEBUG_MIDMESH
 " let @d = 'DO#if DEBUG_MIDMESHo#endifP'
-let @d = 'C#if DEBUG_MIDMESHo#endifP'
+let @d = 'C#if DEBUG_SWEEPo#endifP'
 " Inserts a # comment box
 let @x = 'I// A //yyPVr/jpVr/'
+let @y = 'I## A ##yyPVr#jpVr#'
 " Go to one of the places where current function is called
 let @k = '[[?(b*``' 
-" size_t loop
-let @s = '"zdiwafor (size_t iterName = 0; iterName < z.size(); ++iterName){}kkf=b:call Input()*Nciwtn.n.jo= z[t];^iauto '
-" iterator loop
-let @i = '"zdiwafor (auto iterName = z.begin(); iterName != z.end(); ++iterName){}kkf=b:call Input()*Nciwtn.n.jo= *t;^iauto '
-" camelCase to underscores
-" let @c = 'viwomt"tywviw:s:\%V\(\u\):_\1:g`tguiw'
 let @c = ':sp:set autoread:e command1.tclG?readfile$F.yT/:q:set noautoreadO// case : p'
 let @e = ':!p4 edit %'
 " }}}
@@ -134,13 +118,18 @@ vnoremap <Leader>/ <Esc>/<C-R>=<SID>ScopeSearch('[[', 2)<CR><CR>
 nnoremap <C-s> :exe 'mks! ~\' . $P4CLIENT . '.vim'<CR>
 
 " Foldtext
-autocmd FileType cpp setlocal foldmarker=#if,#endif
 highlight! link Folded FoldColumn
-set fillchars+=fold:┈
-" set fillchars+=fold:╍
-" set fillchars+=fold:─
-" set fillchars+=fold:\ 
 set foldmethod=marker
+if !has_key(g:plugs, 'nvim-treesitter')
+    " autocmd FileType cpp setlocal foldmethod=marker foldmarker=#if,#endif
+    autocmd FileType cpp,python setlocal foldmethod=indent
+    " set fillchars+=fold:╍
+    " set fillchars+=fold:─
+    " set fillchars+=fold:\ 
+else
+    autocmd FileType cpp if line('$') < 10000 | setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr() | endif
+endif
+set fillchars+=fold:┈
 function! NeatFold()
     " set the max number of nested fold levels + 1
     let fnum = 3
@@ -148,14 +137,17 @@ function! NeatFold()
     let nnum = 5
 
     let char = matchstr(&fillchars, 'fold:\zs.')
+    let indent_level = indent(v:foldstart)
     let lnum = v:foldend - v:foldstart + 1
     let plus = repeat('❱', fnum - v:foldlevel)
     let minus = repeat('❰', fnum - v:foldlevel)
-    let dash = repeat(char, v:foldlevel)
+    let dash = repeat(char, indent_level - strlen(plus) - 1)
     let spac = repeat(' ', nnum - len(lnum))
 
     " let txta = v:foldstart . ' ⇋ ' . v:foldend
-    let txta = '' . trim(getline(v:foldstart), &commentstring.&foldmarker) . ''
+    " let txta = '' . trim(getline(v:foldstart), &commentstring.&foldmarker) . ''
+    " let txta = '' . getline(v:foldstart) . ''
+    let txta = '' . trim(getline(v:foldstart), " ") . ''
     let txtb = '' . spac . lnum . ' '
     let fill = repeat(char, winwidth(0) - fnum - len(txta . txtb) - &foldcolumn - (&number ? &numberwidth : 0))
 

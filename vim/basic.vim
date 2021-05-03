@@ -1,6 +1,6 @@
 " Basic stuff {{{
-let mapleader = ','            " Leader key
-let g:mapleader = ','          " Leader key
+let mapleader = ' '            " Leader key
+let g:mapleader = ' '          " Leader key
 set nocompatible
 set hidden                     " Abandoned buffer hide
 set noshowmode                 " Status related
@@ -24,7 +24,11 @@ set foldcolumn=1               " fold level column
 " set background=dark            " Dark/light background
 set termguicolors
 set virtualedit=block,onemore  " Allows you to move your cursor off the end of lines while in visual block mode, and allows your cursor to go one space off the end of the line when in normal mode.
+set sidescroll=2               " when scrolling past last char outside the screen, number of extra chars to show
 " }}}
+
+" completion menu height
+set pumheight=4
 
 " encoding related
 set encoding=utf-8
@@ -86,7 +90,7 @@ set foldmethod=marker          " Foldmethod
 set tw=0
 set fo+=t
 set linebreak nolist
-set colorcolumn=100
+set colorcolumn=80
 
 " syntax
 syntax on
@@ -139,3 +143,28 @@ augroup checktime
 augroup END
 
 set updatetime=500
+
+" mouse
+set mouse=a
+
+" signcolumn
+set signcolumn=yes:2
+
+" Loc list and quick fix mappings, putting in basic so that these mappings can
+" be overriden by other rcs
+nmap <M-n> :lnext<CR>
+nmap <M-p> :lprev<CR>
+nmap <M-q> :lclose<CR>
+nnoremap <M-e> :topleft lopen<CR>
+
+" QuickFix List
+nmap <C-n> :cnext<CR>
+nmap <C-p> :cprev<CR>
+nmap <C-q> :cclose<CR>
+nnoremap <C-e> :topleft copen<CR>
+
+augroup CursorLines
+    autocmd!
+    au WinLeave * set nocursorline
+    au WinEnter * set cursorline
+augroup END

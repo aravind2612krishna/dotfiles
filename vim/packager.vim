@@ -162,5 +162,4 @@ let g:vista_sidebar_width=96
 set listchars=tab:▸\ ,extends:▸,precedes:◂,nbsp:●,eol:→
 set list
 set fillchars+=vert:│
-set guifont=Iosevka:h16
 " }}}

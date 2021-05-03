@@ -445,3 +445,4 @@ if exists('g:loaded_vista')
                 \ 'python': s:vista_provider,
                 \ }
 endif
+

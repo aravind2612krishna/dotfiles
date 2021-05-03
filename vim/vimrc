@@ -2,7 +2,6 @@ let g:norm_home_dir = substitute(expand('~'), '\', '/', 'g')
 if !exists('g:storage_home')
     let g:storage_home = g:norm_home_dir
 endif
-let curscrpath = expand('<sfile>:p:h')
 runtime basic.vim
 if !exists('g:vscode')
     runtime plug_config.vim
