@@ -129,7 +129,8 @@ if !has_key(g:plugs, 'nvim-treesitter')
 else
     autocmd FileType cpp if line('$') < 10000 | setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr() | endif
 endif
-set fillchars+=fold:┈
+" set fillchars+=fold:┈
+set fillchars+=fold:⸱
 function! NeatFold()
     " set the max number of nested fold levels + 1
     let fnum = 3
@@ -159,6 +160,7 @@ augroup PreviewAutocmds
   autocmd!
   autocmd WinEnter * if &previewwindow | setlocal wrap | endif
 augroup END
+autocmd QuickFixCmdPost * top copen 8 | wincmd p
 
 if has('win32')
     set directory=D:\vimfiles\swaps

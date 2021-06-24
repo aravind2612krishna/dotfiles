@@ -167,3 +167,6 @@ nn <silent> gl :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
 nn <silent> gk :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
 
 nmap  <Plug>(coc-float-jump)
+
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"

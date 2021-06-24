@@ -11,29 +11,26 @@ endfunction
 " LSP
 if has('nvim')
 
-    " Plug 'neovim/nvim-lsp' " {{{ nvim_lsp
-    " Plug 'neovim/nvim-lspconfig'
-    " Plug 'hrsh7th/nvim-compe'
-    " " Plug 'ojroques/nvim-lspfuzzy'
-    " " Plug 'glepnir/lspsaga.nvim'
-    " Plug 'kyazdani42/nvim-web-devicons'
+    Plug 'neovim/nvim-lsp' " {{{ nvim_lsp
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'hrsh7th/nvim-compe'
+    " Plug 'ojroques/nvim-lspfuzzy'
+    " Plug 'glepnir/lspsaga.nvim'
+    Plug 'kyazdani42/nvim-web-devicons'
     " Plug 'simrat39/symbols-outline.nvim'
-    " Plug 'folke/lsp-trouble.nvim'
-    " Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
-    " " Plug 'ray-x/navigator.lua'
-
-    " " Plug 'nvim-lua/diagnostic-nvim'
-    " " Plug 'nvim-lua/lsp-status.nvim'
-    " " Plug 'nvim-lua/completion-nvim'
-    " " Plug 'steelsojka/completion-buffers' " }}}
+    Plug 'stevearc/aerial.nvim'
+    Plug 'ray-x/lsp_signature.nvim'
+    Plug 'folke/lsp-trouble.nvim'
+    Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
+    " Plug 'ray-x/navigator.lua'
 
     " Plug 'natebosch/vim-lsc', { 'for' : ['cpp', 'python'] } " {{{ lsc
     " Plug 'Chiel92/vim-autoformat' " }}}
 
-    Plug 'neoclide/coc.nvim', {'branch': 'release'} " {{{ coc
-    Plug 'honza/vim-snippets'
-    Plug 'neoclide/coc-snippets'
-    Plug 'clangd/coc-clangd'
+    " Plug 'neoclide/coc.nvim', {'branch': 'release'} " {{{ coc
+    " Plug 'honza/vim-snippets'
+    " Plug 'neoclide/coc-snippets'
+    " Plug 'clangd/coc-clangd'
 
     " Plug 'prabirshrestha/vim-lsp' " {{{ vim-lsp
     " Plug 'prabirshrestha/asyncomplete.vim'
@@ -48,25 +45,22 @@ if has('nvim')
     " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     " Plug 'Shougo/echodoc.vim' " }}}
 
-    " Treesitter colorscheme
-    " Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
-    " Plug 'tjdevries/colorbuddy.vim'
-    " Plug 'Th3Whit3Wolf/onebuddy'
-    " Plug 'Th3Whit3Wolf/spacebuddy'
-    Plug 'norcalli/nvim-colorizer.lua'
 
     Plug 'nvim-treesitter/nvim-treesitter' " Tree sitter
     Plug 'romgrk/nvim-treesitter-context'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-    Plug 'nvim-treesitter/nvim-treesitter-refactor'
+    " Plug 'nvim-treesitter/nvim-treesitter-refactor'
 
     " Plug 'nvim-treesitter/playground'
     " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 
     " Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
     Plug 'JessicaKMcIntosh/Nagelfar-Vim', { 'for' : ['tcl'] }
+    
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
     packadd termdebug
+    let g:termdebug_wide = 163
 
     " Plug 'puremourning/vimspector'
 
@@ -110,20 +104,24 @@ else
     endif
 endif
 " Plug 'nathanaelkane/vim-indent-guides'
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 Plug 'ryanoasis/vim-devicons'
 Plug 'octol/vim-cpp-enhanced-highlight'
 " Plug 'jackguo380/vim-lsp-cxx-highlight'
 
+" Treesitter colorscheme
+" Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
+" Plug 'shaunsingh/solarized.nvim'
 Plug 'tomasiser/vim-code-dark'
+" Plug 'marko-cerovac/material.nvim'
+" Plug 'glepnir/zephyr-nvim'
 " Plug 'wadackel/vim-dogrun'
 " Plug 'rakr/vim-one'
-" Plug 'altercation/vim-colors-solarized'
-Plug 'flazz/vim-colorschemes'
+" Plug 'flazz/vim-colorschemes'
 
 " Plug 'beauwilliams/statusline.lua'
 
-" Plug 'datwaft/bubbly.nvim'
 
 if v:true " !exists('g:goneovim')
     " Plug 'vim-airline/vim-airline'
@@ -132,9 +130,9 @@ endif
 
 " Plug 'itchyny/lightline.vim'
 " Plug 'josa42/vim-lightline-coc'
-
-Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
-
+Plug 'datwaft/bubbly.nvim'
+" Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+" Plug 'hoob3rt/lualine.nvim'
 " Plug 'adelarsq/neoline.vim'
 
 " Plug 'kkoomen/vim-doge', {'for': 'cpp', 'do': { -> doge#install() } }
@@ -187,6 +185,10 @@ endif
 if s:IsPlugged('nvim-treesitter') "{{{
     lua require'treesitter_config'.config_treesitter()
 endif "}}}
+
+" if s:IsPlugged('lspsaga.nvim')
+"     lua require'lspsaga_cfg'
+" endif
 
 if s:IsPlugged('Nagelfar-Vim') " {{{
     let g:nagelfar_tclsh='/home/aravind/repos/HmMshgFbNxtThpty_AK_1204/tcl/tcl8.5.9/linux64/bin/tclsh8.5'
@@ -353,6 +355,8 @@ endif
 if s:IsPlugged('asyncrun.vim')
     if executable('rg')
         map <leader>r :AsyncRun rg -in <C-R><C-W> <C-R>=expand("%:.:h") <CR>
+    elseif executable('ug')
+        map <leader>r :AsyncRun ug -Rn <C-R><C-W> <C-R>=expand("%:.:h") <CR>
     else
         if executable('grep')
             map <leader>r :AsyncRun grep -Rn <C-R><C-W> <C-R>=expand("%:p:h") . "/*" <CR>
@@ -369,6 +373,9 @@ if s:IsPlugged('vim-indent-guides')
 endif
 if s:IsPlugged('bubbly.nvim')
     lua require'bubbly'.config_bubbly()
+endif
+if s:IsPlugged('lualine.nvim')
+    lua require'lualine_cfg'
 endif
 if s:IsPlugged('galaxyline.nvim')
     lua require'evilline'
@@ -467,16 +474,28 @@ set fillchars+=vert:│
 if s:IsPlugged('spacebuddy')
     lua require('colorbuddy').colorscheme('spacebuddy')
 elseif s:IsPlugged('nvcode-color-schemes.vim')
-    colorscheme nvcode
-elseif s:IsPlugged('vim-code-dark')
-    colorscheme codedark
+    let g:nvcode_termcolors=256
+    " colorscheme nvcode
+    colorscheme onedark
+    " colorscheme gruvbox
 elseif s:IsPlugged('vim-colorschemes')
-    " set background=light
-    colorscheme flattened_dark
+    set background=light
+    colorscheme flattened_light
 elseif s:IsPlugged('vim-dogrun')
     colorscheme dogrun
 elseif s:IsPlugged('vim-one')
     colorscheme one
+elseif s:IsPlugged('material.nvim')
+    colorscheme material
+    let g:material_italic_comments = v:true
+    let g:material_style = 'darker'
+elseif s:IsPlugged('zephyr-nvim')
+    colorscheme zephyr
+elseif s:IsPlugged('solarized.nvim')
+    set background=light
+    colorscheme solarized
+elseif s:IsPlugged('vim-code-dark')
+    colorscheme codedark
 endif
 
 if !has('nvim')
@@ -493,6 +512,9 @@ endif
 " }}}
 
 if s:IsPlugged('vim-signify')
+    let g:signify_sign_add    = '▊'  " U+258A LEFT THREE QUARTERS BLOCK (1 cell)
+    let g:signify_sign_delete    = '▊'  " U+258A LEFT THREE QUARTERS BLOCK (1 cell)
+    let g:signify_sign_change    = '▊'  " U+258A LEFT THREE QUARTERS BLOCK (1 cell)
     highlight! link SignifySignChange Comment
     highlight! link SignifySignDelete ErrorMsg
     highlight! link SignifySignAdd Type
@@ -500,6 +522,14 @@ endif
 
 if s:IsPlugged('lsp-trouble.nvim')
     nnoremap <leader>xx <cmd>LspTroubleToggle<cr>
+endif
+
+if s:IsPlugged('indent-blankline.nvim')
+    lua require'indentline'
+    let g:indent_blankline_char = "│"
+    " let g:indent_blankline_use_treesitter = v:true
+    " let g:indent_blankline_show_current_context = v:true
+    " let g:indent_blankline_context_patterns = ['class', 'function', 'method', '^if', '^while', '^for', '^object', '^table', 'block', 'arguments']
 endif
 
 " {{{ misc

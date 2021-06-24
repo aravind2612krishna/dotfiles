@@ -1,4 +1,5 @@
 local lspconfig = require('lspconfig')
+local aerial = require'aerial'
 
 local on_attach = function(client, bufnr)
 
@@ -19,6 +20,23 @@ local on_attach = function(client, bufnr)
         return 0
     end
 
+    aerial.on_attach(client)
+    require'lsp_signature'.on_attach({
+        bind = true, -- This is mandatory, otherwise border config won't get registered.
+        handler_opts = {
+            border = "single"
+        }
+    })
+
+    -- Aerial does not set any mappings by default, so you'll want to set some up
+    -- Toggle the aerial window with <leader>a
+    vim.api.nvim_buf_set_keymap(0, 'n', '<leader>a', '<cmd>AerialToggle!<CR>', {})
+    -- Jump forwards/backwards with '{' and '}'
+    vim.api.nvim_buf_set_keymap(0, 'n', '{', '<cmd>AerialPrev<CR>', {})
+    vim.api.nvim_buf_set_keymap(0, 'n', '}', '<cmd>AerialNext<CR>', {})
+    -- Jump up the tree with '[[' or ']]'
+    vim.api.nvim_buf_set_keymap(0, 'n', '[[', '<cmd>AerialPrevUp<CR>', {})
+    vim.api.nvim_buf_set_keymap(0, 'n', ']]', '<cmd>AerialNextUp<CR>', {})
 
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -28,7 +46,7 @@ local on_attach = function(client, bufnr)
     -- Mappings.
     local opts = { noremap=true, silent=true }
     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>zzzv', opts)
     buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', 'gm', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -135,7 +153,7 @@ local opts = {
     -- default: true
     show_guides = true,
 }
-require('symbols-outline').setup(opts)
+-- require('symbols-outline').setup(opts)
 
 -- require'navigator'.setup()
 

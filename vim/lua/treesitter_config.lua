@@ -22,7 +22,7 @@ function M.config_treesitter()
         },
         refactor = {
             highlight_definitions = {
-                enable = false
+                enable = true
             },
             highlight_current_scope = {
                 enable = false

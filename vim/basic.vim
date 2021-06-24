@@ -20,7 +20,7 @@ set hlsearch                   " search highlight
 set incsearch                  " search as you type
 set wrapscan                   " search [don't] wrap
 set lazyredraw                 " redraw performance
-set foldcolumn=1               " fold level column
+set foldcolumn=0               " fold level column
 " set background=dark            " Dark/light background
 set termguicolors
 set virtualedit=block,onemore  " Allows you to move your cursor off the end of lines while in visual block mode, and allows your cursor to go one space off the end of the line when in normal mode.
@@ -36,7 +36,9 @@ set ffs=unix,dos,mac
 set ai                         " Auto indent
 set si                         " Smart indent
 set nowrap                     " Wrap lines
-set fdo-=search                " Open folds for search
+
+" Open folds for search
+set fdo=block,hor,jump,mark,percent,quickfix,search
 
 " Gui related options 
 set guioptions+=c  "use console dialogs
@@ -158,8 +160,8 @@ nmap <M-q> :lclose<CR>
 nnoremap <M-e> :topleft lopen<CR>
 
 " QuickFix List
-nmap <C-n> :cnext<CR>
-nmap <C-p> :cprev<CR>
+nmap <C-n> :cnext<CR>zzzv
+nmap <C-p> :cprev<CR>zzzv
 nmap <C-q> :cclose<CR>
 nnoremap <C-e> :topleft copen<CR>
 

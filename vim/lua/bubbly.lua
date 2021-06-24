@@ -16,6 +16,18 @@ function M.config_bubbly()
         'progress',
     }
 
+    vim.g.bubbly_characters = {
+        -- Bubble delimiters
+        -- left = '',
+        -- right = '',
+        -- left = '',
+        -- right = '',
+        -- Close character for the tabline
+        close = '',
+        -- Bubble separators
+        bubble_separator = ' ',
+    }
+
     vim.g.bubbly_palette = {
         background = "#1E1E1E",
         foreground = "#D4D4D4",
