@@ -165,8 +165,13 @@ nmap <C-p> :cprev<CR>zzzv
 nmap <C-q> :cclose<CR>
 nnoremap <C-e> :topleft copen<CR>
 
-augroup CursorLines
-    autocmd!
-    au WinLeave * set nocursorline
-    au WinEnter * set cursorline
-augroup END
+" augroup CursorLines
+"     autocmd!
+"     au WinLeave * set nocursorline nocursorcolumn
+"     au WinEnter * set cursorline nocursorcolumn
+" augroup END
+
+
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+            \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+            \,sm:block-blinkwait175-blinkoff150-blinkon175

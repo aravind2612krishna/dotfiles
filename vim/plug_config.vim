@@ -11,26 +11,29 @@ endfunction
 " LSP
 if has('nvim')
 
-    Plug 'neovim/nvim-lsp' " {{{ nvim_lsp
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'hrsh7th/nvim-compe'
-    " Plug 'ojroques/nvim-lspfuzzy'
-    " Plug 'glepnir/lspsaga.nvim'
-    Plug 'kyazdani42/nvim-web-devicons'
+    " Plug 'neovim/nvim-lsp' " {{{ nvim_lsp
+    " Plug 'neovim/nvim-lspconfig'
+    " Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+    " Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+    " " Plug 'hrsh7th/nvim-compe'
+    " " Plug 'ojroques/nvim-lspfuzzy'
+    " " Plug 'glepnir/lspsaga.nvim'
+    " Plug 'kyazdani42/nvim-web-devicons'
     " Plug 'simrat39/symbols-outline.nvim'
-    Plug 'stevearc/aerial.nvim'
-    Plug 'ray-x/lsp_signature.nvim'
-    Plug 'folke/lsp-trouble.nvim'
-    Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
-    " Plug 'ray-x/navigator.lua'
+    " " Plug 'stevearc/aerial.nvim'
+    " " Plug 'ray-x/lsp_signature.nvim'
+    " Plug 'folke/lsp-trouble.nvim'
+    " Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
+    " " Plug 'ray-x/navigator.lua'
 
     " Plug 'natebosch/vim-lsc', { 'for' : ['cpp', 'python'] } " {{{ lsc
     " Plug 'Chiel92/vim-autoformat' " }}}
 
     " Plug 'neoclide/coc.nvim', {'branch': 'release'} " {{{ coc
-    " Plug 'honza/vim-snippets'
-    " Plug 'neoclide/coc-snippets'
-    " Plug 'clangd/coc-clangd'
+    Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+    Plug 'honza/vim-snippets'
+    Plug 'neoclide/coc-snippets'
+    Plug 'clangd/coc-clangd'
 
     " Plug 'prabirshrestha/vim-lsp' " {{{ vim-lsp
     " Plug 'prabirshrestha/asyncomplete.vim'
@@ -49,7 +52,10 @@ if has('nvim')
     Plug 'nvim-treesitter/nvim-treesitter' " Tree sitter
     Plug 'romgrk/nvim-treesitter-context'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-    " Plug 'nvim-treesitter/nvim-treesitter-refactor'
+    Plug 'lukas-reineke/indent-blankline.nvim'
+    " Plug 'haringsrob/nvim_context_vt'
+    " Plug 'SmiteshP/nvim-gps'
+    " " Plug 'nvim-treesitter/nvim-treesitter-refactor'
 
     " Plug 'nvim-treesitter/playground'
     " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
@@ -57,12 +63,21 @@ if has('nvim')
     " Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
     Plug 'JessicaKMcIntosh/Nagelfar-Vim', { 'for' : ['tcl'] }
     
-    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+    " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+    
+    " Plug 'cpiger/NeoDebug'
+
+    Plug 'simonefranza/nvim-conv'
 
     packadd termdebug
     let g:termdebug_wide = 163
 
+    Plug 'mfussenegger/nvim-dap'
+    Plug 'rcarriga/nvim-dap-ui'
+
     " Plug 'puremourning/vimspector'
+
+    Plug 'beauwilliams/focus.nvim'
 
 else
 
@@ -71,6 +86,8 @@ else
     Plug 'kkoenig/wimproved.vim' " }}}
 
 endif
+
+Plug 'will133/vim-dirdiff'
 
 if has('nvim')
     if !s:IsPlugged('coc.nvim')
@@ -103,9 +120,12 @@ else
         " Plug 'dstein64/nvim-scrollview'
     endif
 endif
+
 " Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'yuntan/neovim-indent-guides'
 " Plug 'Yggdroot/indentLine'
-Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
+" let g:indentLine_char = '│'
+
 Plug 'ryanoasis/vim-devicons'
 Plug 'octol/vim-cpp-enhanced-highlight'
 " Plug 'jackguo380/vim-lsp-cxx-highlight'
@@ -113,12 +133,17 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " Treesitter colorscheme
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
 " Plug 'shaunsingh/solarized.nvim'
-Plug 'tomasiser/vim-code-dark'
+" Plug 'projekt0n/github-nvim-theme'
+" Plug 'yashguptaz/calvera-dark.nvim'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'glepnir/zephyr-nvim'
 " Plug 'wadackel/vim-dogrun'
 " Plug 'rakr/vim-one'
 " Plug 'flazz/vim-colorschemes'
+" Plug 'morhetz/gruvbox'
+" Plug 'olimorris/onedarkpro.nvim'
+Plug 'martinsione/darkplus.nvim'
+Plug 'tomasiser/vim-code-dark'
 
 " Plug 'beauwilliams/statusline.lua'
 
@@ -130,9 +155,10 @@ endif
 
 " Plug 'itchyny/lightline.vim'
 " Plug 'josa42/vim-lightline-coc'
-Plug 'datwaft/bubbly.nvim'
+" Plug 'datwaft/bubbly.nvim'
 " Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 " Plug 'hoob3rt/lualine.nvim'
+Plug 'nvim-lualine/lualine.nvim'
 " Plug 'adelarsq/neoline.vim'
 
 " Plug 'kkoomen/vim-doge', {'for': 'cpp', 'do': { -> doge#install() } }
@@ -146,6 +172,8 @@ Plug 'pbogut/fzf-mru.vim'
 " VCS
 " Plug 'mhinz/vim-signify', { 'for' : ['cpp', 'python', 'tcl'] }
 Plug 'mhinz/vim-signify'
+Plug 'ngemily/vim-vp4'
+let g:vp4_prompt_on_write = v:false
 
 call plug#end()
 
@@ -386,13 +414,22 @@ if s:IsPlugged('vim-airline')
     let g:airline#extensions#whitespace#enabled = 0
     let g:airline#extensions#wordcount#enabled = 0
 
-    let g:airline_left_sep = ''
-    let g:airline_left_alt_sep = ''
-    let g:airline_right_sep = ''
-    let g:airline_right_alt_sep = ''
+    let g:airline_left_sep = ''
+    let g:airline_left_alt_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_right_alt_sep = ''
+    let g:webdevicons_enable_airline_statusline = 1
 
-    let g:airline_section_c='%t'
+    " let g:airline_section_c='%t'
 
+endif
+
+if s:IsPlugged('nvim-dap')
+    runtime dapcfg.lua
+    lua require'dapcfg'
+    if s:IsPlugged('nvim-dap-ui')
+        lua require'dapuicfg'
+    endif
 endif
 
 function! MyFiletype() abort
@@ -465,18 +502,25 @@ if s:IsPlugged('lightline.vim')
 endif
 
 if exists('g:fvim_loaded')
-    set listchars=tab:┄\ ,extends:┄,precedes:┄,nbsp:┄,eol:┘
+    " set listchars=tab:┄\ ,extends:┄,precedes:┄,nbsp:┄,eol:┘
+    FVimUIPopupMenu v:false
+    set listchars=tab:▸\ ,extends:▸,precedes:◂,nbsp:●,eol:↦
 else
     set listchars=tab:▸\ ,extends:▸,precedes:◂,nbsp:●,eol:↦
 endif
 set list
 set fillchars+=vert:│
-if s:IsPlugged('spacebuddy')
+if s:IsPlugged('github-nvim-theme')
+    lua require('github-theme').setup({ theme_style = "light" })
+elseif s:IsPlugged('solarized.nvim')
+    set background=light
+    colorscheme solarized
+elseif s:IsPlugged('spacebuddy')
     lua require('colorbuddy').colorscheme('spacebuddy')
 elseif s:IsPlugged('nvcode-color-schemes.vim')
     let g:nvcode_termcolors=256
-    " colorscheme nvcode
-    colorscheme onedark
+    colorscheme nvcode
+    " colorscheme onedark
     " colorscheme gruvbox
 elseif s:IsPlugged('vim-colorschemes')
     set background=light
@@ -491,9 +535,17 @@ elseif s:IsPlugged('material.nvim')
     let g:material_style = 'darker'
 elseif s:IsPlugged('zephyr-nvim')
     colorscheme zephyr
-elseif s:IsPlugged('solarized.nvim')
-    set background=light
-    colorscheme solarized
+elseif s:IsPlugged('calvera-dark.nvim')
+    colorscheme calvera
+elseif s:IsPlugged('gruvbox')
+    " set background=light
+    colorscheme gruvbox
+elseif s:IsPlugged('onedarkpro.nvim')
+    " lua require('onedarkpro').setup({theme = "onelight"})
+    lua require('onedarkpro').load()
+    colorscheme onedark
+elseif s:IsPlugged('darkplus.nvim')
+    colorscheme darkplus
 elseif s:IsPlugged('vim-code-dark')
     colorscheme codedark
 endif
@@ -501,10 +553,10 @@ endif
 if !has('nvim')
     set guifont=Iosevka:h14:cANSI:qDRAFT
 else
-    set guifont=Victor\ Mono:h12
+    " set guifont=Victor\ Mono:h12
     " set guifont=Input\ Mono:h12
     " set guifont=VictorMono\ Nerd\ Font\ Mono:h12
-    " set guifont=Iosevka:h17
+    set guifont=Iosevka:h16
     " set guifont=Iosevka\ Slab:h18
     " set guifont=Iosevka\ SS08:h18
 endif
@@ -528,8 +580,12 @@ if s:IsPlugged('indent-blankline.nvim')
     lua require'indentline'
     let g:indent_blankline_char = "│"
     " let g:indent_blankline_use_treesitter = v:true
-    " let g:indent_blankline_show_current_context = v:true
-    " let g:indent_blankline_context_patterns = ['class', 'function', 'method', '^if', '^while', '^for', '^object', '^table', 'block', 'arguments']
+    let g:indent_blankline_show_current_context = v:true
+    let g:indent_blankline_context_patterns = ['class', 'function', 'method', '^if', '^while', '^for', '^object', '^table', 'block', 'arguments']
+endif
+
+if s:IsPlugged('NeoDebug')
+    runtime NeoDebugConfig.vim
 endif
 
 " {{{ misc
@@ -552,3 +608,48 @@ highlight Comment cterm=italic gui=italic
 
 " }}}
 " 
+if exists('g:neoray')
+    " set guifont=Victor_Mono_Regular:h14
+    set guifont=VictorMono_Nerd_Font_Mono_Medium:h14
+    set listchars=tab:┄\ ,extends:┄,precedes:┄,nbsp:┄,eol:┘
+    let neoray_cursor_animation_time=0
+    " let neoray_framebuffer_transparency=0.95
+    let neoray_target_ticks_per_second=60
+    let neoray_popup_menu_enabled=1
+    let neoray_window_startup_state='maximized'
+    let neoray_key_toggle_fullscreen='<M-C-CR>' " AltGr+Enter
+    let neoray_key_increase_fontsize='<C-PageUp>'
+    let neoray_key_decrease_fontsize='<C-PageDown>'
+endif
+
+if s:IsPlugged('nvim-gps')
+lua << EOF
+    require("nvim-gps").setup({
+        icons = {
+            ["class-name"] = ' ',      -- Classes and class-like objects
+            ["function-name"] = ' ',   -- Functions
+            ["method-name"] = ' '      -- Methods (functions inside class-like objects)
+        },
+        languages = {                    -- You can disable any language individually here
+            ["c"] = true,
+            ["cpp"] = true,
+            ["go"] = false,
+            ["java"] = false,
+            ["javascript"] = false,
+            ["lua"] = false,
+            ["python"] = true,
+            ["rust"] = false,
+        },
+        separator = ' > ',
+    })
+EOF
+endif
+
+if s:IsPlugged('focus.nvim')
+    "You must run setup() to begin using focus
+    lua require("focus").setup()
+endif
+
+if s:IsPlugged('coq_nvim')
+    let g:coq_settings = { 'keymap.bigger_preview': "<C-z>", 'keymap.jump_to_mark': "<C-h>" }
+endif

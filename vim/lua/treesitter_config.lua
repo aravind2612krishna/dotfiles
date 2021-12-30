@@ -4,7 +4,7 @@ local l_treesitter = require('nvim-treesitter.configs')
 function M.config_treesitter()
     l_treesitter.setup {
         highlight = {
-            enable = true,                    -- false will disable the whole extension
+            enable = false,                    -- false will disable the whole extension
             -- disable = { "c", "rust" },        -- list of language that will be disabled
             -- custom_captures = {               -- mapping of user defined captures to highlight groups
             --   -- ["foo.bar"] = "Identifier"   -- highlight own capture @foo.bar with highlight group "Identifier", see :h nvim-treesitter-query-extensions
@@ -22,13 +22,13 @@ function M.config_treesitter()
         },
         refactor = {
             highlight_definitions = {
-                enable = true
+                enable = false
             },
             highlight_current_scope = {
                 enable = false
             },
             navigation = {
-                enable = true,
+                enable = false,
                 keymaps = {
                     goto_next_usage = "<c-a-j>",
                     goto_previous_usage = "<c-a-k>",
@@ -37,7 +37,7 @@ function M.config_treesitter()
         },
         textobjects = { -- syntax-aware textobjects
         select = {
-            enable = true,
+            enable = false,
             keymaps = {
                 -- ["iL"] = { -- you can define your own textobjects directly here
                 --   python = "(function_definition) @function",

@@ -12,7 +12,7 @@ endif
 
 if has_key(g:plugs, 'coc-highlight')
     " Highlight symbol under cursor on CursorHold
-    highlight! link CocHighlightText PmenuSel
+    " highlight! link CocHighlightText PmenuSel
     autocmd! CursorHold * silent call CocActionAsync('highlight')
 endif
 
@@ -95,7 +95,7 @@ nmap <leader>gq  <Plug>(coc-format-selected)
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd FileType cpp,python,typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end

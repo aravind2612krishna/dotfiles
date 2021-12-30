@@ -1,5 +1,6 @@
 local lspconfig = require('lspconfig')
-local aerial = require'aerial'
+local coq = require('coq')
+-- local aerial = require'aerial'
 
 local on_attach = function(client, bufnr)
 
@@ -20,23 +21,23 @@ local on_attach = function(client, bufnr)
         return 0
     end
 
-    aerial.on_attach(client)
-    require'lsp_signature'.on_attach({
-        bind = true, -- This is mandatory, otherwise border config won't get registered.
-        handler_opts = {
-            border = "single"
-        }
-    })
+    -- aerial.on_attach(client)
+    -- require'lsp_signature'.on_attach({
+    --     bind = true, -- This is mandatory, otherwise border config won't get registered.
+    --     handler_opts = {
+    --         border = "single"
+    --     }
+    -- })
 
-    -- Aerial does not set any mappings by default, so you'll want to set some up
-    -- Toggle the aerial window with <leader>a
-    vim.api.nvim_buf_set_keymap(0, 'n', '<leader>a', '<cmd>AerialToggle!<CR>', {})
-    -- Jump forwards/backwards with '{' and '}'
-    vim.api.nvim_buf_set_keymap(0, 'n', '{', '<cmd>AerialPrev<CR>', {})
-    vim.api.nvim_buf_set_keymap(0, 'n', '}', '<cmd>AerialNext<CR>', {})
-    -- Jump up the tree with '[[' or ']]'
-    vim.api.nvim_buf_set_keymap(0, 'n', '[[', '<cmd>AerialPrevUp<CR>', {})
-    vim.api.nvim_buf_set_keymap(0, 'n', ']]', '<cmd>AerialNextUp<CR>', {})
+    -- -- Aerial does not set any mappings by default, so you'll want to set some up
+    -- -- Toggle the aerial window with <leader>a
+    -- vim.api.nvim_buf_set_keymap(0, 'n', '<leader>a', '<cmd>AerialToggle!<CR>', {})
+    -- -- Jump forwards/backwards with '{' and '}'
+    -- vim.api.nvim_buf_set_keymap(0, 'n', '{', '<cmd>AerialPrev<CR>', {})
+    -- vim.api.nvim_buf_set_keymap(0, 'n', '}', '<cmd>AerialNext<CR>', {})
+    -- -- Jump up the tree with '[[' or ']]'
+    -- vim.api.nvim_buf_set_keymap(0, 'n', '[[', '<cmd>AerialPrevUp<CR>', {})
+    -- vim.api.nvim_buf_set_keymap(0, 'n', ']]', '<cmd>AerialNextUp<CR>', {})
 
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -100,16 +101,34 @@ for _, lsp in ipairs(servers) do
    }
 end
 
-lspconfig.clangd.setup {
+lspconfig.clangd.setup(coq.lsp_ensure_capabilities {
     cmd = {
         "clangd", "--background-index", "-j=6", "--clang-tidy",
         "-clang-tidy-checks=-*,clang-analyzer*,bugprone*,performance*",
         "-pch-storage=memory", "--completion-style=detailed",
         "--completion-parse=auto", "--function-arg-placeholders"
     },
+    flags = {
+        debounce_text_changes = 500,
+    },
     capabilities = capabilities,
     on_attach = on_attach,
 }
+)
+
+-- lspconfig.clangd.setup {
+--     cmd = {
+--         "clangd", "--background-index", "-j=6", "--clang-tidy",
+--         "-clang-tidy-checks=-*,clang-analyzer*,bugprone*,performance*",
+--         "-pch-storage=memory", "--completion-style=detailed",
+--         "--completion-parse=auto", "--function-arg-placeholders"
+--     },
+--     flags = {
+--         debounce_text_changes = 500,
+--     },
+--     capabilities = capabilities,
+--     on_attach = on_attach,
+-- }
 
 -- require('lspfuzzy').setup {
 --     methods = {

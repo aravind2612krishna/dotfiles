@@ -16,7 +16,7 @@ let s:ccls_cache_dir = g:storage_home . '/ccls-cache'
 let g:lsc_enable_snippet_support = v:true
 
 if has_key(g:plugs, 'vim-autoformat')
-    xnoremap ,gq :Autoformat<CR>
+    xnoremap <space>gq :Autoformat<CR>
 endif
 
 " \                                                     'filterAndSort': v:false,
@@ -54,7 +54,7 @@ let s:ccls_lsc_server_commands = {
 
 let s:clangd_lsc_server_commands = {
             \ 'cpp': {
-            \    'command': 'clangd --clang-tidy --completion-style=detailed -clang-tidy-checks=-*,clang-analyzer*,bugprone*',
+            \    'command': 'clangd -j=6 --clang-tidy --completion-style=detailed -clang-tidy-checks=-*,clang-analyzer*,bugprone*',
             \    'suppress_stderr': v:true,
             \  },
             \ 'c': {
@@ -64,7 +64,7 @@ let s:clangd_lsc_server_commands = {
             \ 'python' : 'pyls',
             \}
 
-let g:lsc_server_commands = s:ccls_lsc_server_commands
+let g:lsc_server_commands = s:clangd_lsc_server_commands
 
 let g:lsc_auto_map = {
             \ 'defaults': v:true,

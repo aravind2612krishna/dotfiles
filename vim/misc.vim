@@ -118,7 +118,7 @@ vnoremap <Leader>/ <Esc>/<C-R>=<SID>ScopeSearch('[[', 2)<CR><CR>
 nnoremap <C-s> :exe 'mks! ~\' . $P4CLIENT . '.vim'<CR>
 
 " Foldtext
-highlight! link Folded FoldColumn
+" highlight! link Folded FoldColumn
 set foldmethod=marker
 if !has_key(g:plugs, 'nvim-treesitter')
     " autocmd FileType cpp setlocal foldmethod=marker foldmarker=#if,#endif
@@ -127,10 +127,11 @@ if !has_key(g:plugs, 'nvim-treesitter')
     " set fillchars+=fold:─
     " set fillchars+=fold:\ 
 else
-    autocmd FileType cpp if line('$') < 10000 | setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr() | endif
+    autocmd FileType cpp if line('$') < 5000 && line ('$') > 10 | setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr() | endif
 endif
 " set fillchars+=fold:┈
-set fillchars+=fold:⸱
+" set fillchars+=fold:⸱
+set fillchars+=fold:.
 function! NeatFold()
     " set the max number of nested fold levels + 1
     let fnum = 3
