@@ -7,7 +7,9 @@ end
 require'lualine'.setup {
   options = {
     icons_enabled = true,
-    theme = 'codedark',
+    theme = 'solarized',
+    -- theme = 'enfocado',
+    -- theme = 'codedark',
     -- theme = 'gruvbox',
     -- theme = 'gruvbox_light',
     -- component_separators = {'', ''},

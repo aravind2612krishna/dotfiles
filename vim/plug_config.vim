@@ -53,6 +53,7 @@ if has('nvim')
     Plug 'romgrk/nvim-treesitter-context'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'lukas-reineke/indent-blankline.nvim'
+    " Plug 'nvim-treesitter/nvim-tree-docs'
     " Plug 'haringsrob/nvim_context_vt'
     " Plug 'SmiteshP/nvim-gps'
     " " Plug 'nvim-treesitter/nvim-treesitter-refactor'
@@ -132,6 +133,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Treesitter colorscheme
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
+" Plug 'ishan9299/nvim-solarized-lua'
 " Plug 'shaunsingh/solarized.nvim'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'yashguptaz/calvera-dark.nvim'
@@ -142,8 +144,8 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " Plug 'flazz/vim-colorschemes'
 " Plug 'morhetz/gruvbox'
 " Plug 'olimorris/onedarkpro.nvim'
-Plug 'martinsione/darkplus.nvim'
-Plug 'tomasiser/vim-code-dark'
+Plug 'wuelnerdotexe/vim-enfocado'
+" Plug 'tomasiser/vim-code-dark'
 
 " Plug 'beauwilliams/statusline.lua'
 
@@ -162,6 +164,7 @@ Plug 'nvim-lualine/lualine.nvim'
 " Plug 'adelarsq/neoline.vim'
 
 " Plug 'kkoomen/vim-doge', {'for': 'cpp', 'do': { -> doge#install() } }
+Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 
 " File search, fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -512,8 +515,16 @@ set list
 set fillchars+=vert:│
 if s:IsPlugged('github-nvim-theme')
     lua require('github-theme').setup({ theme_style = "light" })
+elseif s:IsPlugged('nvim-solarized-lua')
+    colorscheme solarized
 elseif s:IsPlugged('solarized.nvim')
     set background=light
+    let g:solarized_italic_comments = v:true
+    let g:solarized_italic_keywords = v:false
+    let g:solarized_italic_functions = v:true
+    let g:solarized_italic_variables = v:true
+    let g:solarized_contrast = v:true
+    let g:solarized_borders = v:true
     colorscheme solarized
 elseif s:IsPlugged('spacebuddy')
     lua require('colorbuddy').colorscheme('spacebuddy')
@@ -546,6 +557,12 @@ elseif s:IsPlugged('onedarkpro.nvim')
     colorscheme onedark
 elseif s:IsPlugged('darkplus.nvim')
     colorscheme darkplus
+elseif s:IsPlugged('vim-enfocado')
+    " let g:enfocado_style = "neon"
+    " IMPORTANT: this vim auto command ensures the
+    " activation of Enfocado in compatible plugins.
+    autocmd VimEnter * ++nested colorscheme enfocado
+    " colorscheme enfocado
 elseif s:IsPlugged('vim-code-dark')
     colorscheme codedark
 endif
@@ -556,7 +573,8 @@ else
     " set guifont=Victor\ Mono:h12
     " set guifont=Input\ Mono:h12
     " set guifont=VictorMono\ Nerd\ Font\ Mono:h12
-    set guifont=Iosevka:h16
+    " set guifont=Iosevka:h16
+    set guifont=IBM\ Plex\ Mono\ Text:h14
     " set guifont=Iosevka\ Slab:h18
     " set guifont=Iosevka\ SS08:h18
 endif
@@ -567,9 +585,9 @@ if s:IsPlugged('vim-signify')
     let g:signify_sign_add    = '▊'  " U+258A LEFT THREE QUARTERS BLOCK (1 cell)
     let g:signify_sign_delete    = '▊'  " U+258A LEFT THREE QUARTERS BLOCK (1 cell)
     let g:signify_sign_change    = '▊'  " U+258A LEFT THREE QUARTERS BLOCK (1 cell)
-    highlight! link SignifySignChange Comment
-    highlight! link SignifySignDelete ErrorMsg
-    highlight! link SignifySignAdd Type
+    " highlight! link SignifySignChange Comment
+    " highlight! link SignifySignDelete ErrorMsg
+    " highlight! link SignifySignAdd Type
 endif
 
 if s:IsPlugged('lsp-trouble.nvim')
@@ -652,4 +670,35 @@ endif
 
 if s:IsPlugged('coq_nvim')
     let g:coq_settings = { 'keymap.bigger_preview': "<C-z>", 'keymap.jump_to_mark': "<C-h>" }
+endif
+
+if s:IsPlugged('nvim-treesitter-context')
+lua << EOF
+    require'treesitter-context'.setup{
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+        throttle = true, -- Throttles plugin updates (may improve performance)
+        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+        patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+            -- For all filetypes
+            -- Note that setting an entry here replaces all other patterns for this entry.
+            -- By setting the 'default' entry below, you can control which nodes you want to
+            -- appear in the context window.
+            default = {
+                'class',
+                'function',
+                'method',
+                'for',
+                'while',
+                'if',
+                'switch',
+                'case',
+            },
+            -- Example for a specific filetype.
+            -- If a pattern is missing, *open a PR* so everyone can benefit.
+            --   rust = {
+            --       'impl_item',
+            --   },
+        },
+    }
+EOF
 endif

@@ -10,6 +10,13 @@ function M.config_treesitter()
             --   -- ["foo.bar"] = "Identifier"   -- highlight own capture @foo.bar with highlight group "Identifier", see :h nvim-treesitter-query-extensions
             -- },
         },
+        -- tree_docs = {
+        --     enable = true,
+        --     keymaps = {
+        --         doc_node_at_cursor = "<leader>d",
+        --         doc_all_in_range = "<leader>d",
+        --     },
+        -- },
         incremental_selection = {
             enable = true,
             -- disable = { "cpp", "lua" },
@@ -36,48 +43,48 @@ function M.config_treesitter()
             },
         },
         textobjects = { -- syntax-aware textobjects
-        select = {
-            enable = false,
-            keymaps = {
-                -- ["iL"] = { -- you can define your own textobjects directly here
-                --   python = "(function_definition) @function",
-                --   cpp = "(function_definition) @function",
-                --   c = "(function_definition) @function",
-                --   java = "(method_declaration) @function"
-                -- },
-                -- or you use the queries from supported languages with textobjects.scm
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["aC"] = "@class.outer",
-                ["iC"] = "@class.inner",
-                -- ["ac"] = "@conditional.outer",
-                -- ["ic"] = "@conditional.inner",
-                -- ["ae"] = "@block.outer",
-                -- ["ie"] = "@block.inner",
-                -- ["al"] = "@loop.outer",
-                -- ["il"] = "@loop.inner",
-                -- ["is"] = "@statement.inner",
-                -- ["as"] = "@statement.outer",
-                -- ["ad"] = "@comment.outer",
-                -- ["am"] = "@call.outer",
-                -- ["im"] = "@call.inner"
+            select = {
+                enable = true,
+                keymaps = {
+                    -- ["iL"] = { -- you can define your own textobjects directly here
+                    --   python = "(function_definition) @function",
+                    --   cpp = "(function_definition) @function",
+                    --   c = "(function_definition) @function",
+                    --   java = "(method_declaration) @function"
+                    -- },
+                    -- or you use the queries from supported languages with textobjects.scm
+                    ["af"] = "@function.outer",
+                    ["if"] = "@function.inner",
+                    ["aC"] = "@class.outer",
+                    ["iC"] = "@class.inner",
+                    -- ["ac"] = "@conditional.outer",
+                    -- ["ic"] = "@conditional.inner",
+                    -- ["ae"] = "@block.outer",
+                    -- ["ie"] = "@block.inner",
+                    -- ["al"] = "@loop.outer",
+                    -- ["il"] = "@loop.inner",
+                    -- ["is"] = "@statement.inner",
+                    -- ["as"] = "@statement.outer",
+                    -- ["ad"] = "@comment.outer",
+                    -- ["am"] = "@call.outer",
+                    -- ["im"] = "@call.inner"
+                },
+            }, 
+            move = {
+                enable = true,
+                goto_next_start = {
+                    ["]m"] = "@function.outer",
+                },
+                goto_next_end = {
+                    ["]M"] = "@function.outer",
+                },
+                goto_previous_start = {
+                    ["[m"] = "@function.outer",
+                },
+                goto_previous_end = {
+                    ["[M"] = "@function.outer",
+                },
             },
-        }, 
-        move = {
-            enable = true,
-            goto_next_start = {
-                ["]m"] = "@function.outer",
-            },
-            goto_next_end = {
-                ["]M"] = "@function.outer",
-            },
-            goto_previous_start = {
-                ["[m"] = "@function.outer",
-            },
-            goto_previous_end = {
-                ["[M"] = "@function.outer",
-            },
-        },
         },
     }
 end

@@ -16,7 +16,7 @@ let g:vista_executive_for = {
 
 " For highlighting references
 Plug 'neoclide/coc-highlight'
-highlight! link CocHighlightText PmenuSel
+" highlight! link CocHighlightText PmenuSel
 " highlight! link CocHighlightText CocListBlackWhite
 " highlight! link CocHighlightText LightlineMiddle_terminal
 " set updatetime=500

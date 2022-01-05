@@ -92,7 +92,7 @@ set foldmethod=marker          " Foldmethod
 set tw=0
 set fo+=t
 set linebreak nolist
-set colorcolumn=80
+" set colorcolumn=0
 
 " syntax
 syntax on
