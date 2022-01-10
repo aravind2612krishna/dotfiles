@@ -1,7 +1,7 @@
 -- local gps = require("nvim-gps")
 
 local function padding()
-    return [[─────────────────]]
+    return [[─┈─┈─┈─┈─┈─]]
 end
 
 require'lualine'.setup {

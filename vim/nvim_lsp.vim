@@ -10,10 +10,6 @@ endif
 
 exec 'luafile' expand(curscrpath . '/lua/lsp_setup.lua')
 
-if has_key(g:plugs, 'lspsaga.nvim')
-    " exec 'luafile' expand(curscrpath . '/lua/lspsaga_cfg.lua')
-endif
-
 sign define LspDiagnosticsSignError text=❌ texthl=LspDiagnosticsSignError linehl= numhl=
 sign define LspDiagnosticsSignWarning text=🚩 texthl=LspDiagnosticsSignWarning linehl= numhl=
 sign define LspDiagnosticsSignInformation text=ℹ texthl=LspDiagnosticsSignInformation linehl= numhl=

@@ -80,3 +80,5 @@ highlight link lscDiagnosticError SpellBad
 highlight link lscDiagnosticWarning Underlined
 highlight link lscDiagnosticInfo WildMenu
 highlight link lscDiagnosticHint WildMenu
+
+echom 'vim-lsc is now loaded!'

@@ -117,6 +117,8 @@ vnoremap <Leader>/ <Esc>/<C-R>=<SID>ScopeSearch('[[', 2)<CR><CR>
 " session
 nnoremap <C-s> :exe 'mks! ~\' . $P4CLIENT . '.vim'<CR>
 
+set fillchars+=vert:│
+
 " Foldtext
 " highlight! link Folded FoldColumn
 set foldmethod=marker
@@ -129,30 +131,44 @@ if !has_key(g:plugs, 'nvim-treesitter')
 else
     autocmd FileType cpp if line('$') < 5000 && line ('$') > 10 | setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr() | endif
 endif
-" set fillchars+=fold:┈
+set fillchars+=fold:┈
 " set fillchars+=fold:⸱
-set fillchars+=fold:.
+" set fillchars+=fold:.
+" set fillchars+=fold:─
+" set fillchars+=fold:━
 function! NeatFold()
     " set the max number of nested fold levels + 1
     let fnum = 3
     " set the max number of digits in the number folded lines
     let nnum = 5
 
-    let char = matchstr(&fillchars, 'fold:\zs.')
-    let indent_level = indent(v:foldstart)
-    let lnum = v:foldend - v:foldstart + 1
-    let plus = repeat('❱', fnum - v:foldlevel)
-    let minus = repeat('❰', fnum - v:foldlevel)
-    let dash = repeat(char, indent_level - strlen(plus) - 1)
+    let fillchar = matchstr(&fillchars, 'fold:\zs.')
+    let foldstartline = v:foldstart
+    let foldendline = v:foldend
+    let indent_level = indent(foldstartline)
+    let lnum = foldendline - foldstartline + 1
+    " let plus = repeat('┫', fnum - v:foldlevel)
+    " let minus = repeat('┣', fnum - v:foldlevel)
+    " let plus = repeat('❱', fnum - v:foldlevel)
+    " let minus = repeat('❰', fnum - v:foldlevel)
+    " let plus = '┤' . v:foldlevel . '├'
+    " let plus = '┤' . v:foldlevel . '├'
+    let plus = '┤' . lnum . '├'
+    let dash = repeat(fillchar, indent_level - strlen(lnum) - 4)
+    " echom 'strlen(lnum) = ' . strlen(lnum)
     let spac = repeat(' ', nnum - len(lnum))
 
-    " let txta = v:foldstart . ' ⇋ ' . v:foldend
-    " let txta = '' . trim(getline(v:foldstart), &commentstring.&foldmarker) . ''
-    " let txta = '' . getline(v:foldstart) . ''
-    let txta = '' . trim(getline(v:foldstart), " ") . ''
-    let txtb = '' . spac . lnum . ' '
-    let fill = repeat(char, winwidth(0) - fnum - len(txta . txtb) - &foldcolumn - (&number ? &numberwidth : 0))
+    " let txta = foldstartline . ' ⇋ ' . foldendline
+    " let txta = '' . trim(getline(foldstartline), &commentstring.&foldmarker) . ''
+    " let txta = '' . getline(foldstartline) . ''
+    let txta = '┤' . trim(getline(foldstartline), " ") . '├'
+    let txtb = ''
+    " let txtb = '┤' . spac . lnum . ' ├'
+    " let txta = '┫' . trim(getline(foldstartline), " ") . '┣'
+    " let txtb = '┫' . spac . lnum . ' ┣'
+    let fill = repeat(fillchar, winwidth(0) - fnum - len(txta . txtb) - &foldcolumn - (&number ? &numberwidth : 0))
 
+    " echom indent_level - strlen(plus) - 1 
     return plus . dash . txta . fill . txtb
 endfunction
 set foldtext=NeatFold()
