@@ -19,7 +19,12 @@ set smartcase                  " if even one char in searchstr is uppercase it w
 set hlsearch                   " search highlight
 set incsearch                  " search as you type
 set wrapscan                   " search [don't] wrap
-set lazyredraw                 " redraw performance
+if exists('g:neovide')
+    set nolazyredraw
+else
+    set nolazyredraw
+    " set lazyredraw                 " redraw performance
+endif
 set foldcolumn=0               " fold level column
 " set background=dark            " Dark/light background
 set termguicolors
@@ -41,7 +46,7 @@ set nowrap                     " Wrap lines
 set fdo=block,hor,jump,mark,percent,quickfix,search
 
 " Gui related options 
-set guioptions+=c  "use console dialogs
+set guioptions-=c  "use console dialogs
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
@@ -172,6 +177,6 @@ nnoremap <C-e> :topleft copen<CR>
 " augroup END
 
 
-set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-            \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-            \,sm:block-blinkwait175-blinkoff150-blinkon175
+" set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+"             \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+"             \,sm:block-blinkwait175-blinkoff150-blinkon175

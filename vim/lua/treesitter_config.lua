@@ -5,6 +5,9 @@ function M.config_treesitter()
     l_treesitter.setup {
         highlight = {
             enable = true,                    -- false will disable the whole extension
+            disable = function(lang, bufnr) -- Disable in large C++ buffers
+                return lang == "cpp" and vim.api.nvim_buf_line_count(bufnr) > 5000
+            end,
             -- disable = { "c", "rust" },        -- list of language that will be disabled
             -- custom_captures = {               -- mapping of user defined captures to highlight groups
             --   -- ["foo.bar"] = "Identifier"   -- highlight own capture @foo.bar with highlight group "Identifier", see :h nvim-treesitter-query-extensions
@@ -22,9 +25,9 @@ function M.config_treesitter()
             -- disable = { "cpp", "lua" },
             keymaps = {                       -- mappings for incremental selection (visual mappings)
                 init_selection = "gni",         -- maps in normal mode to init the node/scope selection
-                node_incremental = "gnn",       -- increment to the upper named parent
+                node_incremental = "	",       -- increment to the upper named parent
                 scope_incremental = "gns",      -- increment to the upper scope (as defined in locals.scm)
-                node_decremental = "gnp",       -- decrement to the previous node
+                node_decremental = "<S-Tab>",       -- decrement to the previous node
             },
         },
         refactor = {
@@ -35,10 +38,10 @@ function M.config_treesitter()
                 enable = false
             },
             navigation = {
-                enable = false,
+                enable = true,
                 keymaps = {
-                    goto_next_usage = "<c-a-j>",
-                    goto_previous_usage = "<c-a-k>",
+                    goto_next_usage = "<C-S-j>",
+                    goto_previous_usage = "<C-S-k>",
                 },
             },
         },
@@ -63,8 +66,8 @@ function M.config_treesitter()
                     -- ["ie"] = "@block.inner",
                     -- ["al"] = "@loop.outer",
                     -- ["il"] = "@loop.inner",
-                    -- ["is"] = "@statement.inner",
-                    -- ["as"] = "@statement.outer",
+                    ["is"] = "@statement.inner",
+                    ["as"] = "@statement.outer",
                     -- ["ad"] = "@comment.outer",
                     -- ["am"] = "@call.outer",
                     -- ["im"] = "@call.inner"
@@ -84,6 +87,21 @@ function M.config_treesitter()
                 goto_previous_end = {
                     ["[M"] = "@function.outer",
                 },
+            },
+            lsp_interop = {
+                enable = false,
+                border = 'single',
+                peek_definition_code = {
+                    ["<leader>df"] = "@function.outer",
+                    ["<leader>dF"] = "@class.outer",
+                },
+            },
+        },
+        nt_cpp_tools = {
+            enable = true,
+            preview = {
+                quit = 'q', -- optional keymapping for quit preview
+                accept = '<tab>' -- optional keymapping for accept preview
             },
         },
     }

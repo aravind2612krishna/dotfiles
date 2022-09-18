@@ -22,7 +22,7 @@ let s:use_coc_nvim = (s:lsp_client == 'coc')
 let s:use_native_lsp = has('nvim') && (s:lsp_client == 'native')
 let s:use_lsc = (s:lsp_client == 'lsc')
 let s:use_treesitter = has('nvim')
-let s:debugger = (s:os == 'linux' ? 'termdebug' : 'null')
+let s:debugger = (s:os == 'linux' ? 'termdebug' : 'dap')
 let s:use_dap = (s:debugger == 'dap')
 let s:use_vimspector = (s:debugger == 'vimspector')
 
@@ -34,15 +34,23 @@ call plug#begin(s:plug_opt_path)
 if s:use_native_lsp
     Plug 'neovim/nvim-lsp'
     Plug 'neovim/nvim-lspconfig'
+    Plug 'p00f/clangd_extensions.nvim'
     Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
     Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-    Plug 'kyazdani42/nvim-web-devicons'
+
+    " Plug 'ldelossa/litee.nvim'
+    " Plug 'ldelossa/litee-calltree.nvim'
+    " Plug 'ldelossa/litee-symboltree.nvim'
+    " Plug 'ldelossa/litee-filetree.nvim'
+
+    " Plug 'sidebar-nvim/sidebar.nvim'
+
     Plug 'simrat39/symbols-outline.nvim'
     " Plug 'stevearc/aerial.nvim'
     Plug 'folke/lsp-trouble.nvim'
-    Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
-    Plug 'hrsh7th/vim-vsnip'
-    Plug 'hrsh7th/vim-vsnip-integ'
+    " Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
+    " Plug 'hrsh7th/vim-vsnip'
+    " Plug 'hrsh7th/vim-vsnip-integ'
     " Plug 'ray-x/navigator.lua'
 endif
 "" }}}
@@ -50,9 +58,12 @@ endif
 " coc.nvim {{{
 if s:use_coc_nvim
     Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
     Plug 'neoclide/coc-snippets'
     Plug 'clangd/coc-clangd'
+    Plug 'kevinhwang91/promise-async'
+    Plug 'kevinhwang91/nvim-ufo'
 endif
 " }}}
 
@@ -70,6 +81,12 @@ if s:use_treesitter
     Plug 'romgrk/nvim-treesitter-context'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'lukas-reineke/indent-blankline.nvim'
+    Plug 'danymat/neogen'
+    Plug 'Badhi/nvim-treesitter-cpp-tools'
+    Plug 'SmiteshP/nvim-gps'
+    Plug 'ThePrimeagen/refactoring.nvim'
+    " Plug 'alexzanderr/nvim-treesitter-statusline'
+    " Plug 'folke/twilight.nvim'
     " Plug 'nvim-treesitter/nvim-tree-docs'
     " Plug 'haringsrob/nvim_context_vt'
 else
@@ -93,6 +110,8 @@ Plug 'junegunn/fzf.vim'
 "}}}
 
 " colorschemes {{{
+" Plug 'ishan9299/nvim-solarized-lua'
+" Plug 'savq/melange'
 " Plug 'shaunsingh/solarized.nvim'
 Plug 'wuelnerdotexe/vim-enfocado'
 Plug 'tomasiser/vim-code-dark'
@@ -101,6 +120,20 @@ Plug 'tomasiser/vim-code-dark'
 " Status line {{{
 if has('nvim')
     Plug 'nvim-lualine/lualine.nvim'
+    Plug 'voldikss/vim-floaterm'
+    " Plug 'vim-airline/vim-airline'
+    " Plug 'vim-airline/vim-airline-themes'
+    " Plug 'adelarsq/neoline.vim'
+    " Plug 'windwp/windline.nvim'
+    Plug 'beauwilliams/focus.nvim'
+    Plug 'kyazdani42/nvim-web-devicons'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'MunifTanjim/nui.nvim'
+    Plug 'nagy135/capture-nvim'
+    " Plug 'kyazdani42/nvim-tree.lua'
+    " Plug 'nvim-neo-tree/neo-tree.nvim'
+    Plug 'LudoPinelli/comment-box.nvim'
+    Plug 'jbyuki/venn.nvim'
 else
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
@@ -114,7 +147,9 @@ Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-commentary'
 Plug 'vimwiki/vimwiki'
 Plug 'wellle/context.vim'
-Plug 'psf/black', { 'branch': 'stable','for': 'python' }
+" Plug 'psf/black', { 'branch': 'stable','for': 'python' }
+Plug 'psf/black', { 'for': 'python' }
+" Plug 'averms/black-nvim'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
@@ -187,10 +222,10 @@ endif
 
 " asyncrun rg/grep {{{
 if s:IsPlugged('asyncrun.vim')
-    if executable('rg')
+    if executable('ug')
+        map <leader>r :AsyncRun ug -RnIi <C-R><C-W> <C-R>=expand("%:.:h") <CR>
+    elseif executable('rg')
         map <leader>r :AsyncRun rg -in <C-R><C-W> <C-R>=expand("%:.:h") <CR>
-    elseif executable('ug')
-        map <leader>r :AsyncRun ug -Rn <C-R><C-W> <C-R>=expand("%:.:h") <CR>
     else
         if executable('grep')
             map <leader>r :AsyncRun grep -Rn <C-R><C-W> <C-R>=expand("%:p:h") . "/*" <CR>
@@ -214,20 +249,27 @@ if s:IsPlugged('vim-airline') " {{{
 endif " }}}
 
 " colorschemes {{{
-if s:IsPlugged('solarized.nvim')
+if s:IsPlugged('melange')
+    colorscheme melange
+elseif s:IsPlugged('solarized.nvim')
     set background=light
     let g:solarized_italic_comments = v:true
     let g:solarized_italic_keywords = v:false
-    let g:solarized_italic_functions = v:true
+    let g:solarized_italic_functions = v:false
     let g:solarized_italic_variables = v:true
     let g:solarized_contrast = v:true
     let g:solarized_borders = v:true
     colorscheme solarized
+elseif s:IsPlugged('nvim-solarized-lua')
+    colorscheme solarized
 elseif s:IsPlugged('vim-enfocado')
     " let g:enfocado_style = "neon"
+    let g:enfocado_style = "nature"
     " IMPORTANT: this vim auto command ensures the
     " activation of Enfocado in compatible plugins.
-    autocmd VimEnter * ++nested colorscheme enfocado
+    autocmd VimEnter * ++nested colorscheme enfocado |
+                \ hi! link TabLine CursorLineNr      |                                                                                                              
+                \ hi! link TabLineSel Title    
     " colorscheme enfocado
 elseif s:IsPlugged('vim-code-dark')
     colorscheme codedark
@@ -275,10 +317,22 @@ if exists('g:neoray') " {{{
     let neoray_key_decrease_fontsize='<C-PageDown>'
 endif " }}}
 
-let g:coq_settings = { 'keymap.bigger_preview': "<C-z>", 'keymap.jump_to_mark': "<C-h>" }
+let g:coq_settings = { 
+            \ 'keymap.recommended': v:true,
+            \ 'keymap.bigger_preview': "<c-t>",
+            \ 'keymap.pre_select' : v:true,
+            \ 'keymap.jump_to_mark': "\\",
+            \ 'limits.index_cutoff': 2000000,
+            \ 'auto_start': v:true 
+            \ }
 
 if s:use_coc_nvim
     runtime coc-config.vim
+else
+    ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"
+    ino <silent><expr> <CR>    pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"
+    ino <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
 endif
 
 if s:use_lsc
@@ -298,6 +352,9 @@ function! StartDebug() abort
         if s:use_coc_nvim
             " Need to override termdebug
             nnoremap <silent> K :call CocAction('doHover')<CR>
+        endif
+        if s:IsPlugged('focus.nvim')
+            lua require('focus').focus_disable()
         endif
         execute "Termdebug"
     endif

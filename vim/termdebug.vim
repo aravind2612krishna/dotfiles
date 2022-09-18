@@ -24,8 +24,8 @@ nnoremap <leader>gc  <cmd>Continue<CR>
 nnoremap <CR>  <cmd>Over<CR>
 nnoremap <PageUp> <cmd>call TermDebugSendCommand('up')<CR>
 nnoremap <PageDown> <cmd>call TermDebugSendCommand('down')<CR>
-nnoremap <F11> <cmd>Step<CR>
-nnoremap <F12> <cmd>Finish<CR>
+nnoremap <leader>] <cmd>Step<CR>
+nnoremap <leader>[ <cmd>Finish<CR>
 nnoremap <leader>k <cmd>call TermDebugSendCommand('p ' . expand("<cword>"))<CR>
 " nnoremap | <cmd>call TermDebugSendCommand('p ' . expand("<cword>"))<CR>
 nnoremap \ <cmd>Evaluate<CR>

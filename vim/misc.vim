@@ -47,7 +47,7 @@ let @x = 'I// A //yyPVr/jpVr/'
 let @y = 'I## A ##yyPVr#jpVr#'
 " Go to one of the places where current function is called
 let @k = '[[?(b*``' 
-let @c = ':sp:set autoread:e command1.tclG?readfile$F.yT/:q:set noautoreadO// case : p'
+let @c = ':sp:set autoread:e command.tclG?readfile$F.yT/:q:set noautoreadO// case : p'
 let @e = ':!p4 edit %'
 " }}}
 
@@ -119,23 +119,6 @@ nnoremap <C-s> :exe 'mks! ~\' . $P4CLIENT . '.vim'<CR>
 
 set fillchars+=vert:│
 
-" Foldtext
-" highlight! link Folded FoldColumn
-set foldmethod=marker
-if !has_key(g:plugs, 'nvim-treesitter')
-    " autocmd FileType cpp setlocal foldmethod=marker foldmarker=#if,#endif
-    autocmd FileType cpp,python setlocal foldmethod=indent
-    " set fillchars+=fold:╍
-    " set fillchars+=fold:─
-    " set fillchars+=fold:\ 
-else
-    autocmd FileType cpp if line('$') < 5000 && line ('$') > 10 | setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr() | endif
-endif
-set fillchars+=fold:┈
-" set fillchars+=fold:⸱
-" set fillchars+=fold:.
-" set fillchars+=fold:─
-" set fillchars+=fold:━
 function! NeatFold()
     " set the max number of nested fold levels + 1
     let fnum = 3
@@ -158,20 +141,45 @@ function! NeatFold()
     " echom 'strlen(lnum) = ' . strlen(lnum)
     let spac = repeat(' ', nnum - len(lnum))
 
-    " let txta = foldstartline . ' ⇋ ' . foldendline
-    " let txta = '' . trim(getline(foldstartline), &commentstring.&foldmarker) . ''
-    " let txta = '' . getline(foldstartline) . ''
-    let txta = '┤' . trim(getline(foldstartline), " ") . '├'
-    let txtb = ''
-    " let txtb = '┤' . spac . lnum . ' ├'
-    " let txta = '┫' . trim(getline(foldstartline), " ") . '┣'
-    " let txtb = '┫' . spac . lnum . ' ┣'
-    let fill = repeat(fillchar, winwidth(0) - fnum - len(txta . txtb) - &foldcolumn - (&number ? &numberwidth : 0))
+        " let txta = foldstartline . ' ⇋ ' . foldendline
+        " let txta = '' . trim(getline(foldstartline), &commentstring.&foldmarker) . ''
+        " let txta = '' . getline(foldstartline) . ''
+        let txta = '┤' . trim(getline(foldstartline), " ") . '├'
+        let txtb = ''
+        " let txtb = '┤' . spac . lnum . ' ├'
+        " let txta = '┫' . trim(getline(foldstartline), " ") . '┣'
+        " let txtb = '┫' . spac . lnum . ' ┣'
+        let fill = repeat(fillchar, winwidth(0) - fnum - len(txta . txtb) - &foldcolumn - (&number ? &numberwidth : 0))
 
-    " echom indent_level - strlen(plus) - 1 
-    return plus . dash . txta . fill . txtb
-endfunction
-set foldtext=NeatFold()
+        " echom indent_level - strlen(plus) - 1 
+        return plus . dash . txta . fill . txtb
+    endfunction
+
+" Foldtext
+" highlight! link Folded FoldColumn
+if has_key(g:plugs, 'nvim-ufo')
+    set foldmethod=manual
+    set fillchars+=eob:\ ,fold:\ ,foldopen:,foldsep:\ ,foldclose:
+    set foldlevel=99 foldlevelstart=-1
+    set foldcolumn=1
+else
+    set foldmethod=marker
+    if !has_key(g:plugs, 'nvim-treesitter')
+        " autocmd FileType cpp setlocal foldmethod=marker foldmarker=#if,#endif
+        autocmd FileType cpp,python setlocal foldmethod=indent
+        " set fillchars+=fold:╍
+        " set fillchars+=fold:─
+        " set fillchars+=fold:\ 
+    else
+        autocmd FileType cpp if line('$') < 5000 && line ('$') > 10 | setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr() | endif
+    endif
+    set fillchars+=fold:┈
+    " set fillchars+=fold:⸱
+    " set fillchars+=fold:.
+    " set fillchars+=fold:─
+    " set fillchars+=fold:━
+    set foldtext=NeatFold()
+endif
 
 augroup PreviewAutocmds
   autocmd!
@@ -226,3 +234,28 @@ function! NeovideToggleFullScreen()
     endif
 endfunction
 nnoremap <M-Enter> <cmd>call NeovideToggleFullScreen()<CR>
+
+if exists('g:neovide')
+    let g:neovide_cursor_antialiasing=v:false
+    let g:neovide_fullscreen=v:true
+    let g:neovide_remember_window_size = v:true
+    let g:neovide_cursor_animation_length=0
+endif
+
+function! NvuiSetup()
+    if exists('g:nvui')
+        " Configure nvui
+        set guifont=JetBrains\ Mono:h11
+        NvuiCmdFontFamily Jetbrains Mono
+        NvuiCmdCenterYPos 0.5
+        NvuiCmdBg Grey
+        " NvuiCmdFontSize 25.0
+        " NvuiScrollAnimationDuration 0.2
+    endif
+endfunction
+
+
+" if s:IsPlugged('vim-enfocado')
+    hi! link TabLine CursorLineNr                                                                                                                                   
+    hi! link TabLineSel Title    
+" endif
