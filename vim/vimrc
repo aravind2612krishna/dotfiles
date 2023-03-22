@@ -4,6 +4,8 @@ if !exists('g:storage_home')
 endif
 runtime basic.vim
 
+set guifont=IBM\ Plex\ Mono\ Text:h11
+
 if !exists('g:vscode')
     runtime plug_config.vim
     " runtime plugins.vim
@@ -11,6 +13,4 @@ if !exists('g:vscode')
     " runtime packager_config.vim
 endif
 runtime misc.vim
-
-set guifont=IBM\ Plex\ Mono\ Text:h14
 

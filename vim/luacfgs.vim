@@ -8,8 +8,8 @@ if s:IsPlugged('nvim-treesitter')
 endif
 if s:IsPlugged('indent-blankline.nvim')
     lua require'indentline'
-    hi! link IndentBlanklineContextStart TSEmphasis                                                                                                                                          
-    hi! link IndentBlanklineChar Ignore
+    " hi! link IndentBlanklineContextStart TSEmphasis                                                                                                                                          
+    " hi! link IndentBlanklineChar Ignore
 
     " let g:indent_blankline_char = "│"
     " " let g:indent_blankline_use_treesitter = v:true
@@ -25,22 +25,36 @@ if s:IsPlugged('nvim-treesitter-context.nvim')
 endif
 if s:IsPlugged('nvim-dap')
     lua require'dapcfg'
-    nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
-    nnoremap <silent> <CR> :lua require'dap'.step_over()<CR>
+    lua require('nvim-dap-virtual-text').setup()
+    lua require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+    nnoremap <silent> <leader>gc <Cmd>lua require'dap'.continue()<CR>
+    nnoremap <silent> <leader>gr <Cmd>lua require'dap'.run()<CR>
+    nnoremap <silent> <leader>ga <Cmd>lua require'dap'.run_last()<CR>
+    nnoremap <silent> <Leader>gb <Cmd>lua require'dap'.toggle_breakpoint()<CR>
+    nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+    nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+    nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
+    nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
+    nnoremap <silent> <PageUp> <Cmd>lua require'dap'.up()<CR>
+    nnoremap <silent> <PageDown> <Cmd>lua require'dap'.down()<CR>
+    nnoremap <silent> <CR> <Cmd>lua require'dap'.step_over()<CR>
+    nnoremap <silent> <leader>gu <Cmd>lua require'dap'.run_to_cursor()<CR>
+    nnoremap <silent> <leader>jb <Cmd>lua require'dap'.goto_()<CR>
     nnoremap <silent> <leader>] :lua require'dap'.step_into()<CR>
     nnoremap <silent> <leader>[ :lua require'dap'.step_out()<CR>
     nnoremap <silent> <leader>k :lua require('dap.ui.widgets').hover()<CR>
-    cabbrev Break :lua require'dap'.toggle_breakpoint()<CR>
-    cabbrev CondBreak :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-    cabbrev LogBreak :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-    cabbrev DapRepl :lua require'dap'.repl.open()<CR>
-    cabbrev DapRunLast :lua require'dap'.run_last()<CR>
+    abbrev Break :lua require'dap'.toggle_breakpoint()<CR>
+    abbrev CondBreak :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+    abbrev LogBreak :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+    abbrev DapRepl :lua require'dap'.repl.open()<CR>
+    abbrev DapRunLast :lua require'dap'.run_last()<CR>
 endif
 if s:IsPlugged('nvim-dap-ui')
     lua require'dapuicfg'
+    abbrev DapUIToggle :lua require("dapui").toggle()<CR>
 endif
-if s:IsPlugged('lualine.nvim')
-    lua require'lualine_cfg'
+if s:IsPlugged('toggleterm.nvim')
+    lua require'toggleterm_cfg'
 endif
 if s:IsPlugged('nvim-lsp')
     runtime nvim_lsp.vim
@@ -96,8 +110,8 @@ endif
 
 if v:true && s:IsPlugged('nvim-gps')
     lua require'nvim_gps_cfg'
-    hi! link WinBar TSNote
-    hi! link WinBarNC CocListBlackBlue                                                                                                                                                            
+    " hi! link WinBar TSNote
+    " hi! link WinBarNC CocListBlackBlue                                                                                                                                                            
     set laststatus=3
 endif
 
@@ -132,10 +146,15 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
     return newVirtText
 end
 
-require('ufo').setup({
-fold_virt_text_handler = handler
-})
+require('ufo').setup()
+
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 EOF
+
+" require('ufo').setup({
+" fold_virt_text_handler = handler
+" })
 
 endif
 
@@ -201,5 +220,59 @@ lua << EOF
         ":lua require('refactoring').select_refactor()<CR>",
         { noremap = true, silent = true, expr = false }
     )
+EOF
+endif
+
+if s:IsPlugged("perfanno.nvim")
+    lua require("perfanno_cfg")
+endif
+
+if s:IsPlugged("mind.nvim")
+    lua require'mind'.setup()
+endif
+
+if s:IsPlugged("mini.tabline")
+    lua require('mini.tabline').setup()
+endif
+
+if s:IsPlugged("mini.indentscope")
+    lua require('mini.indentscope').setup()
+endif
+
+if s:IsPlugged('github-nvim-theme')
+lua << EOF
+    require("github-theme").setup({
+    theme_style = "dark",
+    function_style = "italic",
+    sidebars = {"qf", "vista_kind", "terminal", "packer"},
+    hide_inactive_statusline = false,
+
+    -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+    -- colors = {hint = "orange", error = "#ff0000"},
+
+    -- Overwrite the highlight groups
+    -- overrides = function(c)
+    -- return {
+    --     htmlTag = {fg = c.red, bg = "#282c34", sp = c.hint, style = "underline"},
+    --     DiagnosticHint = {link = "LspDiagnosticsDefaultHint"},
+    --     -- this will remove the highlight groups
+    --     TSField = {},
+    -- }
+    -- end
+    })
+
+EOF
+endif
+
+if s:IsPlugged('lualine.nvim')
+    lua require'lualine_cfg'
+endif
+
+if s:IsPlugged('true-zen.nvim')
+lua << EOF
+	require("true-zen").setup {
+		-- your config goes here
+		-- or just leave it empty :)
+	}
 EOF
 endif

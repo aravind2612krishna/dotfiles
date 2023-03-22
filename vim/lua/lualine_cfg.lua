@@ -1,17 +1,14 @@
-local gps = require("nvim-gps")
+-- local gps = require("nvim-gps")
+-- local vim = require("vim")
 
 local function padding()
-    return [[─┈─┈─┈─┈─┈─]]
+    return [[──]]
 end
 
 require'lualine'.setup {
     options = {
         icons_enabled = true,
-        theme = 'solarized',
-        -- theme = 'enfocado',
-        -- theme = 'codedark',
-        -- theme = 'gruvbox',
-        -- theme = 'gruvbox_light',
+        theme = 'auto',
         -- component_separators = {'', ''},
         -- section_separators = {'', ''},
         component_separators = {'', ''},
@@ -19,17 +16,41 @@ require'lualine'.setup {
         -- component_separators = {'', ''},
         -- section_separators = {'', ''},
 
-        disabled_filetypes = {}
+        disabled_filetypes = {
+            statusline = {},
+            winbar = {},
+        },
     },
     sections = {
-        -- lualine_a = {'mode', 'g:coc_status'},
-        lualine_a = {'mode'},
-        lualine_b = {'filename'},
-        lualine_c = {
-            { gps.get_location, condition = gps.is_available },
-            {'sy#repo#get_stats_decorated'},
+        lualine_a = {
+            { 'mode', icons_enabled = true, separator = { left = '', right = '' } },
+        },
+        lualine_b = {
             {
-                'diagnostics', 
+                'filename',
+                file_status = true,      -- Displays file status (readonly status, modified status)
+                newfile_status = false,  -- Display new file status (new file means no write after created)
+                path = 1,                -- 0: Just the filename
+                -- 1: Relative path
+                -- 2: Absolute path
+                -- 3: Absolute path, with tilde as the home directory
+
+                shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+                -- for other components. (terrible name, any suggestions?)
+                symbols = {
+                    modified = '[+]',      -- Text to show when the file is modified.
+                    readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+                    unnamed = '[No Name]', -- Text to show for unnamed buffers.
+                    newfile = '[New]',     -- Text to show for newly created file before first write
+                }
+            }
+        },
+        lualine_c = {
+            -- { gps.get_location, condition = gps.is_available },
+            {'sy#repo#get_stats_decorated'},
+            {'g:coc_status'},
+            {
+                'diagnostics',
                 -- sources = {'nvim_lsp'},
                 sources = {'coc'},
                 symbols = {error = 'x', warn = '‼', info = 'I', hint = 'H'},
@@ -47,15 +68,15 @@ require'lualine'.setup {
         lualine_z = {'location'}
     },
     inactive_sections = {
-        lualine_a = {padding, 'filename'},
+        lualine_a = {},
         lualine_b = {},
-        lualine_c = {},
+        lualine_c = {'filename'},
         lualine_x = {'location'},
         lualine_y = {},
         lualine_z = {}
     },
-    tabline = {},
-    extensions = {}
+    -- tabline = {},
+    -- extensions = {}
 }
 
 -- local sidebar = require("sidebar-nvim")

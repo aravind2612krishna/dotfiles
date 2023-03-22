@@ -1,5 +1,5 @@
 local lspconfig = require('lspconfig')
-local coq = require('coq')
+-- local coq = require('coq')
 
 
 -- -- Call the setup function to change the default behavior
@@ -151,46 +151,10 @@ local coq = require('coq')
 
 local on_attach = function(client, bufnr)
 
-    Formatexpr_wrapper = function()
-        -- only reformat on explicit gq command
-        if not fn.mode() == 'n' then
-            -- fall back to Vims internal reformatting
-            return 1
-        end
-
-        local opts = {}
-        local start_line = vim.v.lnum
-        local end_line = start_line + vim.v.count - 1
-        if start_line >= 0 and end_line >= 0 then
-            lsp.buf.range_formatting(opts, {start_line, 0}, {end_line, 0})
-        end
-
-        return 0
-    end
-
-    -- aerial.on_attach(client, bufnr)
-
-    -- require'lsp_signature'.on_attach({
-    --     bind = true, -- This is mandatory, otherwise border config won't get registered.
-    --     handler_opts = {
-    --         border = "single"
-    --     }
-    -- })
-
-    -- -- Aerial does not set any mappings by default, so you'll want to set some up
-    -- -- Toggle the aerial window with <leader>a
-    -- vim.api.nvim_buf_set_keymap(0, 'n', '<leader>a', '<cmd>AerialToggle!<CR>', {})
-    -- -- Jump forwards/backwards with '{' and '}'
-    -- vim.api.nvim_buf_set_keymap(0, 'n', '{', '<cmd>AerialPrev<CR>', {})
-    -- vim.api.nvim_buf_set_keymap(0, 'n', '}', '<cmd>AerialNext<CR>', {})
-    -- -- Jump up the tree with '[[' or ']]'
-    -- vim.api.nvim_buf_set_keymap(0, 'n', '[[', '<cmd>AerialPrevUp<CR>', {})
-    -- vim.api.nvim_buf_set_keymap(0, 'n', ']]', '<cmd>AerialNextUp<CR>', {})
-
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
     local opts = { noremap=true, silent=true }
@@ -218,14 +182,14 @@ local on_attach = function(client, bufnr)
         -- buf_set_keymap("v", "gq", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
         -- buf_set_keymap("v", "<space>gq", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
         -- buf_set_option('formatexpr', 'Formatexpr_wrapper()')
-        buf_set_option('formatexpr', 'v:lua.vim.lsp.formatexpr()')
+        -- buf_set_option('formatexpr', 'v:lua.vim.lsp.formatexpr()')
     -- end
 
     -- Set autocommands conditional on server_capabilities
     -- hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
     -- hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
     -- hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-    if client.resolved_capabilities.document_highlight then
+    if client.server_capabilities.document_highlight then
         vim.api.nvim_exec([[
         hi! link LspReferenceRead PmenuSel
         hi! link LspReferenceWrite PmenuSel
@@ -267,97 +231,97 @@ end
 -- }
 -- )
 
-require("clangd_extensions").setup {
-    server = {
-        cmd = {
-            "clangd", "--background-index", "-j=6", "--clang-tidy",
-            "-clang-tidy-checks=-*,clang-analyzer*,bugprone*,performance*",
-            "-pch-storage=memory", "--completion-style=detailed",
-            "--completion-parse=auto", "--function-arg-placeholders",
-            "--inlay-hints"
-        },
-        flags = {
-            debounce_text_changes = 500,
-        },
-        capabilities = capabilities,
-        on_attach = on_attach,
-    },
-    extensions = {
-        -- defaults:
-        -- Automatically set inlay hints (type hints)
-        autoSetHints = true,
-        -- Whether to show hover actions inside the hover window
-        -- This overrides the default hover handler
-        hover_with_actions = true,
-        -- These apply to the default ClangdSetInlayHints command
-        inlay_hints = {
-            -- Only show inlay hints for the current line
-            only_current_line = false,
-            -- Event which triggers a refersh of the inlay hints.
-            -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
-            -- not that this may cause  higher CPU usage.
-            -- This option is only respected when only_current_line and
-            -- autoSetHints both are true.
-            only_current_line_autocmd = "CursorHold",
-            -- whether to show parameter hints with the inlay hints or not
-            show_parameter_hints = true,
-            -- whether to show variable name before type hints with the inlay hints or not
-            show_variable_name = true,
-            -- prefix for parameter hints
-            parameter_hints_prefix = "<- ",
-            -- prefix for all the other hints (type, chaining)
-            other_hints_prefix = "=> ",
-            -- whether to align to the length of the longest line in the file
-            max_len_align = false,
-            -- padding from the left if max_len_align is true
-            max_len_align_padding = 1,
-            -- whether to align to the extreme right or not
-            right_align = false,
-            -- padding from the right if right_align is true
-            right_align_padding = 7,
-            -- The color of the hints
-            highlight = "Comment",
-        },
-        ast = {
-            role_icons = {
-                type = "",
-                declaration = "",
-                expression = "",
-                specifier = "",
-                statement = "",
-                ["template argument"] = "",
-            },
-
-            kind_icons = {
-                Compound = "",
-                Recovery = "",
-                TranslationUnit = "",
-                PackExpansion = "",
-                TemplateTypeParm = "",
-                TemplateTemplateParm = "",
-                TemplateParamObject = "",
-            },
-
-            highlights = {
-                detail = "Comment",
-            },
-        }
-    }
-}
-
--- lspconfig.clangd.setup {
---     cmd = {
---         "clangd", "--background-index", "-j=6", "--clang-tidy",
---         "-clang-tidy-checks=-*,clang-analyzer*,bugprone*,performance*",
---         "-pch-storage=memory", "--completion-style=detailed",
---         "--completion-parse=auto", "--function-arg-placeholders"
+-- require("clangd_extensions").setup {
+--     server = {
+--         cmd = {
+--             "clangd", "--background-index", "-j=6", "--clang-tidy",
+--             "-clang-tidy-checks=-*,clang-analyzer*,bugprone*,performance*",
+--             "-pch-storage=memory", "--completion-style=detailed",
+--             "--completion-parse=auto", "--function-arg-placeholders",
+--             "--inlay-hints"
+--         },
+--         flags = {
+--             debounce_text_changes = 500,
+--         },
+--         capabilities = capabilities,
+--         on_attach = on_attach,
 --     },
---     flags = {
---         debounce_text_changes = 500,
---     },
---     capabilities = capabilities,
---     on_attach = on_attach,
+--     extensions = {
+--         -- defaults:
+--         -- Automatically set inlay hints (type hints)
+--         autoSetHints = true,
+--         -- Whether to show hover actions inside the hover window
+--         -- This overrides the default hover handler
+--         hover_with_actions = true,
+--         -- These apply to the default ClangdSetInlayHints command
+--         inlay_hints = {
+--             -- Only show inlay hints for the current line
+--             only_current_line = false,
+--             -- Event which triggers a refersh of the inlay hints.
+--             -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+--             -- not that this may cause  higher CPU usage.
+--             -- This option is only respected when only_current_line and
+--             -- autoSetHints both are true.
+--             only_current_line_autocmd = "CursorHold",
+--             -- whether to show parameter hints with the inlay hints or not
+--             show_parameter_hints = true,
+--             -- whether to show variable name before type hints with the inlay hints or not
+--             show_variable_name = true,
+--             -- prefix for parameter hints
+--             parameter_hints_prefix = "<- ",
+--             -- prefix for all the other hints (type, chaining)
+--             other_hints_prefix = "=> ",
+--             -- whether to align to the length of the longest line in the file
+--             max_len_align = false,
+--             -- padding from the left if max_len_align is true
+--             max_len_align_padding = 1,
+--             -- whether to align to the extreme right or not
+--             right_align = false,
+--             -- padding from the right if right_align is true
+--             right_align_padding = 7,
+--             -- The color of the hints
+--             highlight = "Comment",
+--         },
+--         ast = {
+--             role_icons = {
+--                 type = "",
+--                 declaration = "",
+--                 expression = "",
+--                 specifier = "",
+--                 statement = "",
+--                 ["template argument"] = "",
+--             },
+
+--             kind_icons = {
+--                 Compound = "",
+--                 Recovery = "",
+--                 TranslationUnit = "",
+--                 PackExpansion = "",
+--                 TemplateTypeParm = "",
+--                 TemplateTemplateParm = "",
+--                 TemplateParamObject = "",
+--             },
+
+--             highlights = {
+--                 detail = "Comment",
+--             },
+--         }
+--     }
 -- }
+
+lspconfig.clangd.setup {
+    cmd = {
+        "clangd", "--background-index", "-j=6", "--clang-tidy",
+        "-clang-tidy-checks=-*,clang-analyzer*,bugprone*,performance*",
+        "-pch-storage=memory", "--completion-style=detailed",
+        "--completion-parse=auto", "--function-arg-placeholders"
+    },
+    flags = {
+        debounce_text_changes = 500,
+    },
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
 
 -- require('lspfuzzy').setup {
 --     methods = {

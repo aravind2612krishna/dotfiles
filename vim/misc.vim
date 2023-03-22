@@ -149,7 +149,7 @@ function! NeatFold()
         " let txtb = '┤' . spac . lnum . ' ├'
         " let txta = '┫' . trim(getline(foldstartline), " ") . '┣'
         " let txtb = '┫' . spac . lnum . ' ┣'
-        let fill = repeat(fillchar, winwidth(0) - fnum - len(txta . txtb) - &foldcolumn - (&number ? &numberwidth : 0))
+        let fill = repeat(' ', winwidth(0) - fnum - len(txta . txtb) - &foldcolumn - (&number ? &numberwidth : 0))
 
         " echom indent_level - strlen(plus) - 1 
         return plus . dash . txta . fill . txtb
@@ -161,6 +161,7 @@ if has_key(g:plugs, 'nvim-ufo')
     set foldmethod=manual
     set fillchars+=eob:\ ,fold:\ ,foldopen:,foldsep:\ ,foldclose:
     set foldlevel=99 foldlevelstart=-1
+    " set foldlevel=99 foldlevelstart=99
     set foldcolumn=1
 else
     set foldmethod=marker
@@ -171,7 +172,8 @@ else
         " set fillchars+=fold:─
         " set fillchars+=fold:\ 
     else
-        autocmd FileType cpp if line('$') < 5000 && line ('$') > 10 | setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr() | endif
+        let g:tslinelimit = 5000
+        autocmd FileType cpp if line('$') < g:tslinelimit && line ('$') > 10 | setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr() | else | setlocal foldmarker=#if,#endif | endif
     endif
     set fillchars+=fold:┈
     " set fillchars+=fold:⸱
@@ -239,7 +241,7 @@ if exists('g:neovide')
     let g:neovide_cursor_antialiasing=v:false
     let g:neovide_fullscreen=v:true
     let g:neovide_remember_window_size = v:true
-    let g:neovide_cursor_animation_length=0
+    " let g:neovide_cursor_animation_length=0
 endif
 
 function! NvuiSetup()
@@ -254,8 +256,10 @@ function! NvuiSetup()
     endif
 endfunction
 
+set diffopt+=iwhite
+set diffopt+=vertical
 
 " if s:IsPlugged('vim-enfocado')
-    hi! link TabLine CursorLineNr                                                                                                                                   
-    hi! link TabLineSel Title    
+    " hi! link TabLine CursorLineNr                                                                                                                                   
+    " hi! link TabLineSel Title    
 " endif

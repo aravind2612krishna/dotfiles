@@ -8,7 +8,7 @@ fun! GetGdbUntilCmd()
 endf
 
 fun! AttachLastHmCmd()
-    let lhmpid = system('pgrep -n -u $USER hw')
+    let lhmpid = system('pgrep -n -u $USER hw$')
     return 'attach ' . lhmpid
 endf
 
@@ -35,3 +35,8 @@ nnoremap <leader>p <cmd>call TermDebugSendCommand('p hwDGFIDebugDrawTcl::IDrawCo
 " nnoremap <leader>pe <cmd>call TermDebugSendCommand('edgePrintDetailed ' . expand("<cword>"))<CR>
 " nnoremap <C-Space>  :call TermDebugSendCommand('next')<CR>
 nnoremap <leader>ga :call TermDebugSendCommand(AttachLastHmCmd())<CR>
+
+if !exists("g:termdebug_config")
+    let g:termdebug_config = {}
+endif
+let g:termdebug_config['map_K'] = 0

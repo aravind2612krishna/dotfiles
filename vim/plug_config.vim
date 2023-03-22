@@ -17,14 +17,15 @@ function! s:IsPlugged(plugin) abort
     return has_key(g:plugs, a:plugin)
 endfunction
 
-let s:lsp_client = 'coc'
+let s:lsp_client = 'coc' " native, coc
 let s:use_coc_nvim = (s:lsp_client == 'coc')
 let s:use_native_lsp = has('nvim') && (s:lsp_client == 'native')
 let s:use_lsc = (s:lsp_client == 'lsc')
 let s:use_treesitter = has('nvim')
-let s:debugger = (s:os == 'linux' ? 'termdebug' : 'dap')
+let s:debugger = (s:os == 'linux' ? 'termdebug' : 'dap') " termdebug, dap
 let s:use_dap = (s:debugger == 'dap')
 let s:use_vimspector = (s:debugger == 'vimspector')
+let g:aravk_completion = (s:lsp_client == 'native' ? 'ddc' : '') " coq, ddc
 
 " }}}
 
@@ -35,8 +36,28 @@ if s:use_native_lsp
     Plug 'neovim/nvim-lsp'
     Plug 'neovim/nvim-lspconfig'
     Plug 'p00f/clangd_extensions.nvim'
-    Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
-    Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+
+    if g:aravk_completion == 'coq'
+        Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+        Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+    endif
+    if g:aravk_completion == 'ddc'
+        Plug 'Shougo/ddc.vim'
+        Plug 'vim-denops/denops.vim'
+
+        " Install your UIs
+        Plug 'Shougo/ddc-ui-native'
+
+        " Install your sources
+        Plug 'Shougo/ddc-source-around'
+        Plug 'Shougo/ddc-buffer'
+        Plug 'Shougo/ddc-buffer'
+        Plug 'Shougo/ddc-file'
+
+        " Install your filters
+        Plug 'Shougo/ddc-matcher_head'
+        Plug 'Shougo/ddc-sorter_rank'
+    endif
 
     " Plug 'ldelossa/litee.nvim'
     " Plug 'ldelossa/litee-calltree.nvim'
@@ -62,8 +83,8 @@ if s:use_coc_nvim
     Plug 'honza/vim-snippets'
     Plug 'neoclide/coc-snippets'
     Plug 'clangd/coc-clangd'
-    Plug 'kevinhwang91/promise-async'
-    Plug 'kevinhwang91/nvim-ufo'
+    " Plug 'kevinhwang91/promise-async'
+    " Plug 'kevinhwang91/nvim-ufo'
 endif
 " }}}
 
@@ -78,26 +99,37 @@ endif
 " Tree sitter {{{
 if s:use_treesitter
     Plug 'nvim-treesitter/nvim-treesitter'
-    Plug 'romgrk/nvim-treesitter-context'
+    Plug 'nvim-treesitter/nvim-treesitter-context'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-    Plug 'lukas-reineke/indent-blankline.nvim'
+    " Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'danymat/neogen'
     Plug 'Badhi/nvim-treesitter-cpp-tools'
-    Plug 'SmiteshP/nvim-gps'
+    " Plug 'SmiteshP/nvim-gps'
     Plug 'ThePrimeagen/refactoring.nvim'
     " Plug 'alexzanderr/nvim-treesitter-statusline'
     " Plug 'folke/twilight.nvim'
     " Plug 'nvim-treesitter/nvim-tree-docs'
     " Plug 'haringsrob/nvim_context_vt'
+
+    Plug 't-troebst/perfanno.nvim'
+
 else
     Plug 'octol/vim-cpp-enhanced-highlight', { 'for' : ['cpp', 'c'] }
 endif
 " }}}
 
+" fugitive
+Plug 'tpope/vim-fugitive'
+Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'rbong/vim-flog'
+" Plug 'tpope/vim-rhubarb'
+
 " Debuggers {{{
 if s:use_dap
     Plug 'mfussenegger/nvim-dap'
     Plug 'rcarriga/nvim-dap-ui'
+    Plug 'theHamsta/nvim-dap-virtual-text'
+    Plug 'mfussenegger/nvim-dap-python'
 endif
 if s:use_vimspector
     Plug 'puremourning/vimspector'
@@ -110,30 +142,45 @@ Plug 'junegunn/fzf.vim'
 "}}}
 
 " colorschemes {{{
+" Plug 'rktjmp/lush.nvim'
 " Plug 'ishan9299/nvim-solarized-lua'
 " Plug 'savq/melange'
 " Plug 'shaunsingh/solarized.nvim'
-Plug 'wuelnerdotexe/vim-enfocado'
+" Plug 'nyoom-engineering/oxocarbon.nvim'
+" Plug 'kartikp10/noctis.nvim'
+" Plug 'wuelnerdotexe/vim-enfocado'
+Plug 'projekt0n/github-nvim-theme', { 'tag': 'v0.0.7' }
 Plug 'tomasiser/vim-code-dark'
 " }}}
 
 " Status line {{{
 if has('nvim')
+    Plug 'Eandrju/cellular-automaton.nvim'
     Plug 'nvim-lualine/lualine.nvim'
-    Plug 'voldikss/vim-floaterm'
+    " Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+    " Plug 'voldikss/vim-floaterm'
     " Plug 'vim-airline/vim-airline'
     " Plug 'vim-airline/vim-airline-themes'
+    " Plug 'shortcuts/no-neck-pain.nvim', { 'tag': '*' }
     " Plug 'adelarsq/neoline.vim'
     " Plug 'windwp/windline.nvim'
+    Plug 'Pocco81/true-zen.nvim'
     Plug 'beauwilliams/focus.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'nvim-lua/plenary.nvim'
+    Plug 'echasnovski/mini.tabline', { 'branch': 'stable' }
+    Plug 'echasnovski/mini.indentscope', { 'branch': 'stable' }
+
+    " TODOs plugin
+    Plug 'phaazon/mind.nvim'
     Plug 'MunifTanjim/nui.nvim'
     Plug 'nagy135/capture-nvim'
+    
     " Plug 'kyazdani42/nvim-tree.lua'
     " Plug 'nvim-neo-tree/neo-tree.nvim'
     Plug 'LudoPinelli/comment-box.nvim'
     Plug 'jbyuki/venn.nvim'
+    Plug 'iamcco/markdown-preview.nvim'
 else
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
@@ -152,10 +199,10 @@ Plug 'psf/black', { 'for': 'python' }
 " Plug 'averms/black-nvim'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'ryanoasis/vim-devicons'
-Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
+" Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 Plug 'mhinz/vim-signify'
 Plug 'ngemily/vim-vp4'
-let g:vp4_prompt_on_write = v:false
+let g:vp4_prompt_on_write = v:true
 "}}}
 
 call plug#end()
@@ -262,14 +309,22 @@ elseif s:IsPlugged('solarized.nvim')
     colorscheme solarized
 elseif s:IsPlugged('nvim-solarized-lua')
     colorscheme solarized
+    " hi! link IndentBlanklineContextStart CursorLine
+elseif s:IsPlugged('noctis.nvim')
+    colorscheme noctis
+elseif s:IsPlugged('oxocarbon.nvim')
+    colorscheme oxocarbon
+elseif s:IsPlugged('github-nvim-theme')
+    colorscheme github_dark
 elseif s:IsPlugged('vim-enfocado')
-    " let g:enfocado_style = "neon"
-    let g:enfocado_style = "nature"
+    let g:enfocado_style = "neon"
+    " let g:enfocado_style = "nature"
     " IMPORTANT: this vim auto command ensures the
     " activation of Enfocado in compatible plugins.
     autocmd VimEnter * ++nested colorscheme enfocado |
                 \ hi! link TabLine CursorLineNr      |                                                                                                              
-                \ hi! link TabLineSel Title    
+                \ hi! link TabLineSel Title          |
+                \ hi! link WinBar Underlined
     " colorscheme enfocado
 elseif s:IsPlugged('vim-code-dark')
     colorscheme codedark
@@ -305,26 +360,34 @@ let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 " 
 if exists('g:neoray') " {{{
     " set guifont=Victor_Mono_Regular:h14
-    set guifont=VictorMono_Nerd_Font_Mono_Medium:h14
+    " set guifont=VictorMono_Nerd_Font_Mono_Medium:h14
+    set guifont=JetBrainsMono:h12
+    " set guifont=Go_Mono:h11
     set listchars=tab:┄\ ,extends:┄,precedes:┄,nbsp:┄,eol:┘
-    let neoray_cursor_animation_time=0
-    " let neoray_framebuffer_transparency=0.95
-    let neoray_target_ticks_per_second=60
-    let neoray_popup_menu_enabled=1
-    let neoray_window_startup_state='maximized'
-    let neoray_key_toggle_fullscreen='<M-C-CR>' " AltGr+Enter
-    let neoray_key_increase_fontsize='<C-PageUp>'
-    let neoray_key_decrease_fontsize='<C-PageDown>'
+    NeoraySet CursorAnimTime 0.04
+    NeoraySet Transparency   1.0
+    NeoraySet TargetTPS      120
+    NeoraySet ContextMenu    TRUE
+    NeoraySet BoxDrawing     TRUE
+    NeoraySet ImageViewer    TRUE
+    " NeoraySet WindowSize     100x40
+    NeoraySet WindowState    maximized
+    NeoraySet KeyZoomIn     <C-kPlus>
+    NeoraySet KeyZoomOut    <C-kMinus>
 endif " }}}
 
-let g:coq_settings = { 
-            \ 'keymap.recommended': v:true,
-            \ 'keymap.bigger_preview': "<c-t>",
-            \ 'keymap.pre_select' : v:true,
-            \ 'keymap.jump_to_mark': "\\",
-            \ 'limits.index_cutoff': 2000000,
-            \ 'auto_start': v:true 
-            \ }
+if g:aravk_completion == 'coq'
+    let g:coq_settings = { 
+                \ 'keymap.recommended': v:true,
+                \ 'keymap.pre_select' : v:true,
+                \ 'keymap.jump_to_mark': "\\",
+                \ 'auto_start': v:true,
+                \ }
+endif
+
+if g:aravk_completion == 'ddc'
+    runtime ddc_config.vim
+endif
 
 if s:use_coc_nvim
     runtime coc-config.vim
@@ -349,10 +412,6 @@ function! StartDebug() abort
         packadd termdebug
         runtime termdebug.vim
         let g:termdebug_wide = 163
-        if s:use_coc_nvim
-            " Need to override termdebug
-            nnoremap <silent> K :call CocAction('doHover')<CR>
-        endif
         if s:IsPlugged('focus.nvim')
             lua require('focus').focus_disable()
         endif
@@ -360,3 +419,10 @@ function! StartDebug() abort
     endif
 endfunction
 " }}}
+
+" " Markdownpreview {{{
+" function OpenMarkdownPreview (url)
+"     execute "silent ! firefox --new-window " . a:url
+" endfunction
+" let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+" " }}}
