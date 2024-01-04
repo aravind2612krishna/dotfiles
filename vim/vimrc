@@ -4,7 +4,8 @@ if !exists('g:storage_home')
 endif
 runtime basic.vim
 
-set guifont=IBM\ Plex\ Mono\ Text:h11
+" set guifont=IBM\ Plex\ Mono\ Text:h11
+set guifont=JetBrains\ Mono:h11
 
 if !exists('g:vscode')
     runtime plug_config.vim

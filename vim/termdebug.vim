@@ -8,7 +8,7 @@ fun! GetGdbUntilCmd()
 endf
 
 fun! AttachLastHmCmd()
-    let lhmpid = system('pgrep -n -u $USER hw$')
+    let lhmpid = system('pgrep -n -u $USER hwx$')
     return 'attach ' . lhmpid
 endf
 

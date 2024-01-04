@@ -86,8 +86,10 @@ let g:coc_snippet_prev = '|'
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev-error)
+nmap <silent> ]g <Plug>(coc-diagnostic-next-error)
+nmap <silent> [w <Plug>(coc-diagnostic-prev)
+nmap <silent> ]w <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -111,7 +113,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-nmap <leader>rf <Plug>(coc-refactor)
+nmap <leader>rr <Plug>(coc-refactor)
+nnoremap <leader>rf <Plug>(coc-codeaction-refactor)
 
 " Formatting selected code.
 xmap <leader>gq  <Plug>(coc-format-selected)

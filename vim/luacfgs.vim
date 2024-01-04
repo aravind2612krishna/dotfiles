@@ -5,6 +5,7 @@ endfunction
 
 if s:IsPlugged('nvim-treesitter')
     lua require'treesitter_config'.config_treesitter()
+    lua require'treesitter_config'.config_cpp()
 endif
 if s:IsPlugged('indent-blankline.nvim')
     lua require'indentline'
@@ -20,9 +21,15 @@ if s:IsPlugged('indent-blankline.nvim')
 	" let g:show_current_context = true,
 	" let g:show_current_context_start = true,
 endif
-if s:IsPlugged('nvim-treesitter-context.nvim')
+
+if s:IsPlugged('nvim-treesitter-context')
     lua require'nvim_treesitter_context_cfg'
 endif
+
+if s:IsPlugged('twilight.nvim')
+    lua require'twilight_cfg'
+endif
+
 if s:IsPlugged('nvim-dap')
     lua require'dapcfg'
     lua require('nvim-dap-virtual-text').setup()
@@ -51,7 +58,7 @@ if s:IsPlugged('nvim-dap')
 endif
 if s:IsPlugged('nvim-dap-ui')
     lua require'dapuicfg'
-    abbrev DapUIToggle :lua require("dapui").toggle()<CR>
+    cabbrev DapUIToggle :lua require("dapui").toggle()<CR>
 endif
 if s:IsPlugged('toggleterm.nvim')
     lua require'toggleterm_cfg'
@@ -111,8 +118,13 @@ endif
 if v:true && s:IsPlugged('nvim-gps')
     lua require'nvim_gps_cfg'
     " hi! link WinBar TSNote
-    " hi! link WinBarNC CocListBlackBlue                                                                                                                                                            
+    " hi! link WinBarNC CocListBlackBlue
     set laststatus=3
+endif
+
+if s:IsPlugged('dropbar.nvim')
+    set laststatus=3
+    lua require'dropbar_cfg'
 endif
 
 if s:IsPlugged('nvim-ufo')
@@ -276,3 +288,4 @@ lua << EOF
 	}
 EOF
 endif
+

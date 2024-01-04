@@ -1,9 +1,11 @@
 require'treesitter-context'.setup{
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
     throttle = true, -- Throttles plugin updates (may improve performance)
-    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-    trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+    max_lines = 2, -- How many lines the window should span. Values <= 0 mean no limit.
+    multiline_threshold = 2, -- Maximum number of lines to show for a single context
+    trim_scope = 'inner', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
     mode = 'topline',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+    separator = nil,
     patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
     -- For all filetypes
     -- Note that setting an entry here replaces all other patterns for this entry.

@@ -99,15 +99,17 @@ endif
 " Tree sitter {{{
 if s:use_treesitter
     Plug 'nvim-treesitter/nvim-treesitter'
-    Plug 'nvim-treesitter/nvim-treesitter-context'
+    " Plug 'nvim-treesitter/nvim-treesitter-context'
+    " Plug 'folke/twilight.nvim'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     " Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'danymat/neogen'
     Plug 'Badhi/nvim-treesitter-cpp-tools'
     " Plug 'SmiteshP/nvim-gps'
+    Plug 'Bekaboo/dropbar.nvim'
     Plug 'ThePrimeagen/refactoring.nvim'
     " Plug 'alexzanderr/nvim-treesitter-statusline'
-    " Plug 'folke/twilight.nvim'
+    Plug 'folke/twilight.nvim'
     " Plug 'nvim-treesitter/nvim-tree-docs'
     " Plug 'haringsrob/nvim_context_vt'
 
@@ -120,8 +122,13 @@ endif
 
 " fugitive
 Plug 'tpope/vim-fugitive'
-Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'rbong/vim-flog'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'stevearc/dressing.nvim'
+Plug 'sindrets/diffview.nvim',
+Plug 'harrisoncramer/gitlab.nvim' " , { 'do': ':lua require(\"gitlab.server\").build()' }
+Plug 'mistweaverco/Screenshot.nvim'
 " Plug 'tpope/vim-rhubarb'
 
 " Debuggers {{{
@@ -148,14 +155,15 @@ Plug 'junegunn/fzf.vim'
 " Plug 'shaunsingh/solarized.nvim'
 " Plug 'nyoom-engineering/oxocarbon.nvim'
 " Plug 'kartikp10/noctis.nvim'
-" Plug 'wuelnerdotexe/vim-enfocado'
-Plug 'projekt0n/github-nvim-theme', { 'tag': 'v0.0.7' }
+Plug 'rebelot/kanagawa.nvim'
+Plug 'wuelnerdotexe/vim-enfocado'
+" Plug 'projekt0n/caret.nvim'
+" Plug 'projekt0n/github-nvim-theme', { 'tag': 'v0.0.7' }
 Plug 'tomasiser/vim-code-dark'
 " }}}
 
 " Status line {{{
 if has('nvim')
-    Plug 'Eandrju/cellular-automaton.nvim'
     Plug 'nvim-lualine/lualine.nvim'
     " Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
     " Plug 'voldikss/vim-floaterm'
@@ -164,23 +172,24 @@ if has('nvim')
     " Plug 'shortcuts/no-neck-pain.nvim', { 'tag': '*' }
     " Plug 'adelarsq/neoline.vim'
     " Plug 'windwp/windline.nvim'
-    Plug 'Pocco81/true-zen.nvim'
-    Plug 'beauwilliams/focus.nvim'
+    " Plug 'Pocco81/true-zen.nvim'
+    Plug 'Eandrju/cellular-automaton.nvim'
+    " Plug 'beauwilliams/focus.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'echasnovski/mini.tabline', { 'branch': 'stable' }
-    Plug 'echasnovski/mini.indentscope', { 'branch': 'stable' }
+    " Plug 'echasnovski/mini.tabline', { 'branch': 'stable' }
+    " Plug 'echasnovski/mini.indentscope', { 'branch': 'stable' }
 
     " TODOs plugin
-    Plug 'phaazon/mind.nvim'
-    Plug 'MunifTanjim/nui.nvim'
-    Plug 'nagy135/capture-nvim'
+    " Plug 'phaazon/mind.nvim'
+    " Plug 'nagy135/capture-nvim'
     
     " Plug 'kyazdani42/nvim-tree.lua'
     " Plug 'nvim-neo-tree/neo-tree.nvim'
+    " Plug 'iamcco/markdown-preview.nvim'
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+
     Plug 'LudoPinelli/comment-box.nvim'
     Plug 'jbyuki/venn.nvim'
-    Plug 'iamcco/markdown-preview.nvim'
 else
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
@@ -286,10 +295,10 @@ if s:IsPlugged('vim-airline') " {{{
     let g:airline#extensions#whitespace#enabled = 0
     let g:airline#extensions#wordcount#enabled = 0
 
-    let g:airline_left_sep = ''
-    let g:airline_left_alt_sep = ''
-    let g:airline_right_sep = ''
-    let g:airline_right_alt_sep = ''
+    let g:airline_left_sep = '<'
+    let g:airline_left_alt_sep = '|'
+    let g:airline_right_sep = '>'
+    let g:airline_right_alt_sep = '|'
     let g:webdevicons_enable_airline_statusline = 1
 
     " let g:airline_section_c='%t'
@@ -316,6 +325,12 @@ elseif s:IsPlugged('oxocarbon.nvim')
     colorscheme oxocarbon
 elseif s:IsPlugged('github-nvim-theme')
     colorscheme github_dark
+elseif s:IsPlugged('caret.nvim')
+    " set background=light
+    colorscheme caret
+elseif s:IsPlugged('kanagawa.nvim')
+    set background=dark
+    lua require"kanagawacfg"
 elseif s:IsPlugged('vim-enfocado')
     let g:enfocado_style = "neon"
     " let g:enfocado_style = "nature"
@@ -324,7 +339,10 @@ elseif s:IsPlugged('vim-enfocado')
     autocmd VimEnter * ++nested colorscheme enfocado |
                 \ hi! link TabLine CursorLineNr      |                                                                                                              
                 \ hi! link TabLineSel Title          |
-                \ hi! link WinBar Underlined
+                " \ hi! link lualine_b_inactive DiagnosticUnderlineOk |
+                " \ hi! link WinBar Underlined         |
+                \ hi! link Ignore Folded
+    " autocmd VimEnter * ++nested colorscheme enfocado
     " colorscheme enfocado
 elseif s:IsPlugged('vim-code-dark')
     colorscheme codedark
@@ -339,6 +357,11 @@ if s:IsPlugged('vim-signify') "{{{
     " highlight! link SignifySignDelete ErrorMsg
     " highlight! link SignifySignAdd Type
 endif "}}}
+
+if s:IsPlugged('gitlab.nvim')
+    lua require("diffviewcfg")
+    lua require("gitlabcfg")
+endif
 
 " misc {{{
 if !empty($P4CLIENT)
@@ -420,9 +443,9 @@ function! StartDebug() abort
 endfunction
 " }}}
 
-" " Markdownpreview {{{
-" function OpenMarkdownPreview (url)
-"     execute "silent ! firefox --new-window " . a:url
-" endfunction
-" let g:mkdp_browserfunc = 'OpenMarkdownPreview'
-" " }}}
+" Markdownpreview {{{
+function OpenMarkdownPreview (url)
+    execute "silent ! firefox --new-window " . a:url
+endfunction
+let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+" }}}

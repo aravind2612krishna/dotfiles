@@ -115,7 +115,7 @@ vnoremap <Leader>/ <Esc>/<C-R>=<SID>ScopeSearch('[[', 2)<CR><CR>
 " }}}
 
 " session
-nnoremap <C-s> :exe 'mks! ~\' . $P4CLIENT . '.vim'<CR>
+nnoremap <C-s> :exe 'mks! ~\' . $HW_CLIENT . '.vim'<CR>
 
 set fillchars+=vert:│
 
@@ -172,8 +172,8 @@ else
         " set fillchars+=fold:─
         " set fillchars+=fold:\ 
     else
-        let g:tslinelimit = 5000
-        autocmd FileType cpp if line('$') < g:tslinelimit && line ('$') > 10 | setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr() | else | setlocal foldmarker=#if,#endif | endif
+        let g:tslinelimit = 2500
+        " autocmd FileType cpp if line('$') < g:tslinelimit && line ('$') > 10 | setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr() | else | setlocal foldmarker=#if,#endif | endif
     endif
     set fillchars+=fold:┈
     " set fillchars+=fold:⸱
@@ -263,3 +263,8 @@ set diffopt+=vertical
     " hi! link TabLine CursorLineNr                                                                                                                                   
     " hi! link TabLineSel Title    
 " endif
+
+
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+            \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+            \,sm:block-blinkwait175-blinkoff150-blinkon175

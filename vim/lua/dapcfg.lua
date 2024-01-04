@@ -7,16 +7,28 @@ dap.adapters.codelldb = {
     port = 13000
 }
 
+dap.adapters.cppdbg = {
+    id = 'cppdbg',
+    type = 'executable',
+    command = '/home/aravk/sources/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
+    MIMode = 'gdb',
+    setupCommands = { {
+        text = 'source ~/.gdbinit',
+        description = 'source my init',
+        ignoreFailures = true
+    } }
+}
+
 dap.configurations.cpp = {
     {
         name = "attach",
-        type = "codelldb",
+        type = "cppdbg",
         request = "attach",
         program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/hw/bin/linux64/hw', 'file')
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/../common/framework/linux64/hwx/bin/linux64/hwx', 'file')
         end,
-        pid = function()
-            local handle = io.popen('pgrep hw$')
+        processId = function()
+            local handle = io.popen('pgrep -n hwx$')
             local result = handle:read()
             handle:close()
             return result
@@ -25,7 +37,21 @@ dap.configurations.cpp = {
         stopOnEntry = true,
         terminal = 'integrated',
     },
+    {
+        name = "launch",
+        type = "cppdbg",
+        request = "launch",
+        program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/../common/framework/linux64/hwx/bin/linux64/hwx', 'file')
+        end,
+        args = {"-l", "en", "-client", "HyperWorksDesktop", "-plugin", "HyperworksGeneral", "-profile", "HyperworksGeneral", "-v", "HyperWorks_2023"},
+        cwd = '${workspaceFolder}',
+        stopOnEntry = true,
+        terminal = 'integrated',
+    }
 }
+
+dap.defaults.fallback.exception_breakpoints = {'raised'}
 
 local dapopts = {
   icons = { expanded = "▾", collapsed = "▸" },

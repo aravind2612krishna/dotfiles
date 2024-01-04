@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -11,4 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 require"basic"
-require("lazy").setup(plugins, opts)
+require"macros"
+require"hwinit"
+require"advanced"
+require("lazy").setup("lazyplugs", opts)

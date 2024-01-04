@@ -2,13 +2,13 @@
 -- local vim = require("vim")
 
 local function padding()
-    return [[──]]
+    return [[▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁]]
 end
 
 require'lualine'.setup {
     options = {
         icons_enabled = true,
-        theme = 'auto',
+        -- theme = 'ayu',
         -- component_separators = {'', ''},
         -- section_separators = {'', ''},
         component_separators = {'', ''},
@@ -23,7 +23,7 @@ require'lualine'.setup {
     },
     sections = {
         lualine_a = {
-            { 'mode', icons_enabled = true, separator = { left = '', right = '' } },
+            { 'mode', icons_enabled = true, separator = { left = '', right = '' } },
         },
         lualine_b = {
             {
@@ -47,6 +47,7 @@ require'lualine'.setup {
         },
         lualine_c = {
             -- { gps.get_location, condition = gps.is_available },
+            'branch',
             {'sy#repo#get_stats_decorated'},
             {'g:coc_status'},
             {
@@ -69,12 +70,28 @@ require'lualine'.setup {
     },
     inactive_sections = {
         lualine_a = {},
-        lualine_b = {},
-        lualine_c = {'filename'},
+        lualine_b = {'filename'},
+        lualine_c = {},
         lualine_x = {'location'},
         lualine_y = {},
         lualine_z = {}
     },
+    -- winbar = {
+    --     lualine_a = {},
+    --     lualine_b = {},
+    --     lualine_c = {'filename'},
+    --     lualine_x = {},
+    --     lualine_y = {},
+    --     lualine_z = {}
+    -- },
+    -- inactive_winbar = {
+    --     lualine_a = {},
+    --     lualine_b = {},
+    --     lualine_c = {'filename'},
+    --     lualine_x = {},
+    --     lualine_y = {},
+    --     lualine_z = {}
+    -- },
     -- tabline = {},
     -- extensions = {}
 }

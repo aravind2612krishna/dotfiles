@@ -6,12 +6,16 @@ function M.config_treesitter()
         highlight = {
             enable = true,                    -- false will disable the whole extension
             disable = function(lang, bufnr) -- Disable in large C++ buffers
-                return lang == "cpp" and vim.api.nvim_buf_line_count(bufnr) > 5000
+                return lang == "cpp" and vim.api.nvim_buf_line_count(bufnr) > 2500
             end,
             -- disable = { "c", "rust" },        -- list of language that will be disabled
             -- custom_captures = {               -- mapping of user defined captures to highlight groups
             --   -- ["foo.bar"] = "Identifier"   -- highlight own capture @foo.bar with highlight group "Identifier", see :h nvim-treesitter-query-extensions
             -- },
+            additional_vim_regex_highlighting = function(lang, bufnr) -- Disable in large C++ buffers
+                return lang == "cpp" and vim.api.nvim_buf_line_count(bufnr) > 2500
+            end,
+
         },
         -- tree_docs = {
         --     enable = true,
@@ -105,6 +109,30 @@ function M.config_treesitter()
             },
         },
     }
+end
+
+function M.config_cpp()
+    require 'nt-cpp-tools'.setup({
+        preview = {
+            quit = 'q',                       -- optional keymapping for quit preview
+            accept = '<tab>'                  -- optional keymapping for accept preview
+        },
+        header_extension = 'h',               -- optional
+        source_extension = {'cxx', 'cpp'},             -- optional
+        custom_define_class_function_commands = { -- optional
+            TSCppImplWrite = {
+                output_handle = require 'nt-cpp-tools.output_handlers'.get_preview_and_apply()
+            }
+            --[[
+        <your impl function custom command name> = {
+            output_handle = function (str, context)
+                -- string contains the class implementation
+                -- do whatever you want to do with it
+            end
+        }
+        ]]
+        }
+    })
 end
 
 return M

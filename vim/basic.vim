@@ -78,10 +78,10 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Tab navigation
-" map <S-H> :tabprev<cr>
-" map <S-L> :tabnext<cr>
-map <S-H> :bprev<cr>
-map <S-L> :bnext<cr>
+map <S-H> :tabprev<cr>
+map <S-L> :tabnext<cr>
+map <C-S-H> :bprev<cr>
+map <C-S-L> :bnext<cr>
 
 " Return to last edit position when opening files
 au BufReadPost * if line(" '\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
