@@ -1,0 +1,2 @@
+. ~/.bashrc
+. ~/repos/CommonUtils/ml_build_scripts/linux/HMBuildUtils.sh

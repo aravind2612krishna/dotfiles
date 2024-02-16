@@ -4,3 +4,11 @@ I have tried to keep it as minimal as possible, with mainly support for C++ and 
 Although I use only a few files from this repo in every day use, I have kept others in case I need to switch
 
 This heavily relies on vim-plug : https://github.com/junegunn/vim-plug
+
+## zellij
+Quick configuration from `cwd = dotfiles` repo
+```
+cp zellij/\.* ~ 
+mkdir -p ~/.config/zellij/
+cp zellij/*.kdl ~/config/zellij
+```
