@@ -10,5 +10,5 @@ Quick configuration from `cwd = dotfiles` repo
 ```
 cp zellij/\.* ~ 
 mkdir -p ~/.config/zellij/
-cp zellij/*.kdl ~/config/zellij
+cp zellij/*.kdl ~/.config/zellij
 ```
