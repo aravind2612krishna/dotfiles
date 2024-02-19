@@ -8,10 +8,10 @@ runtime basic.vim
 set guifont=JetBrains\ Mono:h11
 
 if !exists('g:vscode')
-    runtime plug_config.vim
+    " runtime plug_config.vim
     " runtime plugins.vim
     " runtime packager.vim
     " runtime packager_config.vim
 endif
-runtime misc.vim
+" runtime misc.vim
 

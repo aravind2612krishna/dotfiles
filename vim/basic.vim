@@ -155,7 +155,7 @@ set updatetime=500
 set mouse=a
 
 " signcolumn
-set signcolumn=yes:2
+" set signcolumn=yes:2
 
 " Loc list and quick fix mappings, putting in basic so that these mappings can
 " be overriden by other rcs
