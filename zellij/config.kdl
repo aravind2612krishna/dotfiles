@@ -188,6 +188,13 @@ keybinds clear-defaults=true {
     // }
     shared_except "tmux" "locked" {
         bind "`" { SwitchToMode "Tmux"; }
+        bind "Ctrl Alt h" { GoToPreviousTab }
+        bind "Ctrl Alt l" { GoToNextTab }
+        bind "Alt l" { MoveFocusOrTab "Right"; }
+        bind "Alt h" { MoveFocusOrTab "Left"; }
+        bind "Alt l" { MoveFocusOrTab "Right"; }
+        bind "Alt j" { MoveFocus "Down"; }
+        bind "Alt k" { MoveFocus "Up"; }
     }
 }
 
