@@ -68,20 +68,19 @@ keybinds clear-defaults=true {
     //     bind "9" { GoToTab 9; SwitchToMode "Normal"; }
     //     bind "Tab" { ToggleTab; }
     // }
-    // scroll {
-    //     bind "Ctrl s" { SwitchToMode "Normal"; }
-    //     bind "e" { EditScrollback; SwitchToMode "Normal"; }
-    //     bind "s" { SwitchToMode "EnterSearch"; SearchInput 0; }
-    //     bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
-    //     bind "j" "Down" { ScrollDown; }
-    //     bind "k" "Up" { ScrollUp; }
-    //     bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
-    //     bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
-    //     bind "d" { HalfPageScrollDown; }
-    //     bind "u" { HalfPageScrollUp; }
-    //     // uncomment this and adjust key if using copy_on_select=false
-    //     // bind "Alt c" { Copy; }
-    // }
+    scroll {
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "/" { SwitchToMode "EnterSearch"; SearchInput 0; }
+        bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
+        bind "j" "Down" { ScrollDown; }
+        bind "k" "Up" { ScrollUp; }
+        bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
+        bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
+        bind "d" { HalfPageScrollDown; }
+        bind "u" { HalfPageScrollUp; }
+        // uncomment this and adjust key if using copy_on_select=false
+        // bind "Alt c" { Copy; }
+    }
     // search {
     //     bind "Ctrl s" { SwitchToMode "Normal"; }
     //     bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
@@ -143,6 +142,8 @@ keybinds clear-defaults=true {
         bind "Space" { NextSwapLayout; }
         bind "x" { CloseFocus; SwitchToMode "Normal"; }
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "q" { SwitchToMode "Normal"; }
     }
     // shared_except "locked" {
     //     bind "Ctrl g" { SwitchToMode "Locked"; }
