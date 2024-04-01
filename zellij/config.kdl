@@ -71,7 +71,7 @@ keybinds clear-defaults=true {
     scroll {
         bind "Esc" { SwitchToMode "Normal"; }
         bind "/" { SwitchToMode "EnterSearch"; SearchInput 0; }
-        bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
+        bind "Ctrl c" "q" { ScrollToBottom; SwitchToMode "Normal"; }
         bind "j" "Down" { ScrollDown; }
         bind "k" "Up" { ScrollUp; }
         bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
@@ -273,6 +273,24 @@ plugins {
 //     }
 // }
 
+themes {
+    solarized-light {
+        fg 101 123 131
+        bg 253 246 227
+        black 7 54 66
+        red 220 50 47
+        green 133 153 0
+        yellow 181 137 0
+        blue 38 139 210
+        magenta 211 54 130
+        cyan 42 161 152
+        white 238 232 213
+        orange 203 75 22
+    }
+}
+
+theme "solarized-light"
+
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
@@ -327,7 +345,7 @@ scroll_buffer_size 100000
 // Enable or disable automatic copy (and clear) of selection when releasing mouse
 // Default: true
 //
-// copy_on_select false
+copy_on_select true
 
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
