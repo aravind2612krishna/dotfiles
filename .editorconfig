@@ -1,0 +1,8 @@
+# top-most EditorConfig file
+root = true
+
+[*.sh]
+# like -i=4
+indent_style = space
+indent_size = 4
+max_line_length = 80
