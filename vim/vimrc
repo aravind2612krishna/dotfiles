@@ -4,8 +4,11 @@ if !exists('g:storage_home')
 endif
 runtime basic.vim
 
+packloadall
+vmap <leader>y <Plug>OSCYankVisual
+
 " set guifont=IBM\ Plex\ Mono\ Text:h11
-set guifont=JetBrains\ Mono:h11
+" set guifont=JetBrains\ Mono:h11
 
 if !exists('g:vscode')
     " runtime plug_config.vim
