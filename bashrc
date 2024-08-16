@@ -6,6 +6,8 @@ fi
 REPOS_PATH=$HOME/repos
 COMMON_UTILS_PATH=${REPOS_PATH}/CommonUtils/
 
+[ -n "$SSH_TTY" ] && export TERM=xterm-256color
+
 if [ "$BASHRC_SOURCED" != "1" ]; then
 
     export BASHRC_SOURCED=1
@@ -54,20 +56,26 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     # export P4PORT=10.75.11.75:1999
     #export P4PORT=blrperforce:1999
     # HW_THIRDPARTY=${REPOS_PATH}/HmMshgFbNxtThpty_AK_1204
+    if [ -d /workarea ]; then
+        [ -z "$HW_THIRDPARTY" ] && export HW_THIRDPARTY=/workarea/third_party
+        [ -z "$HW_THIRDPARTY" ] && export HW_INTERNALS=/workarea/internal
+    fi
     [ -z "$HW_THIRDPARTY" ] && export HW_THIRDPARTY=${REPOS_PATH}/third_party
     [ -z "$HW_INTERNALS" ] && export HW_INTERNALS=${REPOS_PATH}/internal
-    # export HW_THIRDPARTY=${REPOS_PATH}/HmMshgFbNxtThpty_AK_1204_backup
-    # export HW_FRAMEWORK=${REPOS_PATH}/HmFrwkWS_AK_1204/common/framework/linux64/hwx
     export HW_SHOW_UNITY_DEV_CONSOLE=1
     export HM_MSHG_REGRESSION_SUITE_PATH=/home/aravk/repos/regressionsuite
     export HM_MIDMESH_ENABLE_VIZ=1 # MidMesh
     export HM_TIMESTAMP=1
     export HWDISPLAY_BUILD=1
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${HW_THIRDPARTY}/tcl/tcl8.5.9/linux64/lib
-    # export ALTAIR_LICENSE_PATH=/home/aravk/Altair/ALUS_ALIN_20210913_499475.dat:6200@10.75.11.91
-    # export ALTAIR_LICENSE_PATH=/home/aravk/Altair/ALUS_ALIN_20210913_499475.dat
-    export ALTAIR_LICENSE_PATH=/home/aravk/altlic.dat
-    export persTkn=$(cat ~/repos/pat)
+    export LD_LIBRARY_PATH=~/sources/neovim/build/lib/:$LD_LIBRARY_PATH
+
+    if [ -e /home/aravk/altlic.dat ]; then
+        export ALTAIR_LICENSE_PATH=/home/aravk/altlic.dat
+    else
+        export ALTAIR_LICENSE_PATH="6200@blrlicsrv01:6200@blrlicsrv03:6200@trlicsrv03"
+    fi
+    [ -f ~/repos/pat ] && export persTkn=$(cat ~/repos/pat)
     export P4IGNORE=~/P4IGNORE
     export HM_QA_VALIDATE_API=1
     export HM_EXPOSE_MDI=1
