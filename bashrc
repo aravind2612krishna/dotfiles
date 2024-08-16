@@ -1,5 +1,5 @@
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
 # Local variables
@@ -9,21 +9,37 @@ COMMON_UTILS_PATH=${REPOS_PATH}/CommonUtils/
 if [ "$BASHRC_SOURCED" != "1" ]; then
 
     export BASHRC_SOURCED=1
-    
-    export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
-    export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar";
-    export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew";
-    export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";
-    export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:";
-    export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}";
+
+    export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+    export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+    export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+    export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}"
+    export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
+    export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
 
     # User specific environment
-    PATH="$HOME/.local/bin:$PATH"
-    PATH="${COMMON_UTILS_PATH}/util_scripts:$PATH"
-    PATH="$HOME/local/bin:$PATH"
-    PATH="$HOME/.cargo/bin:$PATH"
-    PATH="$HOME/nvim/bin:$PATH"
-    PATH="/usr/local/go/bin:$PATH"
+    # Define an array of paths
+    paths=(
+        "/workarea/third_party/python/python3.8.10/linux64/bin"
+        "$HOME/sources/git-2.43.2"
+        "$HOME/local/nvim/bin"
+        "$HOME/.yarn/bin"
+        "$HOME/.config/yarn/global/node_modules/.bin"
+        "$HOME/.local/bin"
+        "${COMMON_UTILS_PATH}/util_scripts"
+        "$HOME/local/bin"
+        "$HOME/.cargo/bin"
+        "$HOME/nvim/bin"
+        "/usr/local/go/bin"
+    )
+
+    # Loop through each path and add it to PATH if it exists
+    for path in "${paths[@]}"; do
+        if [ -d "$path" ]; then
+            PATH="$path:$PATH"
+        fi
+    done
+
     export PATH
 
     # WEBHOOK_URL
@@ -38,10 +54,8 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     # export P4PORT=10.75.11.75:1999
     #export P4PORT=blrperforce:1999
     # HW_THIRDPARTY=${REPOS_PATH}/HmMshgFbNxtThpty_AK_1204
-    HW_THIRDPARTY=${REPOS_PATH}/third_party
-    export HW_THIRDPARTY
-    HW_INTERNALS=${REPOS_PATH}/internal
-    export HW_INTERNALS
+    [ -z "$HW_THIRDPARTY" ] && export HW_THIRDPARTY=${REPOS_PATH}/third_party
+    [ -z "$HW_INTERNALS" ] && export HW_INTERNALS=${REPOS_PATH}/internal
     # export HW_THIRDPARTY=${REPOS_PATH}/HmMshgFbNxtThpty_AK_1204_backup
     # export HW_FRAMEWORK=${REPOS_PATH}/HmFrwkWS_AK_1204/common/framework/linux64/hwx
     export HW_SHOW_UNITY_DEV_CONSOLE=1
@@ -75,7 +89,6 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     export HM_GEOMETRY_DEBUG_CTX_ENABLE=1
 fi
 
-
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
@@ -99,11 +112,10 @@ if [ -f "${COMMON_UTILS_PATH}/util_scripts/wsls.bash" ]; then
     alias ws='cd $REPOS_PATH; wsls'
 fi
 
-function nvq
-{ 
+function nvq {
     local session_file=~/${HW_CLIENT}.vim
     if [[ -e $session_file ]]; then
-        nvim-qt --fullscreen --no-ext-tabline --no-ext-popupmenu -- -S ~/"${HW_CLIENT}".vim 
+        nvim-qt --fullscreen --no-ext-tabline --no-ext-popupmenu -- -S ~/"${HW_CLIENT}".vim
     else
         nvim-qt --fullscreen --no-ext-tabline --no-ext-popupmenu
     fi
@@ -128,25 +140,25 @@ RESET="\[\033[0m\]"
 
 # Function to get the current git branch
 git_branch() {
-  git symbolic-ref --short HEAD 2>/dev/null
+    git symbolic-ref --short HEAD 2>/dev/null
 }
 
 update_ps1() {
-  local exit_status=$?
-  local status_color
+    local exit_status=$?
+    local status_color
 
-  if [ $exit_status -eq 0 ]; then
-    status_color="${WHITE}"
-  else
-    status_color="${RED}"
-  fi
-
-  PS1="${GREEN}\u${WHITE}@${CYAN}\h${WHITE}:${BLUE}\w${WHITE}$(
-    branch=$(git_branch)
-    if [ -n "$branch" ]; then
-      echo " ${PURPLE}(${branch})"
+    if [ $exit_status -eq 0 ]; then
+        status_color="${WHITE}"
+    else
+        status_color="${RED}"
     fi
-  )${YELLOW} \t${status_color} \$?${RESET} $ "
+
+    PS1="${GREEN}\u${WHITE}@${CYAN}\h${WHITE}:${BLUE}\w${WHITE}$(
+        branch=$(git_branch)
+        if [ -n "$branch" ]; then
+            echo " ${PURPLE}(${branch})"
+        fi
+    )${YELLOW} \t${status_color} \$?${RESET} $ "
 }
 
 # Set the PROMPT_COMMAND to call update_ps1 before displaying each prompt
@@ -163,6 +175,5 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 # export __GLX_VENDOR_LIBRARY_NAME=nvidia
 # unset  __NV_PRIME_RENDER_OFFLOAD
 # unset __GLX_VENDOR_LIBRARY_NAME
-
 
 # source ~/dlang/dmd-2.107.1/activate
