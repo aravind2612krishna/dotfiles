@@ -3,7 +3,8 @@
 # mkdir -p ~/.config/zellij/
 rsync --archive --delete zellij/*.kdl ~/.config/zellij
 rsync --archive zellij/\.* ~
-rsync --archive .editorconfig ~/.editorconfig
+rsync --archive editorconfig ~/.editorconfig
+cp -rf bashrc ~/.bashrc
 
 mkdir -p ~/.vim/pack/osc/start/
 (cd ~/.vim/pack/osc/start && [ ! -d "vim-oscyank" ] && git clone https://github.com/ojroques/vim-oscyank)
