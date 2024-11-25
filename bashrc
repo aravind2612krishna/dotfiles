@@ -9,6 +9,7 @@ COMMON_UTILS_PATH=${REPOS_PATH}/CommonUtils/
 [ -n "$SSH_TTY" ] && export TERM=xterm-256color
 
 if [ "$BASHRC_SOURCED" != "1" ]; then
+    gsettings set org.gnome.shell.keybindings toggle-overview "['Super_L']" 2> /dev/null
 
     export BASHRC_SOURCED=1
 
@@ -16,7 +17,7 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
     export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
     export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}"
-    export PATH="/home/aravk/.local/kitty.app/bin/kitty${PATH+:$PATH}"
+    export PATH="/home/aravk/.local/kitty.app/bin/${PATH+:$PATH}"
     export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
     export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
 
@@ -25,7 +26,7 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     paths=(
         "/workarea/third_party/python/python3.8.10/linux64/bin"
         "$HOME/sources/git-2.43.2"
-        "$HOME/local/nvim/bin"
+        "$HOME/.local/bin"
         "$HOME/.yarn/bin"
         "$HOME/.config/yarn/global/node_modules/.bin"
         "$HOME/.local/bin"
