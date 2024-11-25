@@ -16,6 +16,7 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
     export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
     export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}"
+    export PATH="/home/aravk/.local/kitty.app/bin/kitty${PATH+:$PATH}"
     export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
     export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
 
@@ -185,3 +186,4 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 # unset __GLX_VENDOR_LIBRARY_NAME
 
 # source ~/dlang/dmd-2.107.1/activate
+alias kittyupdate='curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin' 

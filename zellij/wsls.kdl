@@ -1,9 +1,11 @@
 layout {
-  pane command="bash" {
-    args "--rcfile" "~/.wslsrc"
-    close_on_exit true
-  }
-  pane size=1 borderless=true {
-    plugin location="zellij:compact-bar"
-  }
+    pane size=1 borderless=true {
+        plugin location="zellij:tab-bar"
+    }
+    pane close_on_exit=true command="bash" {
+        args "--rcfile" "~/.wslsrc"
+    }
+    pane size=1 borderless=true {
+        plugin location="zellij:status-bar"
+    }
 }
