@@ -1,0 +1,69 @@
+# python
+# import sys
+# # python sys.path.append("/usr/share/gcc-8/python");
+# from libstdcxx.v6.printers import register_libstdcxx_printers
+# register_libstdcxx_printers (None)
+# end
+set auto-load python-scripts on
+set auto-solib-add on
+set print pretty on
+set print array on
+set print elements 100
+set breakpoint pending on
+# below is due to crash
+set print raw-frame-arguments
+source /home/aravk/repos/CommonUtils/linux_scripts/gdbCustomCommands.py
+source /home/aravk/repos/CommonUtils/linux_scripts/hmpretprinters.py
+unset environment PYTHONHOME
+
+set $hwprettyprint=1
+
+define pattach
+  if $argc != 1
+   help pattach
+  else
+   shell echo -e "\
+set \$PID = "$(pgrep -n $arg0)"\n\
+if \$PID > 0\n\
+  attach "$(pgrep -n $arg0)"\n\
+else\n\
+  print \"Process '"$arg0"' not found\"\n\
+end" > /tmp/gdb.pgrep
+   source /tmp/gdb.pgrep
+  end
+end
+document pattach
+Attach to process by name.
+Usage: pattach PROG_NAME
+end
+
+define rrattach
+    if $argc > 0
+      file ~/.local/share/rr/latest-trace/mmap_clone_3_$arg0
+    else
+        file ~/.local/share/rr/latest-trace/mmap_clone_3_hwx
+    end
+    set sysroot /
+    target extended-remote 127.0.0.1:5000
+end
+document rrattach
+Attach to latest rr recording
+Use after : rr replay -s 5000
+end
+
+define ldsyms
+   sharedlibrary libcommands.so
+   sharedlibrary libafcmesh.so
+   sharedlibrary libhmobj.so
+   sharedlibrary libhmcore.so
+end
+document ldsyms
+    load common shared library symbols
+end
+
+# python
+# import sys
+# sys.path.insert(1, '/home/aravk/sources/Boost-Pretty-Printer')
+# import boost
+# boost.register_printers(boost_version=(1,7,0))
+# end
