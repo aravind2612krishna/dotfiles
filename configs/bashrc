@@ -3,7 +3,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # Local variables
-REPOS_PATH=$HOME/repos
+REPOS_PATH=/mnt/work/repos
 COMMON_UTILS_PATH=${REPOS_PATH}/CommonUtils/
 
 [ -n "$SSH_TTY" ] && export TERM=xterm-256color
@@ -18,6 +18,7 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
     export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}"
     export PATH="/home/aravk/.local/kitty.app/bin/${PATH+:$PATH}"
+    export PATH="/home/linuxbrew/.linuxbrew/opt/node@22/bin:$PATH"
     export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
     export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
 
@@ -65,7 +66,7 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     [ -z "$HW_THIRDPARTY" ] && export HW_THIRDPARTY=${REPOS_PATH}/third_party
     [ -z "$HW_INTERNALS" ] && export HW_INTERNALS=${REPOS_PATH}/internal
     export HW_SHOW_UNITY_DEV_CONSOLE=1
-    export HM_MSHG_REGRESSION_SUITE_PATH=/home/aravk/repos/regressionsuite
+    export HM_MSHG_REGRESSION_SUITE_PATH=${REPOS_PATH}/regressionsuite
     export HM_MIDMESH_ENABLE_VIZ=1 # MidMesh
     export HM_TIMESTAMP=1
     export HWDISPLAY_BUILD=1
@@ -77,7 +78,7 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     else
         export ALTAIR_LICENSE_PATH="6200@blrlicsrv01:6200@blrlicsrv03:6200@trlicsrv03"
     fi
-    [ -f ~/repos/pat ] && export persTkn=$(cat ~/repos/pat)
+    [ -f ${REPOS_PATH}/pat ] && export persTkn=$(cat ${REPOS_PATH}/pat)
     export P4IGNORE=~/P4IGNORE
     export HM_QA_VALIDATE_API=1
     export HM_EXPOSE_MDI=1
@@ -188,3 +189,14 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 
 # source ~/dlang/dmd-2.107.1/activate
 alias kittyupdate='curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin' 
+
+if [ ! -e ~/.hwrc ]; then
+    echo ". ~/.bashrc" > ~/.hwrc
+    echo ". ${COMMON_UTILS_PATH}/ml_build_scripts/linux/HMBuildUtils.sh" >> ~/.hwrc
+fi
+
+if [ ! -e ~/.hwdockerrc ]; then
+    echo ". ~/.bashrc" > ~/.hwdockerrc
+    echo ". ${COMMON_UTILS_PATH}/ml_build_scripts/linux/HMBuildUtils.sh" >> ~/.hwdockerrc
+    echo "docker_run" >> ~/.hwdockerrc
+fi

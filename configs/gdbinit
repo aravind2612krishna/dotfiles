@@ -12,8 +12,8 @@ set print elements 100
 set breakpoint pending on
 # below is due to crash
 set print raw-frame-arguments
-source /home/aravk/repos/CommonUtils/linux_scripts/gdbCustomCommands.py
-source /home/aravk/repos/CommonUtils/linux_scripts/hmpretprinters.py
+source /mnt/work/repos/CommonUtils/linux_scripts/gdbCustomCommands.py
+source /mnt/work/repos/CommonUtils/linux_scripts/hmpretprinters.py
 unset environment PYTHONHOME
 
 set $hwprettyprint=1

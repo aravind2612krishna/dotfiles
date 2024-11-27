@@ -1,6 +1,11 @@
 [user]
-	email = aravk@altair.com
 	name = aravk
+	email = aravk@altair.com
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 [core]
 	editor = vi
 	autocrlf = input
