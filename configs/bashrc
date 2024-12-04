@@ -200,3 +200,5 @@ if [ ! -e ~/.hwdockerrc ]; then
     echo ". ${COMMON_UTILS_PATH}/ml_build_scripts/linux/HMBuildUtils.sh" >> ~/.hwdockerrc
     echo "docker_run" >> ~/.hwdockerrc
 fi
+
+if command -v "fzf" 1>/dev/null; then     eval "$(fzf --bash)"; fi
