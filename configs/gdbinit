@@ -8,6 +8,7 @@ set auto-load python-scripts on
 set auto-solib-add on
 set print pretty on
 set print array on
+set print array-indexes on
 set print elements 100
 set breakpoint pending on
 # below is due to crash

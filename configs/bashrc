@@ -72,6 +72,7 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     export HWDISPLAY_BUILD=1
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${HW_THIRDPARTY}/tcl/tcl8.5.9/linux64/lib
     export LD_LIBRARY_PATH=~/sources/neovim/build/lib/:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/home/linuxbrew/lib:$LD_LIBRARY_PATH
 
     if [ -e /home/aravk/altlic.dat ]; then
         export ALTAIR_LICENSE_PATH=/home/aravk/altlic.dat
