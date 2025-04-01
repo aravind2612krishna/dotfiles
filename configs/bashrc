@@ -181,6 +181,7 @@ export PS1
 
 export DENO_INSTALL="/home/aravk/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+export NVIM_APPNAME=astronvim_v5
 
 # __GLX_VENDOR_LIBRARY_NAME=nvidia __NV_PRIME_RENDER_OFFLOAD=1
 # export  __NV_PRIME_RENDER_OFFLOAD=1
