@@ -9,13 +9,14 @@ set auto-solib-add on
 set print pretty on
 set print array on
 set print array-indexes on
-set print elements 100
+set print elements 500
 set breakpoint pending on
 # below is due to crash
 set print raw-frame-arguments
 source /mnt/work/repos/CommonUtils/linux_scripts/gdbCustomCommands.py
 source /mnt/work/repos/CommonUtils/linux_scripts/hmpretprinters.py
 unset environment PYTHONHOME
+add-auto-load-safe-path /home/linuxbrew/.linuxbrew/Cellar/gcc/15.1.0/lib/gcc/current/libstdc++.so.6.0.34-gdb.py
 
 set $hwprettyprint=1
 
@@ -42,7 +43,7 @@ define rrattach
     if $argc > 0
       file ~/.local/share/rr/latest-trace/mmap_clone_3_$arg0
     else
-        file ~/.local/share/rr/latest-trace/mmap_clone_3_hwx
+        file ../common/framework/linux64/hwx/bin/linux64/hwx
     end
     set sysroot /
     target extended-remote 127.0.0.1:5000

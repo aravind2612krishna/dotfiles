@@ -7,6 +7,7 @@ REPOS_PATH=/mnt/work/repos
 COMMON_UTILS_PATH=${REPOS_PATH}/CommonUtils/
 
 [ -n "$SSH_TTY" ] && export TERM=xterm-256color
+export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig${PKG_CONFIG_PATH+:$PKG_CONFIG_PATH}"
 
 if [ "$BASHRC_SOURCED" != "1" ]; then
     gsettings set org.gnome.shell.keybindings toggle-overview "['Super_L']" 2> /dev/null
@@ -67,12 +68,13 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     [ -z "$HW_INTERNALS" ] && export HW_INTERNALS=${REPOS_PATH}/internal
     export HW_SHOW_UNITY_DEV_CONSOLE=1
     export HM_MSHG_REGRESSION_SUITE_PATH=${REPOS_PATH}/regressionsuite
+    export HM_DBGDRAW_NODE_METADATA=1
     export HM_MIDMESH_ENABLE_VIZ=1 # MidMesh
     export HM_TIMESTAMP=1
     export HWDISPLAY_BUILD=1
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${HW_THIRDPARTY}/tcl/tcl8.5.9/linux64/lib
     export LD_LIBRARY_PATH=~/sources/neovim/build/lib/:$LD_LIBRARY_PATH
-    export LD_LIBRARY_PATH=/home/linuxbrew/lib:$LD_LIBRARY_PATH
+    # export LD_LIBRARY_PATH=/home/linuxbrew/.linuxbrew/lib:$LD_LIBRARY_PATH
 
     if [ -e /home/aravk/altlic.dat ]; then
         export ALTAIR_LICENSE_PATH=/home/aravk/altlic.dat
@@ -181,7 +183,6 @@ export PS1
 
 export DENO_INSTALL="/home/aravk/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
-export NVIM_APPNAME=astronvim_v5
 
 # __GLX_VENDOR_LIBRARY_NAME=nvidia __NV_PRIME_RENDER_OFFLOAD=1
 # export  __NV_PRIME_RENDER_OFFLOAD=1
