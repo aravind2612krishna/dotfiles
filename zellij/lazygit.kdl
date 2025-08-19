@@ -1,0 +1,13 @@
+layout {
+    floating_panes {
+        pane {
+            command "lazygit"
+            name "lazygit-pane"
+            x "1%"
+            y "1%"
+            width "53%"
+            height "98%"
+            close_on_exit true
+        }
+    }
+}
