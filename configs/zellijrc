@@ -1,0 +1,18 @@
+#!/bin/bash
+
+pane_exists() {
+    local pane_layout
+    pane_layout=$(zellij action dump-layout)
+    echo "$pane_layout" | sed -ne '/tab.*focus=true.*$/,/^    }/p' | grep -q "$1"
+    return $?
+}
+
+workspace_toggle() {
+    local created=0
+    pane_exists lazygit || { zellij run -c -f -n lazygit -x 1% -y 1% --height 98% --width 50% -- lazygit && created=1; }
+    pane_exists docker || { [ -d hwcommon ] && zellij run -c -f -n docker -x 51% -y 1% --height 50% --width 50% -- bash "--rcfile" "$HOME/.hwdockerrc" && created=1; }
+    pane_exists hwrc || { zellij run -c -f -n tempterm -x 51% -y 51% --height 49% --width 49% -- bash "--rcfile" "$HOME/.hwrc" && created=1; }
+    [ $created -eq 1 ] || { echo ha && zellij action toggle-floating-panes; }
+}
+
+# vim: filetype=bash
