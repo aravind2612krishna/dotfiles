@@ -126,14 +126,9 @@ keybinds clear-defaults=true {
         bind "Alt ]" { NextSwapLayout; }
         bind "f" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "g" {
-            Run "lazygit" {
+            Run "bash" "--rcfile" "~/.bashrc" "-i" "-c" "workspace_toggle" {
                 floating true
-                name "lazygit-pane"
                 close_on_exit true
-                x "1%"
-                y "1%"
-                height "98%"
-                width "53%"
             }
             SwitchToMode "locked"
         }
@@ -175,12 +170,6 @@ keybinds clear-defaults=true {
     }
     shared_except "locked" "pane" "search" "session" {
         bind "c" { NewTab; SwitchToMode "locked"; }
-        bind "w" {
-            NewTab {
-                layout "wsls.kdl"
-            };
-            SwitchToMode "locked";
-        }
     }
     shared_except "locked" "pane" "search" "session" "move" "tmux" {
         bind "p" { SwitchToMode "pane"; }

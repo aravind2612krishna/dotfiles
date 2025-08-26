@@ -167,12 +167,14 @@ update_ps1() {
         status_color="${RED}"
     fi
 
-    PS1="${GREEN}\u${WHITE}@${CYAN}\h${WHITE}:${BLUE}\w${WHITE}$(
+    local leftPS1="${GREEN}\u${WHITE}@${CYAN}\h${WHITE}:${BLUE}\w${WHITE}$(
         branch=$(git_branch)
         if [ -n "$branch" ]; then
             echo " ${PURPLE}(${branch})"
         fi
-    )${YELLOW} \t${status_color} \$?${RESET} $ "
+    )"
+    local rightPS1="${YELLOW} \t${status_color} \$?${RESET}"
+    PS1="${leftPS1} ______________________________________ ${rightPS1}\n> "
 }
 
 # Set the PROMPT_COMMAND to call update_ps1 before displaying each prompt
@@ -192,6 +194,7 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 
 # source ~/dlang/dmd-2.107.1/activate
 alias kittyupdate='curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin' 
+alias nv='NVIM_APPNAME=nvim_minimal_deps nvim'
 
 if [ ! -e ~/.hwrc ]; then
     echo ". ~/.bashrc" > ~/.hwrc
@@ -205,3 +208,5 @@ if [ ! -e ~/.hwdockerrc ]; then
 fi
 
 if command -v "fzf" 1>/dev/null; then     eval "$(fzf --bash)"; fi
+
+. ~/.zellijrc
