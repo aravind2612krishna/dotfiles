@@ -114,7 +114,7 @@ keybinds clear-defaults=true {
         }
     }
     shared_except "locked" {
-        bind "~" { WriteChars "`"; SwitchToMode "normal"; }
+        bind "`" { WriteChars "`"; SwitchToMode "locked"; }
         bind "Alt left" { MoveFocusOrTab "left"; }
         bind "Alt down" { MoveFocus "down"; }
         bind "Alt up" { MoveFocus "up"; }
@@ -132,7 +132,7 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "locked"
         }
-        bind "`" { SwitchToMode "locked"; }
+        bind "esc" { SwitchToMode "locked"; }
         bind "c" { NewTab; SwitchToMode "locked"; }
         bind "w" {
           NewTab {
@@ -142,6 +142,9 @@ keybinds clear-defaults=true {
           SwitchToMode "locked"
         }
         bind "h" { MoveFocusOrTab "left"; SwitchToMode "locked"; }
+        bind "j" { MoveFocus "down"; SwitchToMode "locked"; }
+        bind "k" { MoveFocus "up"; SwitchToMode "locked"; }
+        bind "l" { MoveFocusOrTab "right"; SwitchToMode "locked"; }
         bind "Alt i" { MoveTab "left"; }
         bind "Alt j" { MoveFocus "down"; }
         bind "Alt k" { MoveFocus "up"; }
