@@ -13,10 +13,8 @@ set print elements 500
 set breakpoint pending on
 # below is due to crash
 set print raw-frame-arguments
-source /mnt/work/repos/CommonUtils/linux_scripts/gdbCustomCommands.py
-source /mnt/work/repos/CommonUtils/linux_scripts/hmpretprinters.py
 unset environment PYTHONHOME
-add-auto-load-safe-path /home/linuxbrew/.linuxbrew/Cellar/gcc/15.1.0/lib/gcc/current/libstdc++.so.6.0.34-gdb.py
+add-auto-load-safe-path /home/linuxbrew/.linuxbrew/Cellar/gcc/15.2.0/lib/gcc/current/libstdc++.so.6.0.34-gdb.py
 
 set $hwprettyprint=1
 
@@ -63,9 +61,29 @@ document ldsyms
     load common shared library symbols
 end
 
-# python
-# import sys
-# sys.path.insert(1, '/home/aravk/sources/Boost-Pretty-Printer')
-# import boost
-# boost.register_printers(boost_version=(1,7,0))
-# end
+python
+import sys
+sys.path.append("/usr/share/gcc/python")
+from libstdcxx.v6.printers import register_libstdcxx_printers
+register_libstdcxx_printers(None)
+
+class IgnoreErrors(gdb.Command):
+    """Run a GDB command and ignore errors."""
+
+    def __init__(self):
+        super(IgnoreErrors, self).__init__("ignore-errors", gdb.COMMAND_USER)
+
+    def invoke(self, arg, from_tty):
+        try:
+            gdb.execute(arg)
+        except gdb.error:
+            pass
+
+IgnoreErrors()
+
+end
+
+source /mnt/work/repos/CommonUtils/linux_scripts/gdbCustomCommands.py
+source /mnt/work/repos/CommonUtils/linux_scripts/hmpretprinters.py
+
+ignore-errors source .gdbinit

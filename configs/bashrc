@@ -174,14 +174,16 @@ update_ps1() {
         fi
     )"
     local rightPS1="${YELLOW} \t${status_color} \$?${RESET}"
-    PS1="${leftPS1} ______________________________________ ${rightPS1}\n> "
+    local cols
+    cols=$COLUMNS
+    local padding=4 # $((cols / 8))
+    PS1="$(printf '%s' "$leftPS1")$(printf '%*s' $padding '' | tr ' ' '-')$(printf '%s' "$rightPS1")\n> "
+    export PS1
 }
 
 # Set the PROMPT_COMMAND to call update_ps1 before displaying each prompt
 PROMPT_COMMAND=update_ps1
-
-# Export the PS1 variable
-export PS1
+update_ps1
 
 export DENO_INSTALL="/home/aravk/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
