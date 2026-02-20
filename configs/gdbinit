@@ -99,16 +99,33 @@ class SourceIfExists(gdb.Command):
             print("[Skipped] {} does not exist.".format(filetosource))
 
 
+class SearchAndSource(gdb.Command):
+    """Search for a file in common locations and source it if found."""
+
+    def __init__(self):
+        super(SearchAndSource, self).__init__("searchandsource", gdb.COMMAND_USER)
+
+    def invoke(self, arg, from_tty):
+        locationstosearch = [
+            "/mnt/work/repos/CommonUtils/linux_scripts/{}".format(arg),
+            "/work/repos/CommonUtils/linux_scripts/{}".format(arg),
+            "/workarea/CommonUtils/linux_scripts/{}".format(arg),
+            path.expanduser("~/CommonUtils/linux_scripts/{}".format(arg)),
+            "./{}".format(arg)
+        ]
+        for loc in locationstosearch:
+            if path.exists(loc):
+                gdb.execute("source {}".format(loc))
+                print("[Sourced] {}.".format(loc))
+                return
+
 IgnoreErrors()
 SourceIfExists()
+SearchAndSource()
 
 end
 
-sourceifexists /mnt/work/repos/CommonUtils/linux_scripts/gdbCustomCommands.py
-sourceifexists /mnt/work/repos/CommonUtils/linux_scripts/hmpretprinters.py
-sourceifexists /work/repos/CommonUtils/linux_scripts/gdbCustomCommands.py
-sourceifexists /work/repos/CommonUtils/linux_scripts/hmpretprinters.py
-sourceifexists /workarea/CommonUtils/linux_scripts/gdbCustomCommands.py
-sourceifexists /workarea/CommonUtils/linux_scripts/hmpretprinters.py
+searchandsource gdbCustomCommands.py
+searchandsource hmpretprinters.py
 sourceifexists ~/sources/eigengdb/eigengdb/__init__.py
 sourceifexists .gdbinit
