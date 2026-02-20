@@ -106,5 +106,9 @@ end
 
 sourceifexists /mnt/work/repos/CommonUtils/linux_scripts/gdbCustomCommands.py
 sourceifexists /mnt/work/repos/CommonUtils/linux_scripts/hmpretprinters.py
+sourceifexists /work/repos/CommonUtils/linux_scripts/gdbCustomCommands.py
+sourceifexists /work/repos/CommonUtils/linux_scripts/hmpretprinters.py
+sourceifexists /workarea/CommonUtils/linux_scripts/gdbCustomCommands.py
+sourceifexists /workarea/CommonUtils/linux_scripts/hmpretprinters.py
 sourceifexists ~/sources/eigengdb/eigengdb/__init__.py
 sourceifexists .gdbinit
