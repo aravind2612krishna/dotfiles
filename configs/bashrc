@@ -81,7 +81,12 @@ setupvars() {
 
 	local COMMON_UTILS_PATH=${REPOS_PATH}/CommonUtils
     # shellcheck source=/mnt/work/repos/CommonUtils/linux_scripts/bashrc
-    [ -d "$COMMON_UTILS_PATH" ] && . "$COMMON_UTILS_PATH/linux_scripts/bashrc"
+    [ -d "$COMMON_UTILS_PATH" ] && {
+        . "$COMMON_UTILS_PATH/linux_scripts/bashrc"
+        sourceCommonUtilsVars
+        sourceHMRelatedVars "$REPOS_PATH"
+        alias ws="cd $REPOS_PATH; pwd; wsls"
+    }
 
     [ -f "$RC_DIR/brewrc" ] && source "$RC_DIR/brewrc"
 	[ -f "$RC_DIR/zellijrc" ] && source "$RC_DIR/zellijrc"
