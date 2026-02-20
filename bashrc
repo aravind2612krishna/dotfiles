@@ -78,6 +78,7 @@ if [ "$BASHRC_SOURCED" != "1" ]; then
     else
         export ALTAIR_LICENSE_PATH="6200@blrlicsrv01:6200@blrlicsrv03:6200@trlicsrv03"
     fi
+    [ -f ${REPOS_PATH}/pat ] && export persTkn=$(cat ${REPOS_PATH}/pat)
     export P4IGNORE=~/P4IGNORE
     export HM_QA_VALIDATE_API=1
     export HM_EXPOSE_MDI=1
@@ -198,4 +199,8 @@ if [ ! -e ~/.hwdockerrc ]; then
     echo ". ~/.bashrc" > ~/.hwdockerrc
     echo ". ${COMMON_UTILS_PATH}/ml_build_scripts/linux/HMBuildUtils.sh" >> ~/.hwdockerrc
     echo "docker_run" >> ~/.hwdockerrc
+fi
+
+if command -v "fzf" 1>/dev/null; then
+    eval "$(fzf --bash)"
 fi
