@@ -21,9 +21,11 @@ update_ps1() {
 	local GREEN="\[\033[0;32m\]"
 	local YELLOW="\[\033[0;33m\]"
 	local BLUE="\[\033[0;34m\]"
+	local LTBLUE="\[\033[0;94m\]"
 	local PURPLE="\[\033[0;35m\]"
 	local CYAN="\[\033[0;36m\]"
 	local WHITE="\[\033[0;37m\]"
+	local BRWHITE="\[\033[0;97m\]"
 	local RESET="\[\033[0m\]"
 
 	local exit_status=$?
@@ -36,7 +38,7 @@ update_ps1() {
 	fi
 
 	local leftPS1
-    leftPS1="${GREEN}\u${WHITE}@${CYAN}\h${WHITE}:${BLUE}\w${WHITE}$(
+    leftPS1="${GREEN}\u${WHITE}@${CYAN}\h${WHITE}:${BRWHITE}\w${WHITE}$(
 		branch=$(git_branch)
 		if [ -n "$branch" ]; then
 			echo " ${PURPLE}(${branch})"
@@ -110,10 +112,10 @@ setupvars() {
 			"$HOME/.config/yarn/global/node_modules/.bin"
 			"$HOME/.cargo/bin"
 			"$HOME/nvim/bin"
-            "$HOME/.local/kitty.app/bin"
+			"$HOME/.local/kitty.app/bin"
 			"/usr/local/go/bin"
 		)
-        addToPath "${paths[@]}"
+		addToPath "${paths[@]}"
 
 		export EDITOR=nvim
 
@@ -150,7 +152,7 @@ setupvars() {
 
 	# source ~/dlang/dmd-2.107.1/activate
 	alias kittyupdate='curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin'
-	alias nv='NVIM_APPNAME=nvim_minimal_deps nvim'
+	alias nv='nvim'
 	if command -v "fzf" 1>/dev/null; then eval "$(fzf --bash)"; fi
 }
 
