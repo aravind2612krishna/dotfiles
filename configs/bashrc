@@ -66,11 +66,10 @@ addToPath() {
 
 
 withpat() {
-    if [ -f "$HOME"/pat ]; then
-        persTkn=$(cat "$HOME"/pat) "$@"
-    else
-        "$@"
-    fi
+    local envs=()
+    [ -f "$HOME"/pat ] && envs+=("persTkn=$(cat $HOME/pat)")
+    [ -f "$HOME"/ifrogpat ] && envs+=("IJFROG_PRIVATE_IDENTITY_TOKEN_REF=$(cat $HOME/ifrogpat)")
+    env "${envs[@]}" "$@"
 }
 
 setupvars() {
