@@ -126,6 +126,8 @@ setupvars() {
 		export HISTSIZE=1000000
 		export HISTFILESIZE=100000000
 	fi
+    export BUILDAH_SHORT_NAME_MODE=permissive
+    export CONTAINERS_SHORT_NAME_MODE=permissive
 
 	# Uncomment the following line if you don't like systemctl's auto-paging feature:
 	# export SYSTEMD_PAGER=

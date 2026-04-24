@@ -69,6 +69,7 @@ end
 python
 import sys
 sys.path.append("/usr/share/gcc/python")
+sys.path.append("/usr/share/gcc-15/python")
 from libstdcxx.v6.printers import register_libstdcxx_printers
 register_libstdcxx_printers(None)
 
